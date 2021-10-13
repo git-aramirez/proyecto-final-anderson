@@ -1,12 +1,12 @@
 {
   "expo": {
-    "name": "proyecto-final",
-    "slug": "proyecto-final",
+    "name": "proyectoFinal",
+    "slug": "proyectoFinal",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/arquitectura.png",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/arquitectura.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -21,9 +21,11 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/arquitectura.png",
         "backgroundColor": "#FFFFFF"
       }
+      ,"package":"com.loricode.proyectoFinal",
+      "versionCode": 1
     },
     "web": {
       "favicon": "./assets/favicon.png"
