@@ -15,7 +15,7 @@ const TableInputProccessesComponent = (props) => {
   }
 
       return(
-        <View style={styles.container_table}>
+        <View style={{ width:200 ,height:props.height}}>
           <DataTable id="tabla">
             <DataTable.Header>
               <DataTable.Title >proceso</DataTable.Title>

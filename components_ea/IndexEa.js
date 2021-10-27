@@ -2,7 +2,8 @@ import React , {useState} from 'react';
 import {styles} from '../styles/styles';
 import {View,SafeAreaView, ScrollView,Picker,Button,TextInput} from 'react-native';
 import TableInputProccessesComponent from './TableInputProccessesComponent';
-import * as main from '../scripts_ea/main';
+import MemoryCellsComponent from './MemoryCellsComponent';
+import * as main from '../scripts_ea/Main';
 
 export default function IndexEa() {
 
@@ -11,7 +12,8 @@ export default function IndexEa() {
   const [tablaEntrada, setTablaEntrada] = useState([]);
   const [cantidadCeldas, setCantidadCeldas] = useState(0);
   const [banderaEntrada,setBanderaEntrada] = useState(false);
-
+  const [banderaSalida,setBanderaSalida] = useState(false);
+  const [celdasMemoria, setCeldasMemoria] = useState([]);
   /**
       * Metodo que realiza la espera mientras se ejecuta una accion
       * @param {*} timeout Tiempo de espera que se quiere
@@ -31,7 +33,7 @@ const onRefresh = React.useCallback(() => {
 
     function tableInputProcessesComponent (){
         if(banderaEntrada){
-          return(<TableInputProccessesComponent tablaEntrada={tablaEntrada} setTablaEntrada={setTablaEntrada} />);
+          return(<TableInputProccessesComponent height={cantidadCeldas} tablaEntrada={tablaEntrada} setTablaEntrada={setTablaEntrada} />);
         }
         return(<></>);
     }
@@ -39,6 +41,23 @@ const onRefresh = React.useCallback(() => {
     function buttonGenerarAleatorios (){
       if(banderaEntrada){
         return(<Button onPress={()=>inicializarTablaEntradaNumerosAleatorios()} title={"Generar Aleatorios"} />);
+      }
+  
+      return(<></>);
+    }
+
+
+    function buttonEjecutarAlgoritmo (){
+      if(banderaEntrada){
+        return(<Button onPress={()=>iniciarAlgoritmo()} title={"Ejecutar Algortimo"} />);
+      }
+  
+      return(<></>);
+    }
+
+    function memoryCellsComponent (){
+      if(banderaSalida){
+        return( <MemoryCellsComponent celdasMemoria={celdasMemoria}/>);
       }
   
       return(<></>);
@@ -58,11 +77,27 @@ const onRefresh = React.useCallback(() => {
       function crearTablaEntrada(){
         let tablaEntrada = [];
         for (let index = 0; index < cantidadCeldas; index++) {
-          tablaEntrada.push({proceso: index+1, solicita: "", libera: ""})
+          tablaEntrada.push({proceso: "S"+(index+1), solicita: "", libera: ""})
         }
         setTablaEntrada(tablaEntrada);
       }
 
+      function inicializarCeldasMemoria(listaSalida){
+        let celdasMemoria = [];
+        for (let i = 0; i < listaSalida.length; i++) {
+          celdasMemoria.push({celdas:listaSalida[i]});
+        }
+        setCeldasMemoria(celdasMemoria);
+        setBanderaSalida(true);
+      }
+
+      function iniciarAlgoritmo (){
+        let item_algoritmo = null;
+        let listaSalida = main.ejecutarAlgoritmo(item_algoritmo,tablaEntrada);
+        alert(listaSalida);
+        inicializarCeldasMemoria(listaSalida);
+      
+      }
    
  return (
   
@@ -76,7 +111,7 @@ const onRefresh = React.useCallback(() => {
           <TextInput style={styles.input} onChangeText={(val)=>setCantidadCeldas(val)} placeholder="Cantidad de Celdas"/>
           
         <SafeAreaView style={{margin: 10} }>
-          <Button style={{marginBottom: 20}} onPress={()=>inicializarTabla()} title={"Crear Celdas"} />
+          <Button style={{marginBottom: 20}} onPress={()=>inicializarTabla()} title={"Crear Solicitudes"} />
         </SafeAreaView>
 
         <SafeAreaView style={{margin: 10} }>
@@ -85,6 +120,14 @@ const onRefresh = React.useCallback(() => {
 
         <SafeAreaView style={{margin: 10} }>
             {buttonGenerarAleatorios()}
+        </SafeAreaView>
+
+        <SafeAreaView style={{margin: 10} }>
+            {buttonEjecutarAlgoritmo()}
+        </SafeAreaView>
+
+        <SafeAreaView style={{margin: 10} }>
+            {memoryCellsComponent()}
         </SafeAreaView>
 
          </SafeAreaView>
