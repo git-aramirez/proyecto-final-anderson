@@ -14,6 +14,7 @@ export default function IndexEa() {
   const [banderaEntrada,setBanderaEntrada] = useState(false);
   const [banderaSalida,setBanderaSalida] = useState(false);
   const [celdasMemoria, setCeldasMemoria] = useState([]);
+  const [itemAjusteHuecos,setItemAjusteHuecos] = useState("Primer Ajuste");
   /**
       * Metodo que realiza la espera mientras se ejecuta una accion
       * @param {*} timeout Tiempo de espera que se quiere
@@ -63,6 +64,17 @@ const onRefresh = React.useCallback(() => {
       return(<></>);
     }
 
+    function pickerAjusteHuecos(){
+      if(banderaEntrada){
+      return (
+      <Picker selectedValue={itemAjusteHuecos} onValueChange={(itemValue, itemIndex) => setItemAjusteHuecos(itemValue)}>
+      <Picker.Item label={"Primer Ajuste"}  value={"Primer Ajuste"}/>
+      <Picker.Item label={"Mejor Ajuste"}  value={"Mejor Ajuste"}/>
+      <Picker.Item label={"Peor Ajuste"}  value={"Peor Ajuste"}/>
+    </Picker>);}
+      return(<></>);
+    }
+
     function inicializarTablaEntradaNumerosAleatorios(){
       main.inicializarTablaEntradaNumerosAleatorios(tablaEntrada);
       onRefresh();
@@ -92,8 +104,8 @@ const onRefresh = React.useCallback(() => {
       }
 
       function iniciarAlgoritmo (){
-        let item_algoritmo = null;
-        let listaSalida = main.ejecutarAlgoritmo(item_algoritmo,tablaEntrada);
+        alert(itemAjusteHuecos);
+        let listaSalida = main.ejecutarAlgoritmo(itemAjusteHuecos,tablaEntrada);
         alert(listaSalida);
         inicializarCeldasMemoria(listaSalida);
       
@@ -121,7 +133,11 @@ const onRefresh = React.useCallback(() => {
         <SafeAreaView style={{margin: 10} }>
             {buttonGenerarAleatorios()}
         </SafeAreaView>
-
+        
+        <View style={{margin: 10}}>
+          {pickerAjusteHuecos()}
+        </View>
+        
         <SafeAreaView style={{margin: 10} }>
             {buttonEjecutarAlgoritmo()}
         </SafeAreaView>

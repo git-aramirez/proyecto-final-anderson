@@ -60,19 +60,19 @@ function limpiarCeldasLiberadas (celdasALiberar){
 }
 
 
-export function ejecutarAlgoritmo(item_algoritmo,tablaEntrada){
-   return ejecutarPrimerAjuste(item_algoritmo,tablaEntrada);
-}
-
-function ejecutarPrimerAjuste(item_algoritmo,tablaEntrada){
+export function ejecutarAlgoritmo(itemAjusteHuecos,tablaEntrada){
     let listaCeldas = new Array(20);
     for (let index = 0; index < tablaEntrada.length; index++) {
         if(tablaEntrada[index].solicita!="--" && tablaEntrada[index].solicita!=""){
-            let posicionFinal=encontrarEspacioEnMemoria(tablaEntrada,index,listaCeldas,"Mejor Ajuste");
+            if(parseInt(tablaEntrada[index].solicita)<=0){
+                continue;
+            }
+            let listaPosiciones = encontrarEspacioEnMemoria(tablaEntrada,index,listaCeldas,itemAjusteHuecos);
+            let posicionFinal=listaPosiciones[0];
             if(posicionFinal===listaCeldas.length){
                 continue;
             }            
-            realizarSolicitud(tablaEntrada,listaCeldas,index,posicionFinal);
+            realizarSolicitud(tablaEntrada,listaCeldas,index,posicionFinal,itemAjusteHuecos,listaPosiciones[1]);
         }else{
             realizarLiberacion(listaCeldas,tablaEntrada,index);
         }  
@@ -81,9 +81,12 @@ function ejecutarPrimerAjuste(item_algoritmo,tablaEntrada){
     return listaCeldas;
 }
 
-function realizarSolicitud(tablaEntrada,listaCeldas,index,posicionFinal){
+function realizarSolicitud(tablaEntrada,listaCeldas,index,posicionFinal,itemAlgoritmo,posicionInicial){
     let cantidadDeEspacios =parseInt(tablaEntrada[index].solicita)-1;
     let pos = posicionFinal-cantidadDeEspacios;
+    if(itemAlgoritmo==="Peor Ajuste"){
+        pos = posicionInicial;
+    }
     cantidadDeEspacios =parseInt(tablaEntrada[index].solicita)+pos;
     for (let index_k = pos; index_k < cantidadDeEspacios; index_k++) {
         listaCeldas[index_k]=tablaEntrada[index].proceso; 
@@ -101,14 +104,23 @@ function realizarLiberacion(listaCeldas,tablaEntrada,index){
 
 function encontrarEspacioEnMemoria(tablaEntrada,index,listaCeldas,item_algoritmo){
     let cantidadDeEspacios =parseInt(tablaEntrada[index].solicita);
+    let posicionFinal;
+    let posicionInicial;
     if(item_algoritmo==="Mejor Ajuste"){
-        let posicionFinal = encontarEspacioEnMemoriaMejorAjuste(listaCeldas,cantidadDeEspacios);
+        posicionFinal = encontarEspacioEnMemoriaMejorAjuste(listaCeldas,cantidadDeEspacios);
         if(posicionFinal===listaCeldas.length){
-            posicionFinal = encontrarEspacioEnMemoriaPrimerAjuste(tablaEntrada,index,listaCeldas,cantidadDeEspacios);
+            posicionFinal = encontrarEspacioEnMemoriaPrimerAjuste(tablaEntrada,index,listaCeldas,cantidadDeEspacios)[0];
         }
-        return posicionFinal;
+        return [posicionFinal,posicionInicial];
     }else if(item_algoritmo==="Peor Ajuste"){
-        return encontarEspacioEnMemoriaPeorAjuste(listaCeldas,cantidadDeEspacios);
+        let listaPosiciones = encontarEspacioEnMemoriaPeorAjuste(listaCeldas,cantidadDeEspacios);
+        posicionFinal=listaPosiciones[0];
+        posicionInicial=listaPosiciones[1];
+        if(posicionFinal===listaCeldas.length){
+            posicionFinal = encontrarEspacioEnMemoriaPrimerAjuste(tablaEntrada,index,listaCeldas,cantidadDeEspacios)[0];
+            posicionInicial=posicionFinal-(cantidadDeEspacios-1);
+        }
+        return [posicionFinal,posicionInicial];  
     }
 
     return encontrarEspacioEnMemoriaPrimerAjuste(tablaEntrada,index,listaCeldas,cantidadDeEspacios);
@@ -128,26 +140,40 @@ function encontrarEspacioEnMemoriaPrimerAjuste(tablaEntrada,index,listaCeldas,ca
         posicionFinal=listaCeldas.length;
     }
 
-    return posicionFinal;
+    return [posicionFinal,0];
 }
 
 function encontarEspacioEnMemoriaPeorAjuste(listaCeldas,cantidadDeEspacios){
-    let cantidadDeHucosMayor=0;
+    let cantidadDeHuecosMayor=0;
     let posicionFinal=listaCeldas.length;
+    let posicionInicialTemp =0;
+    let posicionInicial=0;
     let cantidadDeHuecos=0;
-    for (let index_j = 0; index_j < listaCeldas.length && cantidadDeEspacios!=cantidadDeHuecos; index_j++) {
+    for (var index_j = 0; index_j < listaCeldas.length; index_j++) {
+        if(cantidadDeHuecos===0){
+            posicionInicialTemp=index_j;
+        }
         if(listaCeldas[index_j]==null || listaCeldas[index_j]==""){
             cantidadDeHuecos++;
             continue;
         }
-        if(cantidadDeHuecos>cantidadDeHucosMayor){
-            cantidadDeHucosMayor=cantidadDeHuecos;
-            posicionFinal=index_j;
+        if(cantidadDeHuecos>cantidadDeHuecosMayor){
+            cantidadDeHuecosMayor=cantidadDeHuecos;
+            posicionFinal=index_j-1;
+            posicionInicial=posicionInicialTemp;
         }
         cantidadDeHuecos=0;
     }
+    if(cantidadDeHuecos>cantidadDeHuecosMayor){
+        cantidadDeHuecosMayor=cantidadDeHuecos;
+        posicionFinal=index_j-1;
+        posicionInicial=posicionInicialTemp;
+    }
+    if(cantidadDeHuecosMayor<cantidadDeEspacios){
+        posicionFinal=listaCeldas.length;
+    }
 
-    return posicionFinal;
+    return [posicionFinal,posicionInicial];
 }
 
 function encontarEspacioEnMemoriaMejorAjuste(listaCeldas,cantidadDeEspacios){
