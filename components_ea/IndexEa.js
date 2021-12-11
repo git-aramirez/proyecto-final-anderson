@@ -50,7 +50,15 @@ const onRefresh = React.useCallback(() => {
 
     function buttonEjecutarAlgoritmo (){
       if(banderaEntrada){
-        return(<Button onPress={()=>iniciarAlgoritmo()} title={"Ejecutar Algortimo"} />);
+        return(<Button onPress={()=>iniciarAlgoritmo(false)} title={"Ejecutar Algortimo"} />);
+      }
+  
+      return(<></>);
+    }
+
+    function buttonEjecutarAlgoritmoPasoAPaso (){
+      if(banderaEntrada){
+        return(<Button onPress={()=>iniciarAlgoritmo(true)} title={"Ejecutar Algortimo x Pasos"} />);
       }
   
       return(<></>);
@@ -103,12 +111,10 @@ const onRefresh = React.useCallback(() => {
         setBanderaSalida(true);
       }
 
-      function iniciarAlgoritmo (){
-        alert(itemAjusteHuecos);
-        let listaSalida = main.ejecutarAlgoritmo(itemAjusteHuecos,tablaEntrada);
-        alert(listaSalida);
+      function iniciarAlgoritmo (isPasoAPaso){
+        //let listaSalida = main.ejecutarAlgoritmo(itemAjusteHuecos,tablaEntrada,isPasoAPaso);
+        let listaSalida = main.ejecutarAlgoritmoAjusteSolicitudes(tablaEntrada);
         inicializarCeldasMemoria(listaSalida);
-      
       }
    
  return (
@@ -140,6 +146,10 @@ const onRefresh = React.useCallback(() => {
         
         <SafeAreaView style={{margin: 10} }>
             {buttonEjecutarAlgoritmo()}
+        </SafeAreaView>
+
+        <SafeAreaView style={{margin: 10} }>
+            {buttonEjecutarAlgoritmoPasoAPaso()}
         </SafeAreaView>
 
         <SafeAreaView style={{margin: 10} }>
