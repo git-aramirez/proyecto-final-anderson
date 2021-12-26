@@ -212,7 +212,7 @@ function encontarEspacioEnMemoriaMejorAjuste(listaCeldas,cantidadDeEspacios){
 
 
 export function ejecutarAlgoritmoAjusteSolicitudes(tablaEntrada){
-
+    posicionesBloques = new Array();
     listaCeldas = new Array(20);
     let bloque = encontrarBloquesDeMemoria(0);
     let posicionInicial = bloque[0];
@@ -235,12 +235,15 @@ export function ejecutarAlgoritmoAjusteSolicitudes(tablaEntrada){
                 }
             } 
         }
-        realizarSolicitudAjusteSolicitudes(tablaEntrada,posicionSolicitud,posicionInicial,solicitudesAgregadas);
-        solicitudesRealizadas++;
-        if(solicitudesRealizadas==3){
-            realizarLiberaciónAjusteSolicitudes(tablaEntrada);
+        if(posicionSolicitud!=-1){
+            realizarSolicitudAjusteSolicitudes(tablaEntrada,posicionSolicitud,posicionInicial,solicitudesAgregadas);
+            solicitudesRealizadas++;
+            if(solicitudesRealizadas==3){
+                realizarLiberacionAjusteSolicitudes(tablaEntrada);
+                solicitudesRealizadas=0;
+            }
         }
-        bloque = encontrarBloquesDeMemoria(posicionInicial+tamanioSolicitud);
+        bloque = encontrarBloquesDeMemoria();
         posicionInicial = bloque[0];
         posicionFinal = bloque[1];
     } 
@@ -248,42 +251,74 @@ export function ejecutarAlgoritmoAjusteSolicitudes(tablaEntrada){
     return listaCeldas;
 }
 
-function realizarLiberaciónAjusteSolicitudes(tablaEntrada){
-    let index = parseInt(Math.random() * 2);
-    let proceso = listaCeldas[index].proceso;
+function realizarLiberacionAjusteSolicitudes(tablaEntrada){
+    let index = parseInt(Math.random() * 3);
+    let proceso = listaCeldas[index];
     let posicionLiberar = listaCeldas.indexOf(proceso);
+    let posicionFinal = 0;
     while(posicionLiberar!=-1){
+        if(posicionLiberar!=-1){
+            posicionFinal=posicionLiberar;
+        }
         listaCeldas[posicionLiberar]="";
         posicionLiberar = listaCeldas.indexOf(proceso);
     }
+   // realizarLiberacionPosicionesBloque(index,posicionFinal);
+}
+
+function realizarLiberacionPosicionesBloque(posicionInicial,posicionFinal){
+    let posicion = -1;
+    for (var index = 0; index < posicionesBloques.length; index+=2) {
+        if(posicionesBloques[index]>=posicionInicial && posicionesBloques[index+1]>=posicionFinal)
+            posicion=index;
+    }
+    if(posicion!=-1)
+        posicionesBloques.splice(posicion, 2);
 }
 
 function realizarSolicitudAjusteSolicitudes(tablaEntrada,index,posicionInicial,solicitudesAgregadas){
-    
     let cantidadDeEspacios =parseInt(tablaEntrada[index].solicita)+posicionInicial;
     for (let index_k = posicionInicial; index_k < cantidadDeEspacios; index_k++) {
         listaCeldas[index_k]=tablaEntrada[index].proceso; 
         solicitudesAgregadas.push(tablaEntrada[index].proceso);
     }
+    realizarLiberacionPosicionesBloque(posicionInicial,cantidadDeEspacios-1);
 }
 
+var posicionesBloques;
 
-
-function encontrarBloquesDeMemoria (posicionPartida){
+function encontrarBloquesDeMemoria (){
     let posicionInicial =-1;
-    let posicionFinal=-1;
-    for (var index = posicionPartida; index < listaCeldas.length; index++) {
-        if(( listaCeldas[index]==null|| listaCeldas[index]==="" ) && posicionInicial===-1 ){
+    let posicionFinal =-1;
+    for (var index = 0; index < listaCeldas.length; index++) {
+        if(( listaCeldas[index]==null|| listaCeldas[index]==="" ) && posicionInicial===-1){
             posicionInicial=index;
         }
         if(listaCeldas[index]!=null && listaCeldas[index]!="" && posicionInicial!=-1){
             posicionFinal=index-1;
-            posicionInicial=-1;
-            break;
+            if(isBloqueExistente(posicionInicial,posicionFinal)==false){
+                break;
+            }
+            posicionInicial =-1;
+            posicionFinal =-1;
         } 
     }
     if(index===listaCeldas.length){
         posicionFinal=index-1;
     }
+    if(isBloqueExistente(posicionInicial,posicionFinal)){
+        return [-1,-1]
+    }
+    posicionesBloques.push(posicionInicial);
+    posicionesBloques.push(posicionFinal);
     return [posicionInicial,posicionFinal];   
+}
+
+function isBloqueExistente(posicionInicial,posicionFinal){
+    for (var index = 0; index < posicionesBloques.length; index+=2) {
+        if(posicionesBloques[index]==posicionInicial && posicionesBloques[index+1]==posicionFinal){
+            return true;
+        }
+    }
+    return false;
 }
