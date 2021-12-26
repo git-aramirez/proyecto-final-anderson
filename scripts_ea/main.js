@@ -223,18 +223,9 @@ export function ejecutarAlgoritmoAjusteSolicitudes(tablaEntrada){
     while(posicionInicial!=-1){
         let tamanioBloque = posicionFinal-posicionInicial+1;
         let posicionSolicitud=-1;
-        let diferenciaMenor=-1;
-        for (let index = 0; index < tablaEntrada.length; index++) {
-            if(tablaEntrada[index].solicita!="--" && tablaEntrada[index].solicita!=""){
-                var tamanioSolicitud = tablaEntrada[index].solicita;
-                let diferencia = tamanioBloque-tamanioSolicitud;
-                let EssolicitudExistente = solicitudesAgregadas.indexOf(tablaEntrada[index].proceso);
-                if(diferencia>=0 && (diferencia<diferenciaMenor || diferenciaMenor===-1) && EssolicitudExistente==-1){
-                    posicionSolicitud=index;
-                    diferenciaMenor=diferencia;
-                }
-            } 
-        }
+        //posicionSolicitud = realizarMejorAjusteSobreSolicitudes(solicitudesAgregadas,tablaEntrada,posicionSolicitud,tamanioBloque);
+        //posicionSolicitud = realizarPeorAjusteSobreSolicitudes(solicitudesAgregadas,tablaEntrada,posicionSolicitud,tamanioBloque);
+        posicionSolicitud = realizarPrimerAjusteSobreSolicitudes(solicitudesAgregadas,tablaEntrada,posicionSolicitud,tamanioBloque);
         if(posicionSolicitud!=-1){
             realizarSolicitudAjusteSolicitudes(tablaEntrada,posicionSolicitud,posicionInicial,solicitudesAgregadas);
             solicitudesRealizadas++;
@@ -249,6 +240,54 @@ export function ejecutarAlgoritmoAjusteSolicitudes(tablaEntrada){
     } 
 
     return listaCeldas;
+}
+
+function realizarPrimerAjusteSobreSolicitudes(solicitudesAgregadas,tablaEntrada,posicionSolicitud,tamanioBloque){
+    
+    for (let index = 0; index < tablaEntrada.length; index++) {
+        if(tablaEntrada[index].solicita!="--" && tablaEntrada[index].solicita!=""){
+            let tamanioSolicitud = parseInt(tablaEntrada[index].solicita);
+            let diferencia = tamanioBloque-tamanioSolicitud;
+            let EssolicitudExistente = solicitudesAgregadas.indexOf(tablaEntrada[index].proceso);
+            if(diferencia>=0 && EssolicitudExistente==-1){
+                posicionSolicitud=index;
+                break;
+            }
+        } 
+    }
+    return posicionSolicitud;
+}
+
+function realizarMejorAjusteSobreSolicitudes(solicitudesAgregadas,tablaEntrada,posicionSolicitud,tamanioBloque){
+    let diferenciaMenor=-1;
+    for (let index = 0; index < tablaEntrada.length; index++) {
+        if(tablaEntrada[index].solicita!="--" && tablaEntrada[index].solicita!=""){
+            let tamanioSolicitud = parseInt(tablaEntrada[index].solicita);
+            let diferencia = tamanioBloque-tamanioSolicitud;
+            let EssolicitudExistente = solicitudesAgregadas.indexOf(tablaEntrada[index].proceso);
+            if(diferencia>=0 && (diferencia<diferenciaMenor || diferenciaMenor===-1) && EssolicitudExistente==-1){
+                posicionSolicitud=index;
+                diferenciaMenor=diferencia;
+            }
+        } 
+    }
+    return posicionSolicitud;
+}
+
+function realizarPeorAjusteSobreSolicitudes(solicitudesAgregadas,tablaEntrada,posicionSolicitud,tamanioBloque){
+    let diferenciaMayor=-1;
+    for (let index = 0; index < tablaEntrada.length; index++) {
+        if(tablaEntrada[index].solicita!="--" && tablaEntrada[index].solicita!=""){
+            let tamanioSolicitud = parseInt(tablaEntrada[index].solicita);
+            let diferencia = tamanioBloque-tamanioSolicitud;
+            let EssolicitudExistente = solicitudesAgregadas.indexOf(tablaEntrada[index].proceso);
+            if(diferencia>=0 && (diferencia > diferenciaMayor || diferenciaMayor === -1) && EssolicitudExistente==-1){
+                posicionSolicitud=index;
+                diferenciaMayor=diferencia;
+            }
+        } 
+    }
+    return posicionSolicitud;
 }
 
 function realizarLiberacionAjusteSolicitudes(tablaEntrada){
