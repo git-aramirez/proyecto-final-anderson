@@ -16,6 +16,20 @@ export const styles = StyleSheet.create({
       marginBottom: 10
     },
 
+    textInput_table_sp: {
+      width: 150,
+      height: 30,
+      borderWidth: 1,
+      textAlign: 'center'
+    },
+
+    textInput_semaforos_sp: {
+      width: 400,
+      height: 30,
+      borderWidth: 1,
+      textAlign: 'center'
+    },
+
     container: {
         flex: 1,
         backgroundColor: '#fff',

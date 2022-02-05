@@ -5,6 +5,9 @@ import { View, Text , TouchableOpacity,TextInput} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import {styles} from '../styles/styles';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import IndexEa from '../components_ea/IndexEa';
+import IndexSp from '../components_sp/IndexSp';
 
 
 function HomeScreen(props) {
@@ -20,20 +23,19 @@ function HomeScreen(props) {
   );
 }
 
-
 function AlgoritmosPlanificacionScreen() {
     return (<IndexAp/>);
+}
+
+function EstrategiaDeAjusteScreen() {
+   return (<IndexEa/>);
   }
 
-  function EstrategiaDeAjusteScreen() {
-    return (<IndexEa/>);
-  }
+function SincronizacionDeProcesosScreen() {
+  return (<IndexSp/>);
+}
 
 const Stack = createNativeStackNavigator();
-
-import { createDrawerNavigator } from '@react-navigation/drawer';
-import IndexEa from '../components_ea/IndexEa';
-
 const Drawer = createDrawerNavigator();
 
 function MyDrawer() {
@@ -43,6 +45,7 @@ function MyDrawer() {
             <Drawer.Screen name="Home" component={HomeScreen} />
             <Drawer.Screen name="Algoritmos de planificación" component={AlgoritmosPlanificacionScreen} />
             <Drawer.Screen name="Estrategias De Ajuste" component={EstrategiaDeAjusteScreen} />
+            <Drawer.Screen name="Sincronización de Procesos" component={SincronizacionDeProcesosScreen} />
         </Drawer.Navigator>
       </NavigationContainer>      
   );
