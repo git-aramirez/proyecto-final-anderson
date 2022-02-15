@@ -48,7 +48,7 @@ function paginacion() {
         
         // Valida que la palabra no este vacia
         if (palabraClone == "") {          
-            return alert("No se admiten Palabras vacias");
+            return alert("No se admiten Palabras vaciass");
         }
         // Valida que la palabra sea maximo del tamaño del bloque
         if (palabra.length <= funciones.TamañoBloque) {
