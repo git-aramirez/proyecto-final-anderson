@@ -1,6 +1,6 @@
 import React , {useState} from 'react';
 import {styles} from '../styles/styles';
-import {View,SafeAreaView, ScrollView,Picker,Button,TextInput} from 'react-native';
+import {View,SafeAreaView, ScrollView,Picker,TextInput, Button,TouchableOpacity,Text} from 'react-native';
 import TableInputThreadsComponent from './TableInputThreadsComponent';
 import * as main from '../scripts_sp/Main';
 
@@ -11,6 +11,7 @@ export default function IndexSp() {
   const [cantidadCeldas, setCantidadCeldas] = useState(0);
   const [cantidadSemaforos, setCantidadSemaforos] = useState(0);
   const [textSemaforos, setTextSemaforos] = useState(0);
+  const [textSalida, setTextSalida] = useState("");
   const [verTablaEntrada, setVerTablaEntrada] = useState(false);
   const [verCantidadFilas, setverCantidadFilas] = useState(false);
   const [tablaEntrada, setTablaEntrada] = useState([]);
@@ -35,7 +36,7 @@ const onRefresh = React.useCallback(() => {
 
 function tableInputThreadsComponent (){
   if(verTablaEntrada){
-    return(<TableInputThreadsComponent  height={400} tablaEntrada={tablaEntrada} setTablaEntrada={setTablaEntrada} />);
+    return(<TableInputThreadsComponent  height={50 * cantidadCeldas} tablaEntrada={tablaEntrada} setTablaEntrada={setTablaEntrada} />);
   }
 
   return(<></>);
@@ -46,7 +47,9 @@ function initCantidadFilasComponent(){
     return(
       <View style={{margin: 20,flex: 1,alignItems: 'center',justifyContent: 'center',flexDirection: 'row'}}>
         <TextInput style={styles.input} onChangeText={(val)=>setCantidadCeldas(val)} placeholder="Cantidad de Filas"/>
-        <Button style={{marginBottom: 20}} onPress={()=>init()} title={"Crear Tabla"} />
+        <TouchableOpacity style={{width: 170, height: 40, backgroundColor: 'blue',padding:10,alignItems: 'center',borderRadius: 5}} onPress={()=>init()} >
+          <Text style={{color:'white', fontSize: 17}}>Crear Tablas</Text>
+        </TouchableOpacity>
     </View>);
   }
 
@@ -91,12 +94,17 @@ function  crearTablaEntrada (){
 
   function ejecutarAlgoritmo(){
     var listaSalida = main.ejecutarAlgoritmo(textSemaforos,tablaEntrada);
+    setTextSalida(listaSalida);
    }
 
 
   function buttonGenerarSemaforosAleatoriosComponent(){
     if(verTablaEntrada){
-      return(<Button onPress={()=>generarSemaforosAleatorios()} title={"Generar Semaforos"} />);
+      return(
+        <TouchableOpacity style={{marginTop:0, width: 250, height: 40, backgroundColor: '#EDAF0A',padding:10,alignItems: 'center',borderRadius: 5}} onPress={()=>generarSemaforosAleatorios()} >
+          <Text style={{color:'white', fontSize: 17}}>Generar Semaforos Aleatorios</Text>
+        </TouchableOpacity>
+      );
     }
   
     return(<></>);
@@ -104,10 +112,24 @@ function  crearTablaEntrada (){
 
   function buttonEjecutarAlgoritmo(){
     if(verTablaEntrada){
-      return(<Button onPress={()=>ejecutarAlgoritmo()} title={"Ejecutar"} />);
+      return(
+        <TouchableOpacity style={{marginLeft:20, width: 100, height: 40, backgroundColor: 'green',padding:10,alignItems: 'center',borderRadius: 5}}onPress={()=>ejecutarAlgoritmo()} >
+          <Text style={{color:'white', fontSize: 17}}>Ejecutar</Text>
+        </TouchableOpacity>);
     }
   
     return(<></>);
+  }
+
+  function textAreaComponent(){
+    if(verTablaEntrada){
+      return (
+        <TextInput style={styles.textInput_salida_sp} 
+        onChangeText={(text) => setTextSalida(text)} placeholder="salida" value={textSalida}/>
+      );
+    }
+
+    return (<></>)
   }
 
   function inicializarTablaSalida(matrizEntrada){
@@ -120,26 +142,26 @@ function  crearTablaEntrada (){
   }
 
  return (
-  
-    <View style={{backgroundColor: '#fff',alignItems: 'center',justifyContent: 'center'}}>
-
-      <View style={{top:20 ,flex: 1,alignItems: 'center',justifyContent: 'center',flexDirection: 'column'}}>
+    <View style={{width: `100%` ,height: `100%`,backgroundColor: '#fff',alignItems: 'center'}}>
 
         <View style={{top:20 ,flex: 2,alignItems: 'center',justifyContent: 'center',flexDirection: 'row'}}>
           <View style={{flex: 1,alignItems: 'center',justifyContent: 'center',flexDirection: 'row'}}>
               <TextInput style={styles.input} onChangeText={(val)=>setCantidadSemaforos(val)} placeholder="Cantidad de Semaforos"/>
-              <Button style={{marginBottom: 20}} onPress={()=>establecerSemaforos()} title={"Establecer Semaforos"} />
+              <TouchableOpacity style={{marginTop:0, width: 190, height: 40, backgroundColor: 'blue',padding:10,alignItems: 'center',borderRadius: 5}} onPress={()=>establecerSemaforos()} >
+                <Text style={{color:'white', fontSize: 17}}>Establecer Semaforos</Text>
+              </TouchableOpacity>
           </View>
-          {initCantidadFilasComponent()}
-          {textInputSemaforosComponent()}
-          {buttonGenerarSemaforosAleatoriosComponent()}
-          {buttonEjecutarAlgoritmo()}
+            {initCantidadFilasComponent()}
+            {textInputSemaforosComponent()}
         </View>
 
         {tableInputThreadsComponent()}
 
-      </View>
-
+        <View style={{top:20 ,flex: 2,alignItems: 'center',justifyContent: 'center',flexDirection: 'row'}}>
+          {buttonGenerarSemaforosAleatoriosComponent()}
+          {buttonEjecutarAlgoritmo()}
+          {textAreaComponent()}
+        </View>
     </View>
     );
 

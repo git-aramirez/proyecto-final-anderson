@@ -6,7 +6,8 @@ export const styles = StyleSheet.create({
       margin: 8,
       borderWidth: 1,
       padding: 10,
-      
+      color:'black',
+      fontSize: 17
     },
     inputTable:{
       width: 40,
@@ -20,14 +21,28 @@ export const styles = StyleSheet.create({
       width: 150,
       height: 30,
       borderWidth: 1,
-      textAlign: 'center'
+      textAlign: 'center',
+      color:'black',
+      fontSize: 17
     },
 
     textInput_semaforos_sp: {
       width: 400,
       height: 30,
       borderWidth: 1,
-      textAlign: 'center'
+      textAlign: 'center',
+      color:'black',
+      fontSize: 17
+    },
+
+    textInput_salida_sp: {
+      width: 400,
+      height: 30,
+      borderWidth: 1,
+      textAlign: 'center',
+      marginLeft: 20,
+      color:'black',
+      fontSize: 17
     },
 
     container: {

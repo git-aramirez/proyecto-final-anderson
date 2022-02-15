@@ -8,6 +8,8 @@ import {styles} from '../styles/styles';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import IndexEa from '../components_ea/IndexEa';
 import IndexSp from '../components_sp/IndexSp';
+import IndexPm from '../components_pm/IndexPm';
+import IndexSm from '../components_sm/IndexSm';
 
 
 function HomeScreen(props) {
@@ -32,7 +34,16 @@ function EstrategiaDeAjusteScreen() {
   }
 
 function SincronizacionDeProcesosScreen() {
+ // IndexSp.crearTablaEntrada();
   return (<IndexSp/>);
+}
+
+function PaginacionDeMemoria() {
+  return (<IndexPm/>);
+}
+
+function SegmentacionMemoria() {
+  return (<IndexSm/>);
 }
 
 const Stack = createNativeStackNavigator();
@@ -46,6 +57,8 @@ function MyDrawer() {
             <Drawer.Screen name="Algoritmos de planificación" component={AlgoritmosPlanificacionScreen} />
             <Drawer.Screen name="Estrategias De Ajuste" component={EstrategiaDeAjusteScreen} />
             <Drawer.Screen name="Sincronización de Procesos" component={SincronizacionDeProcesosScreen} />
+            <Drawer.Screen name="Paginación de Memoria" component={PaginacionDeMemoria} />
+            <Drawer.Screen name="Segmentación de Memoria" component={SegmentacionMemoria} />
         </Drawer.Navigator>
       </NavigationContainer>      
   );

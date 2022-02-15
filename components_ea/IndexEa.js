@@ -1,6 +1,6 @@
 import React , {useState} from 'react';
 import {styles} from '../styles/styles';
-import {View,SafeAreaView, ScrollView,Picker,Button,TextInput} from 'react-native';
+import {View, ScrollView,Picker,Button,TextInput} from 'react-native';
 import TableInputProccessesComponent from './TableInputProccessesComponent';
 import MemoryCellsComponent from './MemoryCellsComponent';
 import * as main from '../scripts_ea/Main';
@@ -97,6 +97,7 @@ const onRefresh = React.useCallback(() => {
       function crearTablaEntrada(){
         let tablaEntrada = [];
         for (let index = 0; index < cantidadCeldas; index++) {
+          let colums = [];
           tablaEntrada.push({proceso: "S"+(index+1), solicita: "", libera: ""})
         }
         setTablaEntrada(tablaEntrada);
@@ -119,44 +120,40 @@ const onRefresh = React.useCallback(() => {
    
  return (
   
-    <View style={{backgroundColor: '#fff',alignItems: 'center',justifyContent: 'center' }}>
-  
-        <SafeAreaView style={{top:20 ,flex: 1,
-          alignItems: 'center',
-          justifyContent: 'center',
-          flexDirection: 'column'}}>
+    <View style={{width: `100%` ,height: `100%`,backgroundColor: '#fff',alignItems: 'center',justifyContent: 'center' }}>
+        <View style={{top:20 ,flex: 1,alignItems: 'center',justifyContent: 'center',flexDirection: 'column'}}>
   
           <TextInput style={styles.input} onChangeText={(val)=>setCantidadCeldas(val)} placeholder="Cantidad de Celdas"/>
           
-        <SafeAreaView style={{margin: 10} }>
+        <View style={{margin: 10} }>
           <Button style={{marginBottom: 20}} onPress={()=>inicializarTabla()} title={"Crear Solicitudes"} />
-        </SafeAreaView>
+        </View>
 
-        <SafeAreaView style={{margin: 10} }>
+        <View style={{margin: 10} }>
             {tableInputProcessesComponent()}
-        </SafeAreaView>
+        </View>
 
-        <SafeAreaView style={{margin: 10} }>
+        <View style={{margin: 10} }>
             {buttonGenerarAleatorios()}
-        </SafeAreaView>
+        </View>
         
         <View style={{margin: 10}}>
           {pickerAjusteHuecos()}
         </View>
         
-        <SafeAreaView style={{margin: 10} }>
+        <View style={{margin: 10} }>
             {buttonEjecutarAlgoritmo()}
-        </SafeAreaView>
+        </View>
 
-        <SafeAreaView style={{margin: 10} }>
+        <View style={{margin: 10} }>
             {buttonEjecutarAlgoritmoPasoAPaso()}
-        </SafeAreaView>
+        </View>
 
-        <SafeAreaView style={{margin: 10} }>
+        <View style={{margin: 10} }>
             {memoryCellsComponent()}
-        </SafeAreaView>
+        </View>
 
-         </SafeAreaView>
+         </View>
   
       </View>
     );

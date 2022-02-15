@@ -138,7 +138,7 @@ function pickerAlgortimos(){
 
  return (
   
-  <View style={{backgroundColor: '#fff',alignItems: 'center',justifyContent: 'center' }}>
+  <View style={{width: `100%` ,height: `100%`,backgroundColor: '#fff',alignItems: 'center',justifyContent: 'center' }}>
 
       <SafeAreaView style={{top:20 ,flex: 1,
         alignItems: 'center',

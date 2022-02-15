@@ -52,7 +52,7 @@ function aleatorios(tablaEntrada){
 
     for (let index = 0; index < (listaSemaforos.length-1)*2; index++) {
      
-       var hiloAleatorio =  Math.floor(Math.random() * 4);
+       var hiloAleatorio =  Math.floor(Math.random() * 5);
 
        var filaAleatoria =  Math.floor(Math.random() * matrizEntrada.length);
        var isPositionInvalid = matrizEntrada[filaAleatoria][hiloAleatorio]!="" && matrizEntrada[filaAleatoria][hiloAleatorio]!=null;
@@ -96,11 +96,12 @@ function inicializarTablaSemaforos (textSemaforos){
 }
 
 var semaforos = new Array();
+var nombreSemaforos = new Array();
 
 function generarPosicionAleatoria(){
-    let hilo =  Math.floor(Math.random() * 4);
+    let hilo =  Math.floor(Math.random() * 5);
     while(hilosDormidos.includes(hilo) || hilosTerminados.includes(hilo)){
-        hilo =   Math.floor(Math.random() * 4);
+        hilo =   Math.floor(Math.random() * 5);
     }
     return hilo;
 }
@@ -111,61 +112,82 @@ var columnasTerminadas;
 
 export function ejecutarAlgoritmo(textSemaforos,tablaEntrada){
     columnasTerminadas = 0;
+
+    semaforos = new Array();
+    let listaSalida = new Array();
+    hilosDormidos = new Array();
+    hilosTerminados = new Array();
+    nombreSemaforos = new Array();
+
     inicializarMatrizConDatos(tablaEntrada);
     inicializarTablaSemaforos(textSemaforos);
-    
-    let listaSalida = new Array();
-    
 
-    while(columnasTerminadas < 5){
+    while(hilosDormidos.length + hilosTerminados.length < 5){
       let hilo =  generarPosicionAleatoria();
       encontrarListaFinal(0,hilo,listaSalida);
     }
 
-    return listaSalida;
+    return listaSalida.toString();
 }
 
 
 function encontrarListaFinal(inicio,hilo,listaSalida){
     let aletorioRelease ;
     let esAcquire;
-    for (let index = inicio; index < matrizEntrada.length; index++) {
+    let index;
+    let nombreSemaforo = "";
+
+    for (index = inicio; index < matrizEntrada.length; index++) {
         let element = matrizEntrada[index][hilo];
         esAcquire = element.includes(".acquire()");
         let esRelease = element.includes(".release()");
         let semaforo = element.split(".");
+        
+        let posicionSemaforo;
+
+        nombreSemaforo = semaforo[0];
+        posicionSemaforo = semaforos.indexOf(nombreSemaforo);
 
         if(esAcquire){
-            let posicionSemaforo = semaforos.indexOf(semaforo[0]);
             if(tablaSemaforos[posicionSemaforo][1] === 0){
                 tablaSemaforos[posicionSemaforo][2] = index;
                 tablaSemaforos[posicionSemaforo][3]= hilo;
                 hilosDormidos.push(hilo);
+                nombreSemaforos.push(nombreSemaforo);
                 break;
-            } 
+            }
+            continue; 
         }else if(esRelease){
-          let posicionSemaforo = semaforos.indexOf(semaforo[0]);
-          if(hilosDormidos.includes(posicionSemaforo)){
-             aletorioRelease = Math.floor(Math.random());
-              if(aletorioRelease===0){
-                  let filaInicio = tablaSemaforos[posicionSemaforo][2]+1;
-                  let hilo = tablaSemaforos[posicionSemaforo][3];
-
-                  encontrarListaFinal(filaInicio,hilo,listaSalida);
-                  columnasTerminadas++;
+          if(nombreSemaforos.includes(nombreSemaforo)){
+             aletorioRelease = Math.floor(Math.random() * (3 - 1)) + 1;
+             let filaInicio = tablaSemaforos[posicionSemaforo][2]+1;
+             let hiloSiguiente = tablaSemaforos[posicionSemaforo][3];
+              if(aletorioRelease===1){
+                  encontrarListaFinal(filaInicio,hiloSiguiente,listaSalida);
+                  encontrarListaFinal(index+1,hilo,listaSalida);
+                  //columnasTerminadas++;
+              }else{
+                encontrarListaFinal(index+1,hilo,listaSalida);
+                encontrarListaFinal(filaInicio,hiloSiguiente,listaSalida);
               }
+              break;
           }else{
               tablaSemaforos[posicionSemaforo][2]+=1;
               continue;
           }
         }
-        listaSalida.push(element);
+        listaSalida.push(element+"  ");
     }
-    if(!esAcquire){
+
+    if(index===matrizEntrada.length){
+        let posicionToRemoved = hilosDormidos.indexOf(hilo);
+        if( posicionToRemoved != -1){
+            hilosDormidos.splice(posicionToRemoved,1);
+            nombreSemaforos.splice(posicionToRemoved,1);
+        }
         hilosTerminados.push(hilo);
-        columnasTerminadas++;
+       //columnasTerminadas++;
     }
-     
 }
 
 

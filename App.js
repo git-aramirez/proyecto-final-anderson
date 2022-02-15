@@ -7,10 +7,7 @@ import {styles} from './styles/styles';
 export default function App() {
 
  return (
-  
       <MyDrawer/>
-   
-    
   );
 }
 
