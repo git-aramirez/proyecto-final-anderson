@@ -6,8 +6,7 @@
  import React from 'react';
  import { Text, View, SectionList, Picker, TextInput, Button} from 'react-native';
  import * as funciones from '../scripts_am/Main';
- 
- 
+ import { styles } from "./styles";
  
  /**
   * Metodo principal que gestiona la vista del mapa de bits y los algortimos de asignacion de espacio
@@ -145,8 +144,8 @@
                         {title: 'Bloque 13', data: array[12]},
                         {title: 'Bloque 17', data: array[16]}
                     ]}
-                    renderItem={({item}) => <Text >{item}</Text>}
-                    renderSectionHeader={({section}) => <Text >{section.title}</Text>}
+                    renderItem={({item}) => <Text style={styles.item}>{item}</Text>}
+                    renderSectionHeader={({section}) => <Text style={styles.sectionHeader}>{section.title}</Text>}
                     keyExtractor={(item, index) => index}
                 />
                 <SectionList 
@@ -157,8 +156,8 @@
                         {title: 'Bloque 14', data: array[13]},
                         {title: 'Bloque 18', data: array[17]}
                     ]}
-                    renderItem={({item}) => <Text >{item}</Text>}
-                    renderSectionHeader={({section}) => <Text >{section.title}</Text>}
+                    renderItem={({item}) => <Text style={styles.item}>{item}</Text>}
+                    renderSectionHeader={({section}) => <Text style={styles.sectionHeader}>{section.title}</Text>}
                     keyExtractor={(item, index) => index}
                 />
                 <SectionList  
@@ -169,8 +168,8 @@
                         {title: 'Bloque 15', data: array[14]},
                         {title: 'Bloque 19', data: array[18]}
                     ]}
-                    renderItem={({item}) => <Text >{item}</Text>}
-                    renderSectionHeader={({section}) => <Text >{section.title}</Text>}
+                    renderItem={({item}) => <Text style={styles.item}>{item}</Text>}
+                    renderSectionHeader={({section}) => <Text style={styles.sectionHeader}>{section.title}</Text>}
                     keyExtractor={(item, index) => index}
                 />
                 <SectionList 
@@ -181,8 +180,8 @@
                         {title: 'Bloque 16', data: array[15]},
                         {title: 'Bloque 20', data: array[19]}
                     ]}
-                    renderItem={({item}) => <Text >{item}</Text>}
-                    renderSectionHeader={({section}) => <Text >{section.title}</Text>}
+                    renderItem={({item}) => <Text style={styles.item}>{item}</Text>}
+                    renderSectionHeader={({section}) => <Text style={styles.sectionHeader}>{section.title}</Text>}
                     keyExtractor={(item, index) => index}
                 />
             </View>
@@ -227,7 +226,7 @@
                     onChangeText={(val) => setnombreArchivo(val)}
                     value={nombreArchivo}
                     placeholder="Nombre del Archivo"
-                    
+                    style={styles.input}
                     keyboardType='default'
                     clearButtonMode="always"
                 />
@@ -235,7 +234,7 @@
                     onChangeText={(val) => settamañoCaracteres(val)}
                     value={tamañoCaracteres}
                     placeholder="Tamaño de caracteres del Archivo"
-                    
+                    style={styles.input}
                     keyboardType='numeric' 
                 />
             </View>

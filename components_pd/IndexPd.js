@@ -254,17 +254,6 @@ const App = () => {
     return (
       <Picker.Item label={data}  value={data}/>
     )});
-       
-
-    const er = {
-      labels:['Google','Hola'],
-      datasets:[{
-        data:[30,56],
-        backgroundColor:['blue','green']
-      }]
-    };
-
-    const opciones = {responsive:true}
 
   return (
 
@@ -322,6 +311,7 @@ const App = () => {
           }
           
         </View>
+        
         <View >
           <DataTable id="tablaParticion">
               <DataTable.Header>
@@ -418,8 +408,6 @@ const App = () => {
               onPress={() =>{llenarDatosParticion()}}
 
             />
-
-
           </View>
         </View>
         {mostrarParticiones()}
@@ -427,4 +415,4 @@ const App = () => {
   );
 }
  
- export default App;
+export default App;

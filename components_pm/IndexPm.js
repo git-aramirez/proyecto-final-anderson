@@ -4,8 +4,7 @@
  */
 
 import React from 'react';
-import { View , ScrollView,Button,TextInput} from 'react-native';
-//import { Button } from 'react-native-paper';
+import { View , ScrollView, Button, TextInput} from 'react-native';
 import * as funciones from '../scripts_pm/Main';
 import ProcessList from './ProcessListComponent';
 

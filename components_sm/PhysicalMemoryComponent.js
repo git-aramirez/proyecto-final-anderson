@@ -2,6 +2,7 @@
 import React from "react";
 import { Text, View } from 'react-native';
 import { DataTable } from 'react-native-paper';
+import { styles } from "./styles";
 
 /**
  * Funcion que muestra la  una tabla de datos
