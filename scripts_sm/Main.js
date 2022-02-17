@@ -1,5 +1,5 @@
 /**
- * Funcionalidades y variables de los algortimos de Paginacion
+ * Funcionalidades y variables de los algortimos de Segmentacion
  * 
  * @author Kevin David Sanchez Solis
  */
@@ -21,15 +21,17 @@ export let MemoriaFisica   = crearArrayMemoria();
 export let TablaProcesos   = new Array();
 // Inicializa el array de tabla de procesos
 export let TablaDatos   = new Array();
+// Log de segmentacion
+export let logSegmentacion = '';
 
 //---------------------------------------Metodos---------------------------------------------------------
 
 /**
-  * Metodo que inicializa el arreglo con los campos de los procesos
-  * 
-  * @returns El arreglo de Procesos inicializado
-  */
- function crearArrayMemoria() {
+ * Metodo que inicializa el arreglo con los campos de los procesos
+ * 
+ * @returns El arreglo de Procesos inicializado
+ */
+function crearArrayMemoria() {
 
     //arreglo de Procesos totales
     let array = new Array(CantidadMemoria);
@@ -37,7 +39,7 @@ export let TablaDatos   = new Array();
     for (let index = 0; index < array.length; index++) {
         //inicializa la posicion en el arreglo en "".
         array.push();
-        array[index] = [''];
+        array[index] = ['', ''];
     }
 
     return array;
@@ -51,21 +53,28 @@ export let TablaDatos   = new Array();
  * @returns Estado de la solicitud
  */
 export function crearProceso(palabra) { // Falta Tabla de segmentos
+    // Ingresa registro al log
+    logSegmentacion += `Se solicita crear el proceso: ${palabra}. \n`;
+
     // Agrega la palabra en memoria fisica
     let estado = agregarPalabraMemoriaFisica(palabra);
 
     // Valida si el estado es negativo
     if (estado == -1) {
+        // Ingresa registro al log
+        logSegmentacion += ` Se notifica que no se encontro el espacio para almacenar el proceso en memoria fisica. \n`;
         return alert('No se encontro el espacio para almacenar la palabra en memoria fisica');
     }
 
     // Visualizacion de datos
-    console.log("Tabla de procesos");
-    console.log(TablaProcesos);
-    console.log("Tabla de datos");
-    console.log(TablaDatos);
-    console.log("Memoria fisica");
-    console.log(MemoriaFisica);
+    // console.log("Tabla de procesos");
+    // console.log(TablaProcesos);
+    // console.log("Tabla de datos");
+    // console.log(TablaDatos);
+    // console.log("Memoria fisica");
+    // console.log(MemoriaFisica);
+    console.log("log");
+    console.log(logSegmentacion);
 }
 
 /**
@@ -83,7 +92,10 @@ function agregarPalabraTablaProcesos(palabra, indice) {
         // Agrega la letra en un espacio del arreglo
         array.push(palabra.charAt(index));
     }
-
+    // Ingresa registro al log
+    logSegmentacion += ` agrega el proceso en tabla de procesos. \n`;
+    // Ingresa registro al log
+    logSegmentacion += ` Se asigna en la tabla de segmentos que el proceso inicia en el bloque ${indice+1} y tiene un tamaño de ${palabra.length}. \n`;
     // Agrega los datos del segmento a la tabla de procesos
     TablaProcesos[TablaProcesos.length] = array; 
     TablaDatos.push([indice, palabra.length]);
@@ -101,27 +113,39 @@ function agregarPalabraMemoriaFisica(palabra) {
     // Maneja el estado de la validacion
     let estado = validarEspacioMemoriaFisica(palabra.length);
 
+    let inicio = estado;
+
+    // Ingresa registro al log
+    logSegmentacion += ` Se valida que exista el espacio en memoria fisica. \n`;
     // Valida si la validacion de espacio es negativa
     if (estado == -1) {
         // Devuelve estado negativo de la solicitud
         return -1;
     }
 
-    // Agrega el proceso en la tabla de procesos global
-    agregarPalabraTablaProcesos(palabra, estado);
-
-
     // Caso de parada de asignacion de la palabra
     let tope = 0;
+    // Color diferenciador del proceso
+    let color = generarColor();
 
+    // Ingresa registro al log
+    logSegmentacion += ` Se inicia a agregar el proceso en el bloque: ${inicio+1}. \n`;
+    
     // Bucle para asignar las letras de la palabra en memoria fisica
     while (tope != palabra.length) {
         // Asigna letra de la palabra en el espacio del segmento
-        MemoriaFisica[estado] = palabra.charAt(tope);
+        MemoriaFisica[estado][0] = palabra.charAt(tope);
+        // Asigna el color para el proceso
+        MemoriaFisica[estado][1] = color;
         // Incrementa indices
         tope++;
         estado++;
     }
+    // Ingresa registro al log
+    logSegmentacion += ` Se termina de agregar el proceso en el bloque: ${estado}. \n`;
+
+    // Agrega el proceso en la tabla de procesos global
+    agregarPalabraTablaProcesos(palabra, inicio);
 
     return 0;
 }
@@ -134,7 +158,6 @@ function agregarPalabraMemoriaFisica(palabra) {
  * @returns indice de inicio para asignar o estado negativo (-1)
  */
 function validarEspacioMemoriaFisica(tamaño) {
-
     // Variable auxiliar para controlar si el espacio esta
     let aux = tamaño;
 
@@ -145,7 +168,7 @@ function validarEspacioMemoriaFisica(tamaño) {
         // Bucle que busca si existe el espacio
         while (aux != 0) {
             // Valida si la posicion en la memoria fisica esta disponible
-            if (MemoriaFisica[indexAux] == '') {
+            if (MemoriaFisica[indexAux][0] == '') {
                 // Ajusta los auxiliares
                 aux--;
                 indexAux++;
@@ -172,30 +195,42 @@ function validarEspacioMemoriaFisica(tamaño) {
  */
 export function eliminarSegmento(segmento) {
     
+    // Ingresa registro al log
+    logSegmentacion += `Se solicta eliminar el segmento: ${segmento}. \n`;
+    // Ingresa registro al log
+    logSegmentacion += `Se consulta en la tabla de segmentos los datos del proceso. \n`;
     // Indice de inicio del segmento
-    let inicio = TablaProcesos[segmento-1][1];
+    let inicio = TablaDatos[segmento-1][0];
     // Tamaño del segmento
-    let tope   = TablaProcesos[segmento-1][2];
+    let tope   = inicio+TablaDatos[segmento-1][1];
+    // Ingresa registro al log
+    logSegmentacion += ` Se obtiene que el proceso inicia en el bloque ${inicio+1} y va hasta el bloque ${tope}. \n`;
 
     // Bucle que recorre el segmento
     while (tope != 0) {
         // Limpia la posicion
-        MemoriaFisica[inicio] = [''];
+        MemoriaFisica[inicio] = ['', ''];
         // Actualiza las variables
         inicio++;
         tope--;
     }
 
+    // Ingresa registro al log
+    logSegmentacion += ` Se limpian los datos de memoria fisica, tabla de procesos y tabla de segmentos. \n`;
+
     // Limpia los datos del segmento eliminado en la tabla de procesos
-    TablaProcesos[segmento-1] = ['', '','']
+    TablaProcesos.splice(segmento-1, 1);
+    TablaDatos.splice(segmento-1, 1);
 
     // Visualizacion de datos
-    console.log("Tabla de procesos");
-    console.log(TablaProcesos);
-    console.log("Tabla de datos");
-    console.log(TablaDatos);
-    console.log("Memoria fisica");
-    console.log(MemoriaFisica);
+    // console.log("Tabla de procesos");
+    // console.log(TablaProcesos);
+    // console.log("Tabla de datos");
+    // console.log(TablaDatos);
+    // console.log("Memoria fisica");
+    // console.log(MemoriaFisica);
+    console.log("Log");
+    console.log(logSegmentacion);
 }
 
 /**
@@ -208,11 +243,72 @@ export function eliminarSegmento(segmento) {
  */
 export function solicitarItem(segmento, indice) {
 
-    // Calcula la posicion en la que se encuentra el item en memoria fisica
-    let item = TablaProcesos[segmento-1][1] + (indice-1);
-    // Obtiene el item solicitado
-    item = MemoriaFisica[item];
+    // Ingresa registro al log
+    logSegmentacion += `Se solicita el item del segmento ${segmento} en la posición ${indice}. \n`;
 
-    // Retorna el valor solicitado
-    return alert("El item que solicito es: "+ item);
+    // Ingresa registro al log
+    logSegmentacion += ` Se obtiene de la tabla de segmentos que el proceso inicia en el bloque ${TablaDatos[segmento-1][0]+1}. \n`;
+
+    // Ingresa registro al log
+    logSegmentacion += ` Se valida que la posición solictada no exceda el tamaño del proceso. \n`;
+
+    // Valida que la posicion solictada no exceda el tamaño del proceso
+    if (indice <= TablaDatos[segmento-1][1]) {        
+        // Calcula la posicion en la que se encuentra el item en memoria fisica
+        let item = TablaDatos[segmento-1][0] + (indice-1);
+        // Obtiene el item solicitado
+        item = MemoriaFisica[item][0];
+        // Ingresa registro al log
+        logSegmentacion += ` Se obtiene el item: ${item}. \n`;
+
+        console.log("log");
+        console.log(logSegmentacion);
+
+        // Retorna el valor solicitado
+        return alert("El item que solicito es: "+ item);
+    } else {
+        // Ingresa registro al log
+        logSegmentacion += ` Se genera un error, porque la posición solictada excede el tamaño del proceso. \n`;
+        return alert("La posición solicitada excede el tamaño del proceso");
+    }
+}
+
+/**
+ * Genera color hexadecimal aleatorio
+ *
+ * @returns Color aleatorio
+ */
+function generarColor() {
+    // Array de opciones 
+    let hexadecimal = new Array("0","1","2","3","4","5","6","7","8","9","A","B","C","D","E","F");
+    // Inicializa el string con el color
+    let color = "#";
+
+    // Recorre 6 posiciones que conforman el numero en hexadecimal
+    for (let i = 0; i < 6; i++) {
+        // Genera un indice aleatorio
+       let posarray = aleatorio(0,hexadecimal.length);
+        // obtiene la opcion seleccionada
+        color += hexadecimal[posarray];
+    }
+    return color;
+}
+
+/**
+ * Genera un numero aleatorio
+ *
+ * @param {*} inferior indice inferior de opciones
+ * @param {*} superior indice superior de opciones
+ *
+ * @returns numero aleatorio generado
+ */
+function aleatorio(inferior, superior) {
+    // Cantidad de posibilidades
+    let numPosibilidades = superior - inferior;
+    // Genera un numero aleatorio
+    let aleat = Math.random() * numPosibilidades;
+    // Toma el entero inferior
+    aleat = Math.floor(aleat);
+
+    return parseInt(inferior) + aleat;
 }

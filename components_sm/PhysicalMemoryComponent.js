@@ -1,7 +1,6 @@
 
 import React from "react";
-import { Text, View} from 'react-native';
-import { styles } from "../styles/styles";
+import { Text, View } from 'react-native';
 import { DataTable } from 'react-native-paper';
 
 /**
@@ -36,7 +35,9 @@ function PhysicalMemory(props) {
           <DataTable.Row > 
             <DataTable.Cell>{index+1}</DataTable.Cell>
             <DataTable.Cell>
-              <Text >{array[index]}</Text>
+              <View style={{flexDirection: 'column', margin: 0, backgroundColor: array[index][1]}}>
+                <Text >{array[index][0]}</Text>
+              </View>
           </DataTable.Cell>
           </DataTable.Row>
         ))}
