@@ -10,9 +10,10 @@ import React from 'react';
 //--------------------------------------Variables--------------------------------------------------------
 //Variable que determina el tamaño de cada bloque que almacena los datos
 var tamañoBloque = 3;
+export let mapaBits = inicializarMapa();
     //--------------------------------Asignacion Contigua------------------------------------------------
         //Arreglo que almacena los archivos creados
-        var archivosCreadosContigua  = [];
+        export let archivosCreadosContigua  = [];
         //Arreglo que almacena el tamaño de caracteres de los archivos creados
         var tamañoCaracteresContigua = [];
         //Arreglo con los indices de inicio de cada archivo
@@ -23,7 +24,7 @@ var tamañoBloque = 3;
         export var logContigua = '';
     //--------------------------------Asignacion Enlazada------------------------------------------------
         //Arreglo que almacena los archivos creados
-        var archivosCreadosEnlazada  = [];
+        export var archivosCreadosEnlazada  = [];
         //Arreglo que almacena el tamaño de caracteres de los archivos creados
         var tamañoCaracteresEnlazada = [];
         //Arreglo con los indices de inicio de cada archivo
@@ -34,7 +35,7 @@ var tamañoBloque = 3;
         export var logEnlazada = '';
     //---------------------------Asignacion Indexada Enlazada-------------------------------------------
         //Arreglo que almacena los archivos creados
-        var archivosCreadosIndexadaEnlazada  = [];
+        export var archivosCreadosIndexadaEnlazada  = [];
         //Arreglo que almacena el tamaño de caracteres de los archivos creados
         var tamañoCaracteresIndexadaEnlazada = [];
         //Arreglo con los indices de inicio de cada archivo
@@ -47,7 +48,7 @@ var tamañoBloque = 3;
         export var logIndexadaEnlazada = '';
     //--------------------------Asignacion Indexada-Multinivel------------------------------------------
         //Arreglo que almacena los archivos creados
-        var archivosCreadosIndexadaMultinivel  = [];
+        export var archivosCreadosIndexadaMultinivel  = [];
         //Arreglo que almacena el tamaño de caracteres de los archivos creados
         var tamañoCaracteresIndexadaMultinivel = [];
         //Arreglo con los indices de inicio de cada archivo
@@ -60,7 +61,7 @@ var tamañoBloque = 3;
         export var logIndexadaMultinivel = '';
    //--------------------------Asignacion Indexada-Combinada------------------------------------------
         //Arreglo que almacena los archivos creados
-        var archivosCreadosIndexadaCombinada  = [];
+        export var archivosCreadosIndexadaCombinada  = [];
         //Arreglo que almacena el tamaño de caracteres de los archivos creados
         var tamañoCaracteresIndexadaCombinada  = [];
         //Arreglo con los indices de inicio de cada archivo
@@ -142,6 +143,72 @@ export function eliminarArchivo(nombre, tamaño) {
 
     return mapa;
     
+}
+
+/**
+ * Inicializa el mapa de bit con 20 posiciones y todos los datos en 0 (vacios)
+ * @returns Arreglo de 20 posiciones con todos sus datos en 0
+ */
+ export function inicializarMapa() {
+
+    //arreglo de 20 posiciones
+    let mapa = new Array(20);
+    //recorre el arreglo
+    for (let index = 0; index < mapa.length; index++) {
+        //inicializa la posicion en el arreglo en "".
+        mapa.push();
+        mapa[index] = [""];
+        
+    }
+
+    return mapa;
+    
+}
+
+/**
+ * Crea mapa de bits a mostrar
+ *
+ * @returns mapa de bits
+ */
+export function crearMapaBits (algoritmo) {
+
+    // mapa de bits con datos
+    let mapa = mapaBits;
+    // mapa de bits
+    let array = [];
+
+    // Valida si el algoritmo es contigua
+    if (algoritmo == "Contigua") {
+        mapa = (mapaContigua);
+    }
+    //Valida que el algortimo seleccionado sea Enlazada
+    if (algoritmo == "Enlazada") {
+        mapa = (mapaEnlazada);
+    }
+    //Valida que el algortimo seleccionado sea Indexada-Enlazada
+    if (algoritmo == "Indexada-Enlazada") {
+        mapa = (mapaIndexadaEnlazada);
+    }
+    //Valida que el algortimo seleccionado sea Indexada-Multinivel
+    if (algoritmo == "Indexada-Multinivel") {
+        mapa = (mapaIndexadaMultinivel);
+    }
+    //Valida que el algortimo seleccionado sea Indexada Combinada
+    if (algoritmo == "Indexada-Combinada") {
+        mapa = (mapaIndexadaCombinada);
+    }
+
+    // Recorre mapa de bits con datos
+    for (let index = 0; index < mapa.length; index++) {
+        // Valida si el mapa en la posicion tiene datos
+        if (mapa[index][0] != '' || mapa[index][1] != '' || mapa[index][2] != '') {
+            array[index] = '*';
+        } else {
+            array[index] = ' ';
+        }
+    }
+
+    return array;
 }
 
     //--------------------------------Asignacion Contigua------------------------------------------------
@@ -286,7 +353,7 @@ export function crearArchivoContigua(nombre, tamaño) {
     // console.log("mapa (Contigua)");
     // console.log(mapaContigua);
     // console.log("creados (Contigua)");
-    // console.log(archivosCreadosContigua);
+    console.log(archivosCreadosContigua);
     // console.log("tamaño (Contigua)");
     // console.log(tamañoCaracteresContigua);
     // console.log("inicio (Contigua)");

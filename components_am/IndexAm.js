@@ -7,6 +7,8 @@
  import { Text, View, SectionList, Picker, TextInput, Button} from 'react-native';
  import * as funciones from '../scripts_am/Main';
  import { styles } from "./styles";
+ import ProcessList from './ProcessListComponent';
+ import BitsMap from './BitsMap';
  
  /**
   * Metodo principal que gestiona la vista del mapa de bits y los algortimos de asignacion de espacio
@@ -81,6 +83,80 @@
         funciones.eliminarArchivo(nombreArchivo, tamañoCaracteres);
         //Refresco de la tabla del algortimo de asignacion
         onRefresh();
+    }
+
+    /**
+     * Funcion que visualiza el mapa de bits
+     */
+    function mapaBits() {
+        // Tabla de procesos a mostrar
+        let mapaBits = [];
+
+        // Valida si el algortimo seleccionado es contigua
+        if (algoritmo == "Contigua") {
+            mapaBits = funciones.crearMapaBits("Contigua");
+        }
+        //Valida que el algortimo seleccionado sea Enlazada
+        if (algoritmo == "Enlazada") {
+            mapaBits = funciones.crearMapaBits("Enlazada");
+        }
+        //Valida que el algortimo seleccionado sea Indexada-Enlazada
+        if (algoritmo == "Indexada-Enlazada") {
+            mapaBits = funciones.crearMapaBits("Indexada-Enlazada");
+        }
+        //Valida que el algortimo seleccionado sea Indexada-Multinivel
+        if (algoritmo == "Indexada-Multinivel") {
+            mapaBits = funciones.crearMapaBits("Indexada-Multinivel");
+        }
+        //Valida que el algortimo seleccionado sea Indexada Combinada
+        if (algoritmo == "Indexada-Combinada") {
+            mapaBits = funciones.crearMapaBits("Indexada-Combinada");
+        }
+
+        return (
+            <View>
+                <BitsMap
+                    map = {mapaBits}
+                />
+            </View>
+        )
+    }
+
+    /**
+     * Funcion que visualiza tabla de procesos segun disco que se usa
+     */
+    function processTable() {
+        // Tabla de procesos a mostrar
+        let tablaProcesos = [];
+
+        // Valida si el algortimo seleccionado es contigua
+        if (algoritmo == "Contigua") {
+            tablaProcesos = (funciones.archivosCreadosContigua);
+        }
+        //Valida que el algortimo seleccionado sea Enlazada
+        if (algoritmo == "Enlazada") {
+            tablaProcesos = (funciones.archivosCreadosEnlazada);
+        }
+        //Valida que el algortimo seleccionado sea Indexada-Enlazada
+        if (algoritmo == "Indexada-Enlazada") {
+            tablaProcesos = (funciones.archivosCreadosIndexadaEnlazada);
+        }
+        //Valida que el algortimo seleccionado sea Indexada-Multinivel
+        if (algoritmo == "Indexada-Multinivel") {
+            tablaProcesos = (funciones.archivosCreadosIndexadaMultinivel);
+        }
+        //Valida que el algortimo seleccionado sea Indexada Combinada
+        if (algoritmo == "Indexada-Combinada") {
+            tablaProcesos = (funciones.archivosCreadosIndexadaCombinada);
+        }
+
+        return (
+            <View>
+                <ProcessList
+                    procesos = {tablaProcesos}
+                />
+            </View>
+        )
     }
 
     /**
@@ -263,6 +339,10 @@
             >
                 {listaPicker}
             </Picker>
+            <View>
+                {processTable()}
+                {mapaBits()}
+            </View>
 
             {mapas()}
         </View>

@@ -8,6 +8,7 @@ import { View , ScrollView,Button,TextInput} from 'react-native';
 import * as funciones from '../scripts_sm/Main';
 import ProcessList from './ProcessListComponent';
 import PhysicalMemory from './PhysicalMemoryComponent';
+import SegmentList from './SegmentListComponent';
 
 function segmentation() {
 
@@ -156,6 +157,9 @@ function segmentation() {
                 style={{ flexDirection: 'row'}}>
                 <ProcessList
                     procesos = {funciones.TablaProcesos}
+                />
+                <SegmentList
+                    procesos = {funciones.TablaDatos}
                 />
                 <PhysicalMemory
                     procesos = {funciones.MemoriaFisica}

@@ -31,5 +31,17 @@ export const styles = StyleSheet.create({
     textAlign: 'center',
     borderBottomWidth: 0
   },
+  itemExtend: {
+    fontSize: 10,
+    fontWeight: 'bold',
+    alignContent: "center",
+    alignItems: "center",
+    justifyContent: "center",
+    borderColor: 'black',
+    flexDirection: 'column',
+    borderWidth: .25,
+    textAlign: 'center',
+    borderBottomWidth: 0
+  },
 });
 
