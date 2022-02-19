@@ -2,30 +2,29 @@
  * Aplicativo de gestion de particiones de disco
  * @author Kevin David Sanchez Solis
  */
- import { StatusBar } from 'expo-status-bar';
- import React from 'react';
- import { SafeAreaView, Text, TextInput, View, Picker, Button} from 'react-native';
- import * as arreglo from '../scripts_pd/Main';
- import { DataTable } from 'react-native-paper';
- 
+import { StatusBar } from 'expo-status-bar';
+import React from 'react';
+import { SafeAreaView, Text, TextInput, View, Picker, Button} from 'react-native';
+import * as arreglo from '../scripts_pd/Main';
+import { DataTable } from 'react-native-paper';
+import { styles } from './styles';
+import NumberFormat from 'react-number-format';
 
- /**
-  * Metodo que Gestiona la vista principal del aplicativo
-  * @returns La vista Principal del Programa
-  */
-const App = () => {
+/**
+ * Metodo que Gestiona la vista principal del aplicativo
+ * @returns La vista Principal del Programa
+ */
+function App () {
  
-  const [datosEso, setDatosEso]  = React.useState([]);
-  const [aux, setAux]  = React.useState(false);
-    //Variable que acciona el refresco de la tabla
-    const [refreshing, setRefreshing]                       = React.useState(false);
+  //Variable que acciona el refresco de la tabla
+  const [refreshing, setRefreshing]                       = React.useState(false);
 
-    /**
-     * Metodo que realiza las operaciones para el refresco de la tabla
-     */
-     const onRefresh = React.useCallback(() => {
-      setRefreshing(true);
-      wait(2000).then(() => setRefreshing(false));
+  /**
+   * Metodo que realiza las operaciones para el refresco de la tabla
+   */
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    wait(2000).then(() => setRefreshing(false));
   }, []);
 
   /**
@@ -34,50 +33,7 @@ const App = () => {
    * @returns El tiempo de espera
    */
   const wait = (timeout) => {
-      return new Promise(resolve => setTimeout(resolve, timeout));
-  }
- 
-  const mostrarParticiones = () => {
- 
-    if (bandera ) {
-
-      return (
-
-        <View >
-          <DataTable id="tabla_salida">
-            <DataTable.Header>
-              <DataTable.Title>Esp.Libre</DataTable.Title>
-              <DataTable.Title>Tam.Nuevo</DataTable.Title>
-              <DataTable.Title>EspL.acontinuacion</DataTable.Title>
-              <DataTable.Title>Alinear</DataTable.Title>
-              <DataTable.Title>Tipo</DataTable.Title>
-              <DataTable.Title>Nombre</DataTable.Title>
-              <DataTable.Title>System</DataTable.Title>
-              <DataTable.Title>Etiqueta</DataTable.Title>
-            </DataTable.Header>
-        
-          {datosEso.map((row, index) => (
-            <DataTable.Row>
-              <DataTable.Cell>{row[index][0]}</DataTable.Cell>
-              <DataTable.Cell>{row[index][1]}</DataTable.Cell>
-              <DataTable.Cell>{row[index][2]}</DataTable.Cell>
-              <DataTable.Cell>{row[index][3]}</DataTable.Cell>
-              <DataTable.Cell>{row[index][4]}</DataTable.Cell>
-              <DataTable.Cell>{row[index][5]}</DataTable.Cell>
-              <DataTable.Cell>{row[index][6]}</DataTable.Cell>
-              <DataTable.Cell>{row[index][7]}</DataTable.Cell>
-            </DataTable.Row>
-            ))}
-          </DataTable > 
-        </View> 
-
-      )
-    } else if (!aux) {
-      
-    }
-
-    return (<></>);
- 
+    return new Promise(resolve => setTimeout(resolve, timeout));
   }
  
   /**
@@ -88,12 +44,14 @@ const App = () => {
     //Llama a la funcion de eliminar disco
     arreglo.EliminarDisco(discos);
 
-      //Set para el selector de discos
-      setitemsInPicker(    
-        arreglo.discosC.map( data => {
+    //Set para el selector de discos
+    setitemsInPicker(    
+      arreglo.discosC.map( data => {
         return (
           <Picker.Item label={data[0]}  value={data[0]}/>
-        )}));
+        )
+      })
+    );
     onRefresh();
   }
   /**
@@ -120,67 +78,55 @@ const App = () => {
     array.push(sistemaA);
     //Etiqueta
     array.push(etiqueta);
-
-    //alert(array[0]);
-    //alert(array[1]);
     
     //Llamado al metodo para el ingreso de la particion.
     await arreglo.ingresarParticion(discos, array);
     let qwerty = await arreglo.datosPorDisco(discos);
-
-    console.log("eso");
-    console.log(qwerty);
   
     datosEso.push(qwerty);
 
-    //;
     setBandera(true);
     onRefresh();
   }
  
-   /**
-    * Metodo que crear un disco con la informacion proporcionada por el usuario
-    * La informacion: Tamaño Disco, Nombre Disco y Tipo Disco (MBR -GPT)
-    */
-   const CrearDisco = ()=>{
+  /**
+   * Metodo que crear un disco con la informacion proporcionada por el usuario
+   * La informacion: Tamaño Disco, Nombre Disco y Tipo Disco (MBR -GPT)
+   */
+  const CrearDisco = () => {
+    //Array que almacena la informacion del disco a crear
+    let array = [];
+    //Nombre del disco a crear
+    array.push(nombre);
+    //Tamaño del disco a crear
+    array.push(parseInt(tamaño, 10));
+    //Tipo del disco a crear
+    array.push(tipo);
 
+    //Llamado al metodo que almacena los discos
+    arreglo.crearDisco(array);
+    
+    //Set para el selector de discos
+    setitemsInPicker(    
+      arreglo.discosC.map( data => {
+      return (
+          
+          <Picker.Item label={data[0]}  value={data[0]}/>
+        )
+        }
+      )
+    );
+    setTamaño("");
+    setNombre("");
 
- 
-     //Array que almacena la informacion del disco a crear
-     let array = [];
-     //Nombre del disco a crear
-     array.push(nombre);
-     //Tamaño del disco a crear
-     array.push(parseInt(tamaño, 10));
-     //Tipo del disco a crear
-     array.push(tipo);
- 
-     //Llamado al metodo que almacena los discos
-     arreglo.crearDisco(array);
-     
-     //Set para el selector de discos
-     setitemsInPicker(    
-       arreglo.discosC.map( data => {
-       return (
-           
-           <Picker.Item label={data[0]}  value={data[0]}/>
-         )
-         }
-       )
-     );
-     setTamaño("");
-     setNombre("");
- 
-     return onRefresh();
-     //setDisco(nombre);
-   }
+    return onRefresh();
+  }
  
    /**
     * Metodo que muestra el selector de discos
     * @returns Selector de discos
     */
   const llamarPicker = ()=> {
- 
     return(
       <Picker
         selectedValue={discos}
@@ -195,7 +141,7 @@ const App = () => {
   //----------------------Datos creacion de Disco nuevo ----------------------------------------------------
  
   //Tamaño del disco nuevo en MiB
-  const [tamaño, setTamaño]  = React.useState(0);
+  const [tamaño, setTamaño]  = React.useState("");
   //Nombre del disco nuevo
   const [nombre, setNombre]  = React.useState("");
   //Tipo de disco [MBR, GPT]
@@ -239,42 +185,50 @@ const App = () => {
   //llena el combo box de sistema de archivos
   let sistemasArchivos = archivos.map( data=> {
     return (
-
-        <Picker.Item label={data}  value={data}/>
-      )});
+      <Picker.Item label={data}  value={data}/>
+    )
+  });
 
   //llena el combo box de tipo de particion
   let listaTipo = listaParticionTipo.map( data=> {
     return (
       <Picker.Item label={data}  value={data}/>
-    )});
+    )
+  });
   
   //llena el combo box de alinear
   let listaAlinear = metricas.map( data=> {
     return (
       <Picker.Item label={data}  value={data}/>
-    )});
+    )
+  });
 
   return (
-
     <View>
       <View >
         <Text >Particiones del disco</Text>
           <SafeAreaView >
-            <TextInput
-              onChangeText={(val) => setTamaño(val)}
-              placeholder="Tamaño del disco"
-              
-              keyboardType='numeric' 
+            <NumberFormat
+              value={tamaño}
+              displayType={'text'}
+              renderText={ (tamaño) => (
+                <TextInput
+                  underlineColorAndroid="transparent"
+                  onChangeText={(val) => setTamaño(val)}
+                  value={tamaño}
+                  placeholder="Ingrese tamaño del disco en MB"
+                  style={styles.input}
+                  keyboardType="numeric"
+                />
+              )}
             />
             <TextInput
               onChangeText={(val) => setNombre(val)}
-              placeholder="Nombre del disco"
-              
+              placeholder="Ingrese nombre del disco"
+              style={styles.input}
               keyboardType='text' 
             />
             <View style={{
-
               flex: 1,
               flexDirection: 'row',
               alignContent: "center",
@@ -287,9 +241,9 @@ const App = () => {
               <Picker
                 selectedValue={tipo}
                 onValueChange={(itemValue, itemIndex) => setTipo(itemValue)}
-                >
-                  <Picker.Item label={"MBR"}  value={"MBR"}/>
-                  <Picker.Item label={"GPT"}  value={"GPT"}/>
+              >
+                <Picker.Item label={"MBR"}  value={"MBR"}/>
+                <Picker.Item label={"GPT"}  value={"GPT"}/>
               </Picker>
             </View>
             
@@ -302,14 +256,11 @@ const App = () => {
           <StatusBar style="auto" />
 
           {llamarPicker()}
-          {/** 
-           <Button 
-            title   = "Eliminar Disco"
-            onPress= { ()=>EliminarDisco()}
-            />
-            */
-          }
-          
+
+          <Button 
+          title   = "Eliminar Disco"
+          onPress= { ()=>EliminarDisco()}
+          />
         </View>
         
         <View >
@@ -385,8 +336,7 @@ const App = () => {
                 value={etiqueta}
                 placeholder="etiqueta"
                 keyboardType='text'/></DataTable.Cell>
-            </DataTable.Row>
-                        
+            </DataTable.Row>     
         </DataTable> 
 
           <View style={{
@@ -399,20 +349,16 @@ const App = () => {
 
           }}>
             <Button 
-                title   = "Cancelar"
-                onPress={() => arreglo.datosPorDisco(discos)}
-
+              title   = "Cancelar"
+              onPress={() => arreglo.datosPorDisco(discos)}
             /> 
             <Button 
               title   = "Aplicar"
               onPress={() =>{llenarDatosParticion()}}
-
             />
           </View>
         </View>
-        {mostrarParticiones()}
     </View>
   );
 }
- 
 export default App;

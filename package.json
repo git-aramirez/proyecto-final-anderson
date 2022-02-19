@@ -6,7 +6,7 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "eject": "expo eject",
-    "build-android":"expo build:android"
+    "build-android": "expo build:android"
   },
   "dependencies": {
     "@react-navigation/drawer": "^6.1.4",
@@ -24,7 +24,8 @@
     "react-native-reanimated": "^2.2.2",
     "react-native-safe-area-context": "^3.3.2",
     "react-native-screens": "^3.7.2",
-    "react-native-web": "~0.13.12"
+    "react-native-web": "~0.13.12",
+    "react-number-format": "^4.9.1"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0"
