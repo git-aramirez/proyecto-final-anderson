@@ -5,10 +5,11 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { SafeAreaView, Text, TextInput, View, Picker, Button} from 'react-native';
-import * as arreglo from '../scripts_pd/Main';
+import * as funciones from '../scripts_pd/Main';
 import { DataTable } from 'react-native-paper';
 import { styles } from './styles';
 import NumberFormat from 'react-number-format';
+import TablePartitions from './TablePartitions';
 
 /**
  * Metodo que Gestiona la vista principal del aplicativo
@@ -17,7 +18,7 @@ import NumberFormat from 'react-number-format';
 function App () {
  
   //Variable que acciona el refresco de la tabla
-  const [refreshing, setRefreshing]                       = React.useState(false);
+  const [refreshing, setRefreshing] = React.useState(false);
 
   /**
    * Metodo que realiza las operaciones para el refresco de la tabla
@@ -39,102 +40,142 @@ function App () {
   /**
    * Metodo que sirve para eliminar el disco seleccionado en el picker
    */
-  const EliminarDisco = () => {
-
+  function EliminarDisco() {
     //Llama a la funcion de eliminar disco
-    arreglo.EliminarDisco(discos);
+    funciones.eliminarDisco(discos);
 
     //Set para el selector de discos
     setitemsInPicker(    
-      arreglo.discosC.map( data => {
+      Object.keys(funciones.discosCreados).map(function(key, index) {
         return (
-          <Picker.Item label={data[0]}  value={data[0]}/>
+          <Picker.Item label={funciones.discosCreados[key]['nombre']}  value={funciones.discosCreados[key]['nombre']}/>
         )
       })
     );
-    onRefresh();
+
+    return onRefresh();
   }
+
   /**
    * Metodo que recopila los datos para crear una particion en un disco en especifico
    */
-  const llenarDatosParticion = async() => {
+  async function llenarDatosParticion() {
 
     //[Espacio libre, tamaño nuevo, espacio libre acontinuacion, alinear con,
     //crear Como, nombre particion, Sistema de archivos, Etiqueta]
-    var array = [];
+    var array = {};
     //Espacio libre
-    array.push(parseInt(tLibre, 10));
+    array['espacioLibre'] = tLibre != "" ? parseInt(tLibre, 10) : "";
     //Tamaño nuevo
-    array.push(parseInt(tNuevo, 10));
+    array['tamañoNuevo'] = tNuevo != "" ? parseInt(tNuevo, 10) : "";
     //Espacio libre a continuacion
-    array.push(parseInt(libreA, 10));
+    array['espacioLibreAcontinuacion'] = libreA != "" ? parseInt(libreA, 10) : "";
     //Alinear con: MiB - GiB
-    array.push(alinear);
+    array['alinea'] = alinear;
     //Crear como: Primaria, logica, extendida
-    array.push(tipoP);
+    array['tipoParticion'] = tipoP;
     //Nombre de la particion
-    array.push(nombreP);
+    array['nombreParticion'] = nombreP;
     //Tipo de sistema de archivos: Ext, Fat32, etc...
-    array.push(sistemaA);
+    array['tipoSistemaArchivos'] = sistemaA;
     //Etiqueta
-    array.push(etiqueta);
+    array['etiqueta'] = etiqueta;
     
     //Llamado al metodo para el ingreso de la particion.
-    await arreglo.ingresarParticion(discos, array);
-    let qwerty = await arreglo.datosPorDisco(discos);
-  
-    datosEso.push(qwerty);
+    await funciones.ingresarParticion(discos, array);
 
-    setBandera(true);
-    onRefresh();
+    return onRefresh();
   }
  
   /**
    * Metodo que crear un disco con la informacion proporcionada por el usuario
    * La informacion: Tamaño Disco, Nombre Disco y Tipo Disco (MBR -GPT)
    */
-  const CrearDisco = () => {
-    //Array que almacena la informacion del disco a crear
-    let array = [];
-    //Nombre del disco a crear
-    array.push(nombre);
-    //Tamaño del disco a crear
-    array.push(parseInt(tamaño, 10));
-    //Tipo del disco a crear
-    array.push(tipo);
+  function CrearDisco() {
+
+    // Palabra sin espacios
+    let palabra = nombre.trim();
+    // Valida que exista un nombre para el disco
+    if (palabra == '') {
+      return alert("Ingrese un nombre para el disco.");
+    }
+    // Valida que exista tamaño para el disco
+    if (tamaño == '') {
+      return alert("Ingrese tamaño para el disco.");
+    }
+    // Valida si el disco es MBR y el limite se excede
+    if (tipo == "MBR" && parseInt(tamaño, 10) > 2048) {
+      return alert("El tamaño maximo para disco MBR es: 2TB.");
+    }
 
     //Llamado al metodo que almacena los discos
-    arreglo.crearDisco(array);
-    
+    funciones.crearDisco(tipo, nombre, parseInt(tamaño, 10));
+
     //Set para el selector de discos
     setitemsInPicker(    
-      arreglo.discosC.map( data => {
-      return (
-          
-          <Picker.Item label={data[0]}  value={data[0]}/>
+      Object.keys(funciones.discosCreados).map(function(key, index) {
+        return (
+          <Picker.Item label={funciones.discosCreados[key]['nombre']}  value={funciones.discosCreados[key]['nombre']}/>
         )
-        }
-      )
+      })
     );
-    setTamaño("");
-    setNombre("");
 
+    // Valida si esta vacio
+    if (discos == "")  {
+      setDisco(funciones.discosCreados[nombre]['nombre']);
+    }
+
+    // Limpia campos
+    setTamaño("");
+
+    // Refresca componentes
     return onRefresh();
   }
- 
-   /**
-    * Metodo que muestra el selector de discos
-    * @returns Selector de discos
-    */
-  const llamarPicker = ()=> {
+
+  /**
+   * Muestra tabla de particiones
+   * @returns 
+   */
+  function tablePartitions() {
+    //Arreglo que toma el valor del mapa segun el algortimo seleccionado
+    let array = [];
+
+    // Informacion de las particiones del disco seleccionado
+    array = funciones.particiones[discos];
+
+    // Valida si no existe disco
+    if (discos == "") {
+      array = {};
+    }
+    // Valida si no existen particiones en el disco
+    else if (discos && !funciones.particiones[discos]) {
+      array = {};
+    } else {
+      array = funciones.particiones[discos];
+    }
+    
+    //Retorna la tabla de particiones
     return(
-      <Picker
-        selectedValue={discos}
-        style={{ height: 50, width: 150 }}
-        onValueChange={(itemValue) => setDisco(itemValue)}
-        >
-        {itemsInPicker}
-      </Picker>
+      <View >
+        <DataTable id="tablaParticiones">
+          <DataTable.Header>
+            <DataTable.Title>Nombre Particion</DataTable.Title>
+            <DataTable.Title>Tipo</DataTable.Title>
+            <DataTable.Title>Tamaño</DataTable.Title>
+            <DataTable.Title>Opciones</DataTable.Title>
+          </DataTable.Header>
+      
+          { Object.keys(array).map(function(key, index) {
+            let aux = Object.values(array[key]);
+            <DataTable.Row>
+                <DataTable.Cell>{aux[5]}</DataTable.Cell>
+                <DataTable.Cell>{aux[4]}</DataTable.Cell>
+                <DataTable.Cell>{aux[1]}</DataTable.Cell>
+                <DataTable.Cell>{index}</DataTable.Cell>
+            </DataTable.Row>
+          })}
+        </DataTable > 
+      </View>
     );
   }
  
@@ -153,13 +194,10 @@ function App () {
   //Datos del picker de discos creados
   const [itemsInPicker, setitemsInPicker]  = React.useState();
 
-  //Bandera que sirve para mostrar o no un componente
-  const [bandera,setBandera] = React.useState(false);
-   
   //---------------------Datos de la tabla de creacion de particiones---------------------------------------
 
   //Espacio libre
-  const [tLibre,     settLibre] = React.useState(0);
+  const [tLibre,     settLibre] = React.useState("");
   //Tamaño nuevo
   const [tNuevo,     settNuevo] = React.useState("");
   //Espacio libre a contuniacion
@@ -255,7 +293,13 @@ function App () {
           </SafeAreaView>
           <StatusBar style="auto" />
 
-          {llamarPicker()}
+          <Picker
+            selectedValue={discos}
+            style={{ height: 50, width: 150 }}
+            onValueChange={(itemValue) => setDisco(itemValue)}
+          >
+            {itemsInPicker}
+          </Picker>
 
           <Button 
           title   = "Eliminar Disco"
@@ -265,99 +309,115 @@ function App () {
         
         <View >
           <DataTable id="tablaParticion">
-              <DataTable.Header>
-                <DataTable.Title></DataTable.Title>
-                <DataTable.Title></DataTable.Title>
-                <DataTable.Title ></DataTable.Title>
-                <DataTable.Title ></DataTable.Title>
-              </DataTable.Header>
+            <DataTable.Header>
+              <DataTable.Title></DataTable.Title>
+              <DataTable.Title></DataTable.Title>
+              <DataTable.Title ></DataTable.Title>
+              <DataTable.Title ></DataTable.Title>
+            </DataTable.Header>
 
-          <DataTable.Row>
+            <DataTable.Row>
               <DataTable.Cell>Espacio Libre precedente (Mib)</DataTable.Cell>
-              <DataTable.Cell numeric><TextInput
+              <DataTable.Cell numeric>
+                <TextInput
                 onChangeText={(val) => settLibre(val)}
                 value={tLibre}
                 placeholder="espacio libre"
-                keyboardType='numeric' /></DataTable.Cell>
+                keyboardType='numeric' />
+              </DataTable.Cell>
               <DataTable.Cell text>Crear Como</DataTable.Cell>
-              <DataTable.Cell text><Picker
-              selectedValue={tipoP}
-              onValueChange={(itemValue, itemIndex) => settipoP(itemValue)}
-              >
-              {listaTipo}
-            </Picker></DataTable.Cell>
+              <DataTable.Cell text>
+                <Picker
+                selectedValue={tipoP}
+                onValueChange={(itemValue, itemIndex) => settipoP(itemValue)}
+                >
+                {listaTipo}
+                </Picker>
+              </DataTable.Cell>
             </DataTable.Row>
 
             <DataTable.Row>
               <DataTable.Cell>Tamaño nuevo (Mib)</DataTable.Cell>
-              <DataTable.Cell numeric><TextInput
+              <DataTable.Cell numeric>
+                <TextInput
                 onChangeText={(val) => settNuevo(val)}
                 value={tNuevo}
                 placeholder="tamaño nuevo"
-                keyboardType='numeric'/></DataTable.Cell>
-              <DataTable.Cell numeric>Nombre de la particion</DataTable.Cell>
-              <DataTable.Cell text><TextInput
+                keyboardType='numeric'/>
+              </DataTable.Cell>
+              <DataTable.Cell>Nombre de la particion</DataTable.Cell>
+              <DataTable.Cell text>
+                <TextInput
                 onChangeText={(val) => setnombreP(val)}
                 value={nombreP}
                 placeholder="nombre particion"
                 keyboardType='text'
-                /></DataTable.Cell>
+                />
+              </DataTable.Cell>
             </DataTable.Row>
 
             <DataTable.Row>
               <DataTable.Cell>Espacio Libre a continuacion (Mib)</DataTable.Cell>
-              <DataTable.Cell numeric><TextInput
+              <DataTable.Cell numeric>
+                <TextInput
                 onChangeText={(val) => setlibreA(val)}
                 value={libreA}
                 placeholder="libre acontinuacion"
-                keyboardType='numeric'/></DataTable.Cell>
-              <DataTable.Cell numeric>Sistema de archivos</DataTable.Cell>
-              <DataTable.Cell numeric><Picker
-              selectedValue={sistemaA}
-              //style={{ height: 50, width: 150 }}
-              onValueChange={(itemValue, itemIndex) => setsistemaA(itemValue)}
-              >
-                {sistemasArchivos}
-              </Picker></DataTable.Cell>
+                keyboardType='numeric'/>
+                </DataTable.Cell>
+              <DataTable.Cell>Sistema de archivos</DataTable.Cell>
+              <DataTable.Cell text>
+                <Picker
+                selectedValue={sistemaA}
+                //style={{ height: 50, width: 150 }}
+                onValueChange={(itemValue, itemIndex) => setsistemaA(itemValue)}
+                >
+                  {sistemasArchivos}
+                </Picker>
+              </DataTable.Cell>
             </DataTable.Row>
 
             <DataTable.Row>
               <DataTable.Cell>alinear con: </DataTable.Cell>
-              <DataTable.Cell text><Picker
+              <DataTable.Cell numeric>
+                <Picker
                 selectedValue={alinear}
                 //style={{ height: 50, width: 150 }}
                 onValueChange={(itemValue, itemIndex) => setalinear(itemValue)}
                 >
                   {listaAlinear}
-              </Picker></DataTable.Cell>
+                </Picker>
+              </DataTable.Cell>
               <DataTable.Cell>Etiqueta</DataTable.Cell>
-              <DataTable.Cell text><TextInput
+              <DataTable.Cell text>
+                <TextInput
                 onChangeText={(val) => setetiqueta(val)}
                 value={etiqueta}
                 placeholder="etiqueta"
-                keyboardType='text'/></DataTable.Cell>
+                keyboardType='text'/>
+              </DataTable.Cell>
             </DataTable.Row>     
-        </DataTable> 
+          </DataTable> 
 
-          <View style={{
+        <View style={{
+          flex: 1,
+          flexDirection: 'row',
+          alignContent: "center",
+          alignItems: "center",
+          justifyContent: "center"
 
-            flex: 1,
-            flexDirection: 'row',
-            alignContent: "center",
-            alignItems: "center",
-            justifyContent: "center"
-
-          }}>
-            <Button 
-              title   = "Cancelar"
-              onPress={() => arreglo.datosPorDisco(discos)}
-            /> 
-            <Button 
-              title   = "Aplicar"
-              onPress={() =>{llenarDatosParticion()}}
-            />
-          </View>
+        }}>
+          <Button 
+            title   = "Cancelar"
+            onPress={() => arreglo.datosPorDisco(discos)}
+          /> 
+          <Button 
+            title   = "Aplicar"
+            onPress={() =>{llenarDatosParticion()}}
+          />
         </View>
+        {tablePartitions()}
+      </View>
     </View>
   );
 }
