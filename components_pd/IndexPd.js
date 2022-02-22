@@ -9,7 +9,6 @@ import * as funciones from '../scripts_pd/Main';
 import { DataTable } from 'react-native-paper';
 import { styles } from './styles';
 import NumberFormat from 'react-number-format';
-import TablePartitions from './TablePartitions';
 
 /**
  * Metodo que Gestiona la vista principal del aplicativo
@@ -186,16 +185,17 @@ function App () {
               <DataTable.Cell>
                 <Button 
                   title   = "Eliminar"
-                  onPress= { ()=>EliminarParticion(row.nombreParticion)}
+                  onPress= { ()=> EliminarParticion(row.nombreParticion)}
                 />
               </DataTable.Cell>
             </DataTable.Row>
             ))
           }
         </DataTable > 
-      </View>
+      </View> 
     );
   }
+
  
   //----------------------Datos creacion de Disco nuevo ----------------------------------------------------
  
@@ -205,10 +205,8 @@ function App () {
   const [nombre, setNombre]  = React.useState("");
   //Tipo de disco [MBR, GPT]
   const [tipo, setTipo]      = React.useState("MBR");
-
   //Picker Selector de disco a usar para crear las particiones
   const [discos, setDisco]   = React.useState("");
-
   //Datos del picker de discos creados
   const [itemsInPicker, setitemsInPicker]  = React.useState();
 
@@ -349,7 +347,7 @@ function App () {
                 selectedValue={tipoP}
                 onValueChange={(itemValue, itemIndex) => settipoP(itemValue)}
                 >
-                {listaTipo}
+                  {listaTipo}
                 </Picker>
               </DataTable.Cell>
             </DataTable.Row>
@@ -358,18 +356,19 @@ function App () {
               <DataTable.Cell>Tamaño nuevo (Mib)</DataTable.Cell>
               <DataTable.Cell numeric>
                 <TextInput
-                onChangeText={(val) => settNuevo(val)}
-                value={tNuevo}
-                placeholder="tamaño nuevo"
-                keyboardType='numeric'/>
+                  onChangeText={(val) => settNuevo(val)}
+                  value={tNuevo}
+                  placeholder="tamaño nuevo"
+                  keyboardType='numeric'
+                />
               </DataTable.Cell>
               <DataTable.Cell>Nombre de la particion</DataTable.Cell>
               <DataTable.Cell text>
                 <TextInput
-                onChangeText={(val) => setnombreP(val)}
-                value={nombreP}
-                placeholder="nombre particion"
-                keyboardType='text'
+                  onChangeText={(val) => setnombreP(val)}
+                  value={nombreP}
+                  placeholder="nombre particion"
+                  keyboardType='text'
                 />
               </DataTable.Cell>
             </DataTable.Row>
@@ -378,17 +377,18 @@ function App () {
               <DataTable.Cell>Espacio Libre a continuacion (Mib)</DataTable.Cell>
               <DataTable.Cell numeric>
                 <TextInput
-                onChangeText={(val) => setlibreA(val)}
-                value={libreA}
-                placeholder="libre acontinuacion"
-                keyboardType='numeric'/>
-                </DataTable.Cell>
+                  onChangeText={(val) => setlibreA(val)}
+                  value={libreA}
+                  placeholder="libre acontinuacion"
+                  keyboardType='numeric'
+                />
+              </DataTable.Cell>
               <DataTable.Cell>Sistema de archivos</DataTable.Cell>
               <DataTable.Cell text>
                 <Picker
-                selectedValue={sistemaA}
-                //style={{ height: 50, width: 150 }}
-                onValueChange={(itemValue, itemIndex) => setsistemaA(itemValue)}
+                  selectedValue={sistemaA}
+                  //style={{ height: 50, width: 150 }}
+                  onValueChange={(itemValue, itemIndex) => setsistemaA(itemValue)}
                 >
                   {sistemasArchivos}
                 </Picker>
@@ -399,9 +399,9 @@ function App () {
               <DataTable.Cell>alinear con: </DataTable.Cell>
               <DataTable.Cell numeric>
                 <Picker
-                selectedValue={alinear}
-                //style={{ height: 50, width: 150 }}
-                onValueChange={(itemValue, itemIndex) => setalinear(itemValue)}
+                  selectedValue={alinear}
+                  //style={{ height: 50, width: 150 }}
+                  onValueChange={(itemValue, itemIndex) => setalinear(itemValue)}
                 >
                   {listaAlinear}
                 </Picker>
@@ -409,10 +409,11 @@ function App () {
               <DataTable.Cell>Etiqueta</DataTable.Cell>
               <DataTable.Cell text>
                 <TextInput
-                onChangeText={(val) => setetiqueta(val)}
-                value={etiqueta}
-                placeholder="etiqueta"
-                keyboardType='text'/>
+                  onChangeText={(val) => setetiqueta(val)}
+                  value={etiqueta}
+                  placeholder="etiqueta"
+                  keyboardType='text'
+                />
               </DataTable.Cell>
             </DataTable.Row>     
           </DataTable> 

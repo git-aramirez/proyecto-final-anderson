@@ -9,14 +9,15 @@ import React from 'react';
 
 //--------------------------------------Variables--------------------------------------------------------
 
+// Log de particiones 
 //Variable que almacena los discos creados [nombre, tamaño, tipo]
 export var discosCreados =  new Array();
 //Variable que almacena los discos creados [nombre, tamaño, tipo]
 export var memoriaDiscos =  new Array();
-//Arreglo de parametros de los discos = [[Particion primaria, Extendida, Logica, tamaño particion extendida] [] [] ...]
-var especificacionesDisco     =  new Array();
 //Arreglo de arreglos que almacena las particiones de los discos[[particion1, particion1][particion]...]
 export var particiones    =  new Array();
+//Arreglo de parametros de los discos = [[Particion primaria, Extendida, Logica, tamaño particion extendida] [] [] ...]
+var especificacionesDisco     =  new Array();
 //Tamaño maximo del disco MBR (MB)
 var tamañoDiscoMBR = 2048;
 //Cantidad maxima de particiones primarias en un disco MBR

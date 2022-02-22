@@ -7,6 +7,7 @@ import React from 'react';
 import { View , ScrollView, Button, TextInput} from 'react-native';
 import * as funciones from '../scripts_pm/Main';
 import ProcessList from './ProcessListComponent';
+import Speaker from '../components_drawer/Speaker';
 
 function paginacion() {
 
@@ -158,6 +159,18 @@ function paginacion() {
                         />
                     </View>
 
+            </View>
+
+            <View>
+                <TextInput
+                    multiline={true}
+                    numberOfLines={8}
+                    value={funciones.paginationLog}
+                />
+                <Button
+                    title   = "Reproducir"
+                    onPress={ ()=> Speaker(funciones.paginationLog)}
+                />
             </View>
 
         </ScrollView>
