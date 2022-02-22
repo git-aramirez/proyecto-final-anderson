@@ -78,12 +78,12 @@ export function crearDisco(tipoDisco, nombreDisco, tamañoDisco) {
     // Agrega las especificaciones del disco
     especificacionesDisco[nombreDisco] = datos;
 
-    console.log("Discos");
-    console.log(discosCreados);
-    console.log("memoria");
-    console.log(memoriaDiscos);
-    console.log("Especificacion");
-    console.log(especificacionesDisco);
+    // console.log("Discos");
+    // console.log(discosCreados);
+    // console.log("memoria");
+    // console.log(memoriaDiscos);
+    // console.log("Especificacion");
+    // console.log(especificacionesDisco);
 }
 
 /**
@@ -97,12 +97,12 @@ export function eliminarDisco(disco) {
     delete memoriaDiscos[disco];
     delete especificacionesDisco[disco];
 
-    console.log("Discos");
-    console.log(discosCreados);
-    console.log("memoria");
-    console.log(memoriaDiscos);
-    console.log("Especificacion");
-    console.log(especificacionesDisco);
+    // console.log("Discos");
+    // console.log(discosCreados);
+    // console.log("memoria");
+    // console.log(memoriaDiscos);
+    // console.log("Especificacion");
+    // console.log(especificacionesDisco);
 }
 
 /**
@@ -216,12 +216,62 @@ export function ingresarParticion(disco, particion) {
         memoriaDiscos[disco]['libre'] = memoriaDiscos[disco]['libre'] - particion['tamañoNuevo'];
     }
 
-    console.log("Discos");
-    console.log(discosCreados);
-    console.log("memoria");
-    console.log(memoriaDiscos);
-    console.log("Especificacion");
-    console.log(especificacionesDisco);
-    console.log("Particiones");
-    console.log(particiones);
+    // console.log("Discos");
+    // console.log(discosCreados);
+    // console.log("memoria");
+    // console.log(memoriaDiscos);
+    // console.log("Especificacion");
+    // console.log(especificacionesDisco);
+    // console.log("Particiones");
+    // console.log(particiones);
+}
+
+/**
+ * Elimina una particion de un disco
+ * @param {*} disco nombre de disco
+ * @param {*} nombreParticion nombre de la particion a eliminar
+ */
+export function eliminarParticion(disco, nombreParticion) {
+
+    // Aumenta la memoria libre del disco segun el espacio liberado por la particion
+    memoriaDiscos[disco]['libre'] = memoriaDiscos[disco]['libre'] + particiones[disco][nombreParticion].tamañoNuevo;
+
+    // Valida si el disco es tipo GPT
+    if (discosCreados[disco].tipo == 'GPT') {
+        // Aumenta el tipo de partcion liberada
+        especificacionesDisco[disco]['gptPrimarias']++;
+    }
+    // El disco es tipo MBR
+    else {
+        // Valida si el tipo de particion a eliminar es primaria
+        if (particiones[disco][nombreParticion].tipoParticion == 'Primaria') {
+            // Aumenta el tipo de partcion liberada
+            especificacionesDisco[disco]['mbrPrimarias']++;
+        }
+        // Valida si el tipo de particion a eliminar es logica
+        else if (particiones[disco][nombreParticion].tipoParticion == 'Logica') {
+            // Aumenta el tipo de partcion liberada
+            especificacionesDisco[disco]['mbrLogicas']++;
+        }
+        // Valida si el tipo de particion a eliminar es extendida
+        else {
+            // Aumenta el tipo de partcion liberada
+            especificacionesDisco[disco]['mbrExtendidas']++;
+        }
+    }
+
+    
+    // Elimina la informacion del array de particiones del disco
+    delete particiones[disco][nombreParticion];
+    // Elimina del array de memoria del disco la particion
+    delete memoriaDiscos[disco][nombreParticion];
+
+    // console.log("Discos");
+    // console.log(discosCreados);
+    // console.log("memoria");
+    // console.log(memoriaDiscos);
+    // console.log("Especificacion");
+    // console.log(especificacionesDisco);
+    // console.log("Particiones");
+    // console.log(particiones);
 }

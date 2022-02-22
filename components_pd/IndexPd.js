@@ -133,6 +133,20 @@ function App () {
   }
 
   /**
+   * Elimina partcion del disco
+   *
+   * @param {*} nombreParticion nombre de la particion
+   */
+  function EliminarParticion(nombreParticion) {
+    
+    // Llama la funcion de eliminar particion
+    funciones.eliminarParticion(discos, nombreParticion);
+
+    // Refresca componentes
+    return onRefresh();
+  }
+
+  /**
    * Muestra tabla de particiones
    * @returns 
    */
@@ -164,16 +178,20 @@ function App () {
             <DataTable.Title>Tamaño</DataTable.Title>
             <DataTable.Title>Opciones</DataTable.Title>
           </DataTable.Header>
-      
-          { Object.keys(array).map(function(key, index) {
-            let aux = Object.values(array[key]);
+          {Object.values(array).map((row, index) => (
             <DataTable.Row>
-                <DataTable.Cell>{aux[5]}</DataTable.Cell>
-                <DataTable.Cell>{aux[4]}</DataTable.Cell>
-                <DataTable.Cell>{aux[1]}</DataTable.Cell>
-                <DataTable.Cell>{index}</DataTable.Cell>
+              <DataTable.Cell>{row.nombreParticion}</DataTable.Cell>
+              <DataTable.Cell>{row.tipoParticion}</DataTable.Cell>
+              <DataTable.Cell>{row.tamañoNuevo}</DataTable.Cell>
+              <DataTable.Cell>
+                <Button 
+                  title   = "Eliminar"
+                  onPress= { ()=>EliminarParticion(row.nombreParticion)}
+                />
+              </DataTable.Cell>
             </DataTable.Row>
-          })}
+            ))
+          }
         </DataTable > 
       </View>
     );
