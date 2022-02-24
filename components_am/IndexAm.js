@@ -9,6 +9,7 @@
  import { styles } from "./styles";
  import ProcessList from './ProcessListComponent';
  import BitsMap from './BitsMap';
+ import Speaker from '../components_drawer/Speaker';
  
  /**
   * Metodo principal que gestiona la vista del mapa de bits y los algortimos de asignacion de espacio
@@ -83,6 +84,50 @@
         funciones.eliminarArchivo(nombreArchivo, tamañoCaracteres);
         //Refresco de la tabla del algortimo de asignacion
         onRefresh();
+    }
+
+    
+    /**
+     * Funcion que visualiza el mapa de bits
+     */
+    function diskLog() {
+        // Tabla de procesos a mostrar
+        let log = '';
+
+        // Valida si el algortimo seleccionado es contigua
+        if (algoritmo == "Contigua") {
+            log = funciones.logContigua ;
+        }
+        //Valida que el algortimo seleccionado sea Enlazada
+        if (algoritmo == "Enlazada") {
+            log = funciones.logEnlazada ;
+        }
+        //Valida que el algortimo seleccionado sea Indexada-Enlazada
+        if (algoritmo == "Indexada-Enlazada") {
+            log = funciones.logIndexadaEnlazada ;
+        }
+        //Valida que el algortimo seleccionado sea Indexada-Multinivel
+        if (algoritmo == "Indexada-Multinivel") {
+            log = funciones.logIndexadaMultinivel;
+        }
+        //Valida que el algortimo seleccionado sea Indexada Combinada
+        if (algoritmo == "Indexada-Combinada") {
+            log = funciones.logIndexadaCombinada ;
+        }
+
+        return (
+            <View>
+                <TextInput
+                    multiline={true}
+                    numberOfLines={8}
+                    value={log}
+                />
+                <Button
+                    title   = "Reproducir"
+                    onPress={ ()=> Speaker(log)}
+                />
+            </View>
+        )
     }
 
     /**
@@ -345,6 +390,7 @@
             </View>
 
             {mapas()}
+            {diskLog()}
         </View>
     )
  }

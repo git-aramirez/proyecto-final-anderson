@@ -9,6 +9,7 @@ import * as funciones from '../scripts_sm/Main';
 import ProcessList from './ProcessListComponent';
 import PhysicalMemory from './PhysicalMemoryComponent';
 import SegmentList from './SegmentListComponent';
+import Speaker from '../components_drawer/Speaker';
 
 function segmentation() {
 
@@ -163,6 +164,17 @@ function segmentation() {
                 />
                 <PhysicalMemory
                     procesos = {funciones.MemoriaFisica}
+                />
+            </View>
+            <View>
+                <TextInput
+                    multiline={true}
+                    numberOfLines={8}
+                    value={funciones.logSegmentacion}
+                />
+                <Button
+                    title   = "Reproducir"
+                    onPress={ ()=> Speaker(funciones.logSegmentacion)}
                 />
             </View>
         </ScrollView>

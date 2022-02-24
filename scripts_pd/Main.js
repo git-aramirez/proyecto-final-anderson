@@ -10,6 +10,7 @@ import React from 'react';
 //--------------------------------------Variables--------------------------------------------------------
 
 // Log de particiones 
+export var logDiscos = new Array();
 //Variable que almacena los discos creados [nombre, tamaño, tipo]
 export var discosCreados =  new Array();
 //Variable que almacena los discos creados [nombre, tamaño, tipo]
@@ -44,6 +45,9 @@ export function crearDisco(tipoDisco, nombreDisco, tamañoDisco) {
     if (discosCreados[nombreDisco]) {
         return alert('Ya existe un disco con este nombre.');
     }
+
+    //Se agrega registro en el log del disco
+    logDiscos[nombreDisco] = `Se crea el disco ${nombreDisco} con tamaño ${tamañoDisco} y de tipo ${tipoDisco}. \n`;
 
     // Ingresa el disco creado
     discosCreados[nombreDisco] = {
@@ -85,6 +89,8 @@ export function crearDisco(tipoDisco, nombreDisco, tamañoDisco) {
     // console.log(memoriaDiscos);
     // console.log("Especificacion");
     // console.log(especificacionesDisco);
+    console.log("Log discos");
+    console.log(logDiscos);
 }
 
 /**
@@ -93,6 +99,13 @@ export function crearDisco(tipoDisco, nombreDisco, tamañoDisco) {
  */
 export function eliminarDisco(disco) {
 
+    // Valida si no existe el disco
+    if (!memoriaDiscos[disco]) {
+        return alert('Debe crear un disco primero.');
+    }
+
+    //Se agrega registro en el log del disco
+    logDiscos[disco] += `Se elimina el disco. \n`;
     // Elimina la informacion del disco seleccionado
     delete discosCreados[disco];
     delete memoriaDiscos[disco];
@@ -104,6 +117,8 @@ export function eliminarDisco(disco) {
     // console.log(memoriaDiscos);
     // console.log("Especificacion");
     // console.log(especificacionesDisco);
+    console.log("Log discos");
+    console.log(logDiscos);
 }
 
 /**
@@ -120,14 +135,22 @@ export function ingresarParticion(disco, particion) {
     if (!memoriaDiscos[disco]) {
         return alert('Debe crear un disco primero.');
     }
+
+    //Se agrega registro en el log del disco
+    logDiscos[disco] += `Se solicita crear la partición ${particion['nombreParticion']} de tamaño ${particion['tamañoNuevo']}. \n`;
+
     // Valida si la partcion excede el espacio libre del disco
     if (memoriaDiscos[disco].libre < particion['tamañoNuevo']) {
+        //Se agrega registro en el log del disco
+        logDiscos[disco] += `Se notifica error por que la partición excede el espacio disponible en el disco. \n`;
         return alert('El tamaño de la partición es superior al espacio disponible en el disco.');
     }
     // Valida si existe el disco
     if (particiones[disco]) {
         // Valida si ya existe la particion
         if (particiones[disco][nombreParticion]) {
+            //Se agrega registro en el log del disco
+            logDiscos[disco] += `Se notifica error por que ya existe una particion con el mismo nombre en el disco. \n`;
             return alert('Ya existe una particion con ese nombre en el disco.');
         }
     }
@@ -136,10 +159,14 @@ export function ingresarParticion(disco, particion) {
     if (discosCreados[disco].tipo == "GPT") {
         // Valida si la particion es diferente de primaria
         if (particion['tipoParticion'] != 'Primaria') {
+            //Se agrega registro en el log del disco
+            logDiscos[disco] += `Se notifica error, ya que los discos GPT solo admiten particiones primarias. \n`;
             return alert('El disco GPT solo admite particiones primarias');
         }
         // Valida tope de particiones que se pueden crear
         if (especificacionesDisco[disco].gptPrimarias == 0) {
+            //Se agrega registro en el log del disco
+            logDiscos[disco] += `Se notifica error, se alcanzó el limite de particiones (128) en el disco. \n`;
             return alert('Tope de particiones (128) alcanzadas en el disco.')
         }
 
@@ -149,6 +176,8 @@ export function ingresarParticion(disco, particion) {
             particiones[disco] = {};
         }
 
+        //Se agrega registro en el log del disco
+        logDiscos[disco] += `Se crea la partición en el disco. \n`;
         // Ingresa la particion
         particiones[disco][nombreParticion] = {
             'espacioLibre': particion['espacioLibre'] ? particion['espacioLibre'] : "",
@@ -171,6 +200,8 @@ export function ingresarParticion(disco, particion) {
         if (particion['tipoParticion'] == 'Extendida') {
             // Valida si ya se creo una particion extendida
             if (especificacionesDisco[disco].mbrExtendidas == 0 ) {
+                //Se agrega registro en el log del disco
+                logDiscos[disco] += `Se notifica error, por que ya existe una partición extendida creada. \n`;
                 return alert('El disco MBR sólo admite una particion extendida.');
             }
             // Disminuye capacidad de particiones
@@ -180,6 +211,8 @@ export function ingresarParticion(disco, particion) {
         if (particion['tipoParticion'] == 'Logica') {
             // Valida si aun no se ha creado una particion extendida
             if (especificacionesDisco[disco].mbrExtendidas > 0 ) {
+                //Se agrega registro en el log del disco
+                logDiscos[disco] += `Se notifica error, ya que para crear una partición lógica, primero se debe crear una extendida. \n`;
                 return alert('Para crear una partición lógica, primero debe crear una extendida.');
             }
             // Disminuye capacidad de particiones
@@ -189,6 +222,8 @@ export function ingresarParticion(disco, particion) {
         if (particion['tipoParticion'] == 'Primaria') {
             // Valida si se alcanzo el tope de particiones primarias
             if (especificacionesDisco[disco].mbrPrimarias == 0 ) {
+                //Se agrega registro en el log del disco
+                logDiscos[disco] += `Se notifica error, por que se alcanzó el tope de particiones primarias en el disco. \n`;
                 return alert('Ya se alcanzó el tope (4) de particiones primarias en el disco.');
             }
             // Disminuye capacidad de particiones
@@ -200,6 +235,9 @@ export function ingresarParticion(disco, particion) {
             // Inicializa posicion del array
             particiones[disco] = {};
         }
+
+        //Se agrega registro en el log del disco
+        logDiscos[disco] += `Se crea la partición en el disco. \n`;
 
         // Ingresa la particion
         particiones[disco][nombreParticion] = {
@@ -225,6 +263,8 @@ export function ingresarParticion(disco, particion) {
     // console.log(especificacionesDisco);
     // console.log("Particiones");
     // console.log(particiones);
+    console.log("Log discos");
+    console.log(logDiscos);
 }
 
 /**
@@ -234,11 +274,16 @@ export function ingresarParticion(disco, particion) {
  */
 export function eliminarParticion(disco, nombreParticion) {
 
+    //Se agrega registro en el log del disco
+    logDiscos[disco] += `Se solicita eliminar la partición ${nombreParticion} del disco ${disco}. \n`;
+
     // Aumenta la memoria libre del disco segun el espacio liberado por la particion
     memoriaDiscos[disco]['libre'] = memoriaDiscos[disco]['libre'] + particiones[disco][nombreParticion].tamañoNuevo;
 
     // Valida si el disco es tipo GPT
     if (discosCreados[disco].tipo == 'GPT') {
+        //Se agrega registro en el log del disco
+        logDiscos[disco] += ` Se aumenta en el disco la cantidad de particiones primarias disponibles. \n`;
         // Aumenta el tipo de partcion liberada
         especificacionesDisco[disco]['gptPrimarias']++;
     }
@@ -246,21 +291,29 @@ export function eliminarParticion(disco, nombreParticion) {
     else {
         // Valida si el tipo de particion a eliminar es primaria
         if (particiones[disco][nombreParticion].tipoParticion == 'Primaria') {
+            //Se agrega registro en el log del disco
+            logDiscos[disco] += ` Se aumenta en el disco la cantidad de particiones primarias disponibles. \n`;
             // Aumenta el tipo de partcion liberada
             especificacionesDisco[disco]['mbrPrimarias']++;
         }
         // Valida si el tipo de particion a eliminar es logica
         else if (particiones[disco][nombreParticion].tipoParticion == 'Logica') {
+            //Se agrega registro en el log del disco
+            logDiscos[disco] += ` Se aumenta en el disco la cantidad de particiones lógicas disponibles. \n`;
             // Aumenta el tipo de partcion liberada
             especificacionesDisco[disco]['mbrLogicas']++;
         }
         // Valida si el tipo de particion a eliminar es extendida
         else {
+            //Se agrega registro en el log del disco
+            logDiscos[disco] += ` Se aumenta en el disco la cantidad de particiones extendidas disponibles. \n`;
             // Aumenta el tipo de partcion liberada
             especificacionesDisco[disco]['mbrExtendidas']++;
         }
     }
 
+    //Se agrega registro en el log del disco
+    logDiscos[disco] += `Se elimina completamente la partición del disco. \n`;
     
     // Elimina la informacion del array de particiones del disco
     delete particiones[disco][nombreParticion];
@@ -275,4 +328,6 @@ export function eliminarParticion(disco, nombreParticion) {
     // console.log(especificacionesDisco);
     // console.log("Particiones");
     // console.log(particiones);
+    console.log("Log discos");
+    console.log(logDiscos);
 }

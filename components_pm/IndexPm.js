@@ -174,7 +174,6 @@ function paginacion() {
             </View>
 
         </ScrollView>
-
     )
     
 }

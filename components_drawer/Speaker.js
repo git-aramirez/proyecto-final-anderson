@@ -8,7 +8,11 @@ import React from 'react';
  */
 const Speaker = (texto) =>{
 
-    Speech.speak(texto);
+    Speech.speak(texto, {
+        voice: 'Microsoft Salome Online (Natural) - Spanish (Colombia)',
+        language: 'es-CO',
+        _voiceIndex: 81
+    });
 
 }
 export default Speaker;

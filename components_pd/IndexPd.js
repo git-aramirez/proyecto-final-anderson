@@ -9,6 +9,7 @@ import * as funciones from '../scripts_pd/Main';
 import { DataTable } from 'react-native-paper';
 import { styles } from './styles';
 import NumberFormat from 'react-number-format';
+import Speaker from '../components_drawer/Speaker';
 
 /**
  * Metodo que Gestiona la vista principal del aplicativo
@@ -193,6 +194,38 @@ function App () {
           }
         </DataTable > 
       </View> 
+    );
+  }
+
+  /**
+   * Muestra log del disco
+   * @returns 
+   */
+  function diskLog() {
+    //Arreglo que toma el valor del mapa segun el algortimo seleccionado
+    let array = '';
+
+    // Informacion de las particiones del disco seleccionado
+    array = funciones.particiones[discos];
+
+    // Valida si existe el log del disco
+    if (funciones.logDiscos[discos]) {
+      array = funciones.logDiscos[discos];
+    }
+    
+    //Retorna la tabla de particiones
+    return(
+      <View>
+        <TextInput
+          multiline={true}
+          numberOfLines={5}
+          value={array}
+        />
+        <Button
+          title   = "Reproducir"
+          onPress={ ()=> Speaker(array)}
+        />
+      </View>
     );
   }
 
@@ -436,6 +469,7 @@ function App () {
           />
         </View>
         {tablePartitions()}
+        {diskLog()}
       </View>
     </View>
   );
