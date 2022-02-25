@@ -1,21 +1,21 @@
 import { StyleSheet} from 'react-native';
 
 export const styles = StyleSheet.create({
-    input: {
-      height: 40,
-      margin: 8,
-      borderWidth: 1,
-      padding: 10,
-      color:'black',
-      fontSize: 17
-    },
-    inputTable:{
-      width: 40,
-      borderWidth: 1,
-    },
-    button_style: {
-      marginBottom: 10
-    },
+  input: {
+    height: 40,
+    margin: 8,
+    borderWidth: 1,
+    padding: 10,
+    color:'black',
+    fontSize: 17
+  },
+  inputTable:{
+    width: 40,
+    borderWidth: 1,
+  },
+  button_style: {
+    marginBottom: 10
+  },
 
     textInput_table_sp: {
       width: 150,

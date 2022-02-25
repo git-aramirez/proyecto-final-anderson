@@ -39,9 +39,7 @@ function ProcessList(props) {
               <DataTable.Cell style={{width:75, height: 50, borderBottomWidth: 0}}>{index+1}</DataTable.Cell>
               <DataTable.Cell style={{width:75,height: array[index]*20 , flexDirection: 'column'}}>
               <View style={{flexDirection: 'column', margin: 0}}>
-                {array[index].map((row, index1) =>(
-                  <Text style={styles.item}>{array[index][index1]}</Text>
-                ))}
+                <Text style={styles.item}>{array[index]}</Text>
               </View>
               </DataTable.Cell>
             </DataTable.Row>

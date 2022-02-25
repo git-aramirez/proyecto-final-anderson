@@ -4,10 +4,10 @@
  */
 
 import React from 'react';
-import { View , ScrollView,Button,TextInput} from 'react-native';
-//import { Button } from 'react-native-paper';
+import { View , ScrollView, Button, TextInput} from 'react-native';
 import * as funciones from '../scripts_pm/Main';
 import ProcessList from './ProcessListComponent';
+import Speaker from '../components_drawer/Speaker';
 
 function paginacion() {
 
@@ -48,7 +48,7 @@ function paginacion() {
         
         // Valida que la palabra no este vacia
         if (palabraClone == "") {          
-            return alert("No se admiten Palabras vacias");
+            return alert("No se admiten Palabras vaciass");
         }
         // Valida que la palabra sea maximo del tamaño del bloque
         if (palabra.length <= funciones.TamañoBloque) {
@@ -161,8 +161,19 @@ function paginacion() {
 
             </View>
 
-        </ScrollView>
+            <View>
+                <TextInput
+                    multiline={true}
+                    numberOfLines={8}
+                    value={funciones.paginationLog}
+                />
+                <Button
+                    title   = "Reproducir"
+                    onPress={ ()=> Speaker(funciones.paginationLog)}
+                />
+            </View>
 
+        </ScrollView>
     )
     
 }

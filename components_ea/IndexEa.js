@@ -3,7 +3,7 @@ import {styles} from '../styles/styles';
 import {View, ScrollView,Picker,Button,TextInput,TouchableOpacity,Text} from 'react-native';
 import TableInputProccessesComponent from './TableInputProccessesComponent';
 import MemoryCellsComponent from './MemoryCellsComponent';
-import * as main from '../scripts_ea/Main';
+import * as main from '../scripts_ea/main';
 
 export default function IndexEa() {
 
