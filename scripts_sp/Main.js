@@ -1,21 +1,32 @@
-
 var listaSemaforos;
 var valores = [];
 var matrizEntrada;
+var posiciones;
+var salida;
+var sema;
+var hilosDormidos;
+var hilosTerminados
+const CANTIDAD_COLUMNAS = 5;
+const CANTIDAD_FILAS_DAFAULT = 13;
 
-export function generarSemaforosAleatorios(textSemaforos,tablaEntrada){
+/*---------------------------------------------------------
+ --- Algoritmos para Generar valores y semáforos aleatorios
+ ----------------------------------------------------------
+*/
+
+export function generarSemaforosAleatorios(textSemaforos){
     
-    obtenerSemaforos(textSemaforos);
+    listaSemaforos = textSemaforos.split("]");
 
-   return aleatorios(tablaEntrada);
+   return aleatorios();
 
 }
 
 function obtenerSemaforos(textSemaforos){
-    listaSemaforos = textSemaforos.split("]");
     var lista = textSemaforos.split(/(\d)/);
 
     for (let index = 0; index < lista.length; index++) {
+
         if(!isNaN(lista[index]) && lista[index-1]==" valor: "){
             valores.push(parseInt(lista[index]));
         }
@@ -23,55 +34,47 @@ function obtenerSemaforos(textSemaforos){
 }
 
 
-function inicializarMatrizEntrada(tablaEntrada){
+function inicializarMatrizEntrada(){
+
     matrizEntrada = null;
-    matrizEntrada = new Array(tablaEntrada.length);
+    matrizEntrada = new Array(CANTIDAD_FILAS_DAFAULT);
+
     for (let i = 0; i < matrizEntrada.length; i++) {
-        matrizEntrada[i] = new Array(5);
+        matrizEntrada[i] = new Array(CANTIDAD_COLUMNAS);
     }
 }
 
-function inicializarMatrizConDatos(tablaEntrada){
-    matrizEntrada = null;
-    matrizEntrada = new Array(tablaEntrada.length);
-    for (let i = 0; i < matrizEntrada.length; i++) {
-        matrizEntrada[i] = new Array(5);
-        matrizEntrada[i][0] = tablaEntrada[i].Hilo_1;
-        matrizEntrada[i][1] = tablaEntrada[i].Hilo_2;
-        matrizEntrada[i][2] = tablaEntrada[i].Hilo_3;
-        matrizEntrada[i][3] = tablaEntrada[i].Hilo_4;
-        matrizEntrada[i][4] = tablaEntrada[i].Hilo_5;
-    }
 
-}
+function aleatorios(){
 
-function aleatorios(tablaEntrada){
-
-    inicializarMatrizEntrada(tablaEntrada);
+    inicializarMatrizEntrada();
     let index_j = 1;
 
     for (let index = 0; index < (listaSemaforos.length-1)*2; index++) {
      
-       var hiloAleatorio =  Math.floor(Math.random() * 5);
-
-       var filaAleatoria =  Math.floor(Math.random() * matrizEntrada.length);
+       var hiloAleatorio =  Math.floor(Math.random() * CANTIDAD_COLUMNAS);
+       var filaAleatoria =  Math.floor(Math.random() * CANTIDAD_FILAS_DAFAULT);
        var isPositionInvalid = matrizEntrada[filaAleatoria][hiloAleatorio]!="" && matrizEntrada[filaAleatoria][hiloAleatorio]!=null;
+       
        while(isPositionInvalid){
-        filaAleatoria = Math.floor(Math.random() * matrizEntrada.length);
+        filaAleatoria = Math.floor(Math.random() * CANTIDAD_FILAS_DAFAULT);
         isPositionInvalid = matrizEntrada[filaAleatoria][hiloAleatorio]!="" && matrizEntrada[filaAleatoria][hiloAleatorio]!=null;
        }
 
        if(index < (listaSemaforos.length-1)){
          matrizEntrada[filaAleatoria][hiloAleatorio] = "S"+(index+1)+".acquire()";
-           continue;
+         continue;
        }
        matrizEntrada[filaAleatoria][hiloAleatorio] = "S"+(index_j)+".release()";
        index_j++;
     }
 
     for (let index = 0; index < matrizEntrada.length; index++) {
+
         for (let index_j = 0; index_j < matrizEntrada[0].length; index_j++) {
+
             var isPositionInvalid = matrizEntrada[index][index_j]!="" && matrizEntrada[index][index_j]!=null;
+
             if(!isPositionInvalid){
                 var ranNum = Math.ceil(Math.random() * 25);
                 matrizEntrada[index][index_j] = String.fromCharCode(65+ranNum);
@@ -79,116 +82,187 @@ function aleatorios(tablaEntrada){
         }
     }
 
-    return matrizEntrada;
+    return fijarAleatorios(matrizEntrada);
 }
 
-var tablaSemaforos;
+function fijarAleatorios(matrizEntrada){
 
-function inicializarTablaSemaforos (textSemaforos){
-    tablaSemaforos = new Array(listaSemaforos.length-1);
-    obtenerSemaforos(textSemaforos);
-    for (let index = 0; index < listaSemaforos.length-1; index++) {
-        tablaSemaforos[index] = new Array(4);
-        tablaSemaforos[index][0] = "S"+(index+1);
-        tablaSemaforos[index][1] = valores[index];
-        semaforos.push(tablaSemaforos[index][0]);
+    let salida = new Array(CANTIDAD_COLUMNAS);
+
+    for (let index = 0; index < matrizEntrada[0].length; index++) {
+        let hilo = "";
+
+        for (let index_j = 0; index_j < matrizEntrada.length; index_j++) {
+           hilo+=matrizEntrada[index_j][index]+"\n";
+        }
+
+        salida[index] = hilo;
+        salida[index] = salida[index].substring(0,salida[index].length-1);
     }
+    
+    return salida;
 }
 
-var semaforos = new Array();
-var nombreSemaforos = new Array();
 
-function generarPosicionAleatoria(){
-    let hilo =  Math.floor(Math.random() * 5);
-    while(hilosDormidos.includes(hilo) || hilosTerminados.includes(hilo)){
-        hilo =   Math.floor(Math.random() * 5);
-    }
-    return hilo;
-}
+/*----------------------------------------------------------------------------
+--- Algoritmos para realizar la Sincrinizacion de procesos
+------------------------------------------------------------------------------
+*/
 
-var hilosDormidos = new Array();
-var hilosTerminados = new Array();
-var columnasTerminadas;
-
+/*
+Este algoritmo permite la ejecución del 
+*/
 export function ejecutarAlgoritmo(textSemaforos,tablaEntrada){
-    columnasTerminadas = 0;
+    valores = [];
+    obtenerSemaforos(textSemaforos);
+    let textHilosBloqueados = "";
 
-    semaforos = new Array();
-    let listaSalida = new Array();
+    tablaEntrada = inicializarVariablesGlobales(textSemaforos,tablaEntrada);
+
+    while(!IsStop(tablaEntrada)){
+
+        let hiloAleatorio = definirHiloAleatorio();
+        let cuerpo = String(tablaEntrada[hiloAleatorio]);
+        let elemento = cuerpo.split('\n')[posiciones[hiloAleatorio]];
+        
+        let esAcquire = elemento.includes(".acquire()");
+        let esRelease = elemento.includes(".release()");
+    
+        let semaforo = elemento.split(".");
+        let posSemaforo = parseInt(semaforo[0].split("S")[1])-1;
+
+        textHilosBloqueados = definirComportamiento(posSemaforo,hiloAleatorio,elemento,esAcquire,esRelease,textHilosBloqueados);
+
+        posiciones[hiloAleatorio]+=1;
+    }
+
+    let estaElSistemaBloqueado = estaBloqueadoElSistema();
+    textHilosBloqueados = textHilosBloqueados.substring(0,textHilosBloqueados.length-2);
+
+    return [salida,estaElSistemaBloqueado,textHilosBloqueados];
+}
+
+function inicializarVariablesGlobales (textSemaforos,tablaEntrada){
+
+    posiciones = [0,0,0,0,0];
+    salida = new Array();
     hilosDormidos = new Array();
     hilosTerminados = new Array();
-    nombreSemaforos = new Array();
+    sema = obtenerSemaforosV2(textSemaforos);
+    tablaEntrada = [tablaEntrada.Hilo_1,tablaEntrada.Hilo_2,tablaEntrada.Hilo_3,tablaEntrada.Hilo_4,tablaEntrada.Hilo_5];
 
-    inicializarMatrizConDatos(tablaEntrada);
-    inicializarTablaSemaforos(textSemaforos);
+    return tablaEntrada;
+}
 
-    while(hilosDormidos.length + hilosTerminados.length < 5){
-      let hilo =  generarPosicionAleatoria();
-      encontrarListaFinal(0,hilo,listaSalida);
+function definirComportamiento(posSemaforo,hiloAleatorio,elemento,esAcquire,esRelease,textHilosBloqueados){
+    if(esAcquire){
+        let valor = 0;
+        let valorSemaforo = valores[posSemaforo];
+
+        if(valorSemaforo===0){
+            sema[posSemaforo].push(hiloAleatorio);
+            textHilosBloqueados+="Hilo_"+(hiloAleatorio+1)+" , "
+        }else{
+            valores[posSemaforo]-=1;
+        }
+    }else if (esRelease){
+
+        let cantidadHilosDormidos = sema[posSemaforo].length;
+
+        if(cantidadHilosDormidos===0){
+            valores[posSemaforo]+=1;
+        }else{
+            sema[posSemaforo].shift();
+        }
+    }else{
+        salida.push(elemento+" ");
+    }
+    
+    return textHilosBloqueados;
+}
+
+function estaIncluidoElHilo(hiloAleatorio){
+    let esHiloDormido = false;
+
+    for (let index = 0; index < sema.length && !esHiloDormido; index++) {
+        const element = sema[index];
+        if(element.includes(hiloAleatorio)){
+            esHiloDormido = true;
+        }
     }
 
-    return listaSalida.toString();
+    return esHiloDormido;
 }
 
 
-function encontrarListaFinal(inicio,hilo,listaSalida){
-    let aletorioRelease ;
-    let esAcquire;
-    let index;
-    let nombreSemaforo = "";
+function definirHiloAleatorio (){
 
-    for (index = inicio; index < matrizEntrada.length; index++) {
-        let element = matrizEntrada[index][hilo];
-        esAcquire = element.includes(".acquire()");
-        let esRelease = element.includes(".release()");
-        let semaforo = element.split(".");
-        
-        let posicionSemaforo;
+    let hiloAleatorio = Math.floor(Math.random() * CANTIDAD_COLUMNAS);
+    let esHiloDormido = estaIncluidoElHilo(hiloAleatorio);
+    
+    while(esHiloDormido || hilosTerminados.includes(hiloAleatorio)){
+         hiloAleatorio = Math.floor(Math.random() * CANTIDAD_COLUMNAS);
+         esHiloDormido = estaIncluidoElHilo(hiloAleatorio);
+    }
 
-        nombreSemaforo = semaforo[0];
-        posicionSemaforo = semaforos.indexOf(nombreSemaforo);
+    return hiloAleatorio;
+}
 
-        if(esAcquire){
-            if(tablaSemaforos[posicionSemaforo][1] === 0){
-                tablaSemaforos[posicionSemaforo][2] = index;
-                tablaSemaforos[posicionSemaforo][3]= hilo;
-                hilosDormidos.push(hilo);
-                nombreSemaforos.push(nombreSemaforo);
-                break;
+function estaBloqueadoElSistema(){
+    
+    let contador = obtenerCantidadDeDormidos();
+
+    return contador===CANTIDAD_COLUMNAS ? true : false;
+}
+
+function IsStop(tablaEntrada){
+
+    let cantidadDeHilosDormidos= obtenerCantidadDeDormidos();
+    let cantidadDeHilosTerminados = obtenerCantidadDeTerminado(tablaEntrada);
+
+    return (cantidadDeHilosDormidos+cantidadDeHilosTerminados===CANTIDAD_COLUMNAS) ? true : false;
+}
+
+function obtenerCantidadDeDormidos(){
+
+    let cantidadHilosDormidos = 0;
+    for (let index = 0; index < sema.length; index++) {
+        cantidadHilosDormidos+=sema[index].length;
+    }
+    
+    return cantidadHilosDormidos;
+}
+
+function obtenerCantidadDeTerminado(tablaEntrada){
+
+    let cantidadDeHilosterminados = 0;
+
+    for (let index = 0; index < CANTIDAD_COLUMNAS; index++) {
+        let cuerpo = String(tablaEntrada[index]);
+
+        if(cuerpo.split('\n').length===posiciones[index]){
+
+            if(!hilosTerminados.includes(index)){
+                hilosTerminados.push(index);
             }
-            continue; 
-        }else if(esRelease){
-          if(nombreSemaforos.includes(nombreSemaforo)){
-             aletorioRelease = Math.floor(Math.random() * (3 - 1)) + 1;
-             let filaInicio = tablaSemaforos[posicionSemaforo][2]+1;
-             let hiloSiguiente = tablaSemaforos[posicionSemaforo][3];
-              if(aletorioRelease===1){
-                  encontrarListaFinal(filaInicio,hiloSiguiente,listaSalida);
-                  encontrarListaFinal(index+1,hilo,listaSalida);
-                  //columnasTerminadas++;
-              }else{
-                encontrarListaFinal(index+1,hilo,listaSalida);
-                encontrarListaFinal(filaInicio,hiloSiguiente,listaSalida);
-              }
-              break;
-          }else{
-              tablaSemaforos[posicionSemaforo][2]+=1;
-              continue;
-          }
+            cantidadDeHilosterminados++;
         }
-        listaSalida.push(element+"  ");
     }
 
-    if(index===matrizEntrada.length){
-        let posicionToRemoved = hilosDormidos.indexOf(hilo);
-        if( posicionToRemoved != -1){
-            hilosDormidos.splice(posicionToRemoved,1);
-            nombreSemaforos.splice(posicionToRemoved,1);
-        }
-        hilosTerminados.push(hilo);
-       //columnasTerminadas++;
-    }
+    return cantidadDeHilosterminados;
 }
 
+function obtenerSemaforosV2(textSemaforos){
+
+    listaSemaforos = textSemaforos.split("]");
+    var lista = textSemaforos.split(/(\d)/);
+    var sema = new Array();
+
+    for (let index = 0; index < valores.length; index++) {
+        sema.push(new Array());
+    } 
+
+    return sema;
+}
 
 

@@ -9,9 +9,9 @@ const TableInputThreadsComponent = (props) => {
 
   const tablaEntrada = props.tablaEntrada;
 
-  function updateLista (index,property,value){
-    let nuevaLista = [...tablaEntrada];
-    nuevaLista[index][property]=value;
+  function updateLista (property,value){
+    let nuevaLista = {...tablaEntrada};
+    nuevaLista[property]=value;
     props.setTablaEntrada(nuevaLista);
   }
 
@@ -26,16 +26,14 @@ const TableInputThreadsComponent = (props) => {
               <DataTable.Title><Text style={{color:'black', fontSize: 17}}>Hilo 5</Text></DataTable.Title>
               
             </DataTable.Header>
-        
-           {tablaEntrada.map((row,index) => (
+           
             <DataTable.Row >
-              <DataTable.Cell><TextInput style={{color:'black', fontSize: 17}} value={row.Hilo_1} onChangeText={(data)=>updateLista(index,"Hilo_1",data)} style={styles.textInput_table_sp}/></DataTable.Cell>
-              <DataTable.Cell><TextInput style={{color:'black', fontSize: 17}} value={row.Hilo_2} onChangeText={(data)=>updateLista(index,"Hilo_2",data)} style={styles.textInput_table_sp}/></DataTable.Cell>
-              <DataTable.Cell><TextInput style={{color:'black', fontSize: 17}} value={row.Hilo_3} onChangeText={(data)=>updateLista(index,"Hilo_3",data)} style={styles.textInput_table_sp}/></DataTable.Cell>
-              <DataTable.Cell><TextInput style={{color:'black', fontSize: 17}} value={row.Hilo_4} onChangeText={(data)=>updateLista(index,"Hilo_4",data)} style={styles.textInput_table_sp}/></DataTable.Cell>
-              <DataTable.Cell><TextInput style={{color:'black', fontSize: 17}} value={row.Hilo_5} onChangeText={(data)=>updateLista(index,"Hilo_5",data)} style={styles.textInput_table_sp}/></DataTable.Cell>
+              <DataTable.Cell><TextInput  multiline={true} numberOfLines={13} value={tablaEntrada.Hilo_1} onChangeText={(data)=>updateLista("Hilo_1",data)} style={styles.textInput_table_sp}/></DataTable.Cell>
+              <DataTable.Cell><TextInput  multiline={true} numberOfLines={13} value={tablaEntrada.Hilo_2} onChangeText={(data)=>updateLista("Hilo_2",data)} style={styles.textInput_table_sp}/></DataTable.Cell>
+              <DataTable.Cell><TextInput  multiline={true} numberOfLines={13} value={tablaEntrada.Hilo_3} onChangeText={(data)=>updateLista("Hilo_3",data)} style={styles.textInput_table_sp}/></DataTable.Cell>
+              <DataTable.Cell><TextInput  multiline={true} numberOfLines={13} value={tablaEntrada.Hilo_4} onChangeText={(data)=>updateLista("Hilo_4",data)} style={styles.textInput_table_sp}/></DataTable.Cell>
+              <DataTable.Cell><TextInput  multiline={true} numberOfLines={13} value={tablaEntrada.Hilo_5} onChangeText={(data)=>updateLista("Hilo_5",data)} style={styles.textInput_table_sp}/></DataTable.Cell>
             </DataTable.Row>
-            ))}
           </DataTable > 
         </View>   
       );   

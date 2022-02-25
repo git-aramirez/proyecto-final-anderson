@@ -19,7 +19,7 @@ export const styles = StyleSheet.create({
 
     textInput_table_sp: {
       width: 150,
-      height: 30,
+      height: 300,
       borderWidth: 1,
       textAlign: 'center',
       color:'black',
@@ -32,11 +32,22 @@ export const styles = StyleSheet.create({
       borderWidth: 1,
       textAlign: 'center',
       color:'black',
-      fontSize: 17
+      fontSize: 17,
+      marginLeft:20
     },
 
     textInput_salida_sp: {
       width: 400,
+      height: 30,
+      borderWidth: 1,
+      textAlign: 'center',
+      marginLeft: 20,
+      color:'black',
+      fontSize: 17
+    },
+
+    textInput_hilos_bloqueados_sp: {
+      width: 300,
       height: 30,
       borderWidth: 1,
       textAlign: 'center',
@@ -54,7 +65,7 @@ export const styles = StyleSheet.create({
       
       },
       container_table: {
-         width:350,
+         width:100,
          height:200,
       },
       container_buttons: {

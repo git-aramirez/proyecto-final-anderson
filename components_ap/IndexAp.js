@@ -37,7 +37,10 @@ export default function IndexAp() {
 
   function buttonEjecutarAlgoritmoComponent (){
     if(banderaEntrada){
-      return(<Button onPress={()=>iniciarAlgoritmo()} title={"Ejecutar Algoritmo"} />);
+      return(
+        <TouchableOpacity style={{marginTop:0, width: 190, height: 40, backgroundColor: 'blue',padding:10,alignItems: 'center',borderRadius: 5}} onPress={()=>iniciarAlgoritmo()} >
+         <Text style={{color:'white', fontSize: 17}}>Ejecutar Algoritmo</Text>
+        </TouchableOpacity>);
     }
 
     return(<></>);
@@ -155,7 +158,9 @@ function pickerAlgortimos(){
         </SafeAreaView>
        
         <SafeAreaView style={{margin: 10} }>
-          <Button style={{marginBottom: 20}} onPress={()=>init()} title={"Crear Tabla"} />
+        <TouchableOpacity style={{marginTop:0, width: 190, height: 40, backgroundColor: 'blue',padding:10,alignItems: 'center',borderRadius: 5}} onPress={()=>init()} >
+                <Text style={{color:'white', fontSize: 17}}>Crear Tabla</Text>
+        </TouchableOpacity>
         </SafeAreaView>
        
         <SafeAreaView style={{margin: 10} }>
