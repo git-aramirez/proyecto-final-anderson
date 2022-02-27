@@ -1,3 +1,5 @@
+var variables = [];
+var valoresVariables = [];
 var listaSemaforos;
 var valores = [];
 var matrizEntrada;
@@ -5,7 +7,7 @@ var posiciones;
 var salida;
 var sema;
 var hilosDormidos;
-var hilosTerminados
+var hilosTerminados;
 const CANTIDAD_COLUMNAS = 5;
 const CANTIDAD_FILAS_DAFAULT = 13;
 
@@ -45,8 +47,10 @@ function inicializarMatrizEntrada(){
 }
 
 
+
 function aleatorios(){
 
+    
     inicializarMatrizEntrada();
     let index_j = 1;
 
@@ -112,21 +116,35 @@ function fijarAleatorios(matrizEntrada){
 /*
 Este algoritmo permite la ejecución del 
 */
-export function ejecutarAlgoritmo(textSemaforos,tablaEntrada){
+export function ejecutarAlgoritmo(textSemaforos,tablaEntrada,textVariables){
     valores = [];
     obtenerSemaforos(textSemaforos);
     let textHilosBloqueados = "";
 
     tablaEntrada = inicializarVariablesGlobales(textSemaforos,tablaEntrada);
+    almacenarVariablesYvalores(textVariables);
 
     while(!IsStop(tablaEntrada)){
 
         let hiloAleatorio = definirHiloAleatorio();
         let cuerpo = String(tablaEntrada[hiloAleatorio]);
         let elemento = cuerpo.split('\n')[posiciones[hiloAleatorio]];
+        elemento = elemento.replace(/ /g, "");
+
+        if(elemento == "" || elemento=="}"){
+            posiciones[hiloAleatorio]+=1;
+            continue;
+        }
+
+       let esSentencia = esSuma(elemento,hiloAleatorio) 
+       || esResta(elemento,hiloAleatorio) 
+       || esCondicional(elemento,hiloAleatorio,cuerpo);
+       if(esSentencia){
+           continue;
+       }
         
-        let esAcquire = elemento.includes(".acquire()");
-        let esRelease = elemento.includes(".release()");
+        let esAcquire = elemento.toLowerCase().includes(".acquire()");
+        let esRelease = elemento.toLowerCase() .includes(".release()");
     
         let semaforo = elemento.split(".");
         let posSemaforo = parseInt(semaforo[0].split("S")[1])-1;
@@ -137,13 +155,163 @@ export function ejecutarAlgoritmo(textSemaforos,tablaEntrada){
     }
 
     let estaElSistemaBloqueado = estaBloqueadoElSistema();
-    textHilosBloqueados = textHilosBloqueados.substring(0,textHilosBloqueados.length-2);
+    textHilosBloqueados = encontrarHilosBloqueados();
+    textVariables = redefinirVariables();
 
-    return [salida,estaElSistemaBloqueado,textHilosBloqueados];
+    return [salida,estaElSistemaBloqueado,textHilosBloqueados,textVariables];
+}
+
+function esCondicional(elemento,hiloAleatorio,cuerpo){
+   
+    if(elemento.includes("if(") && elemento.includes("){")){
+        let resultado1 = elemento.split("(");
+        let resultado2 = resultado1[1].split(")");
+        let comparacion = resultado2[0];
+
+        if(!comparacion.includes("==")){
+            return false;
+        }
+
+        return esComparacionValida(comparacion,hiloAleatorio,cuerpo);        
+
+    }
+
+    return false;
+}
+
+function esComparacionValida(comparacion,hiloAleatorio,cuerpo){
+   
+    let resultadoComparacion = comparacion.split(/(\d)/);
+    let valor = parseInt(resultadoComparacion[1]);
+    let variable = resultadoComparacion[0].split("=")[0];
+    let posicion = variables.indexOf(variable);
+
+    if(posicion===-1){
+        return false;
+    }
+
+    if(valoresVariables[posicion]!=valor){
+        let salida = encontrarSalidaCondicional(cuerpo);
+        posiciones[hiloAleatorio]=salida+1;
+
+        return true;
+    }
+
+    posiciones[hiloAleatorio]+=1;
+        
+    return true;
+}
+
+function esResta(elemento,hiloAleatorio){
+    
+    if(elemento.includes("--;")){
+        let listIncremento = elemento.split("-");
+        let variable = listIncremento [0];
+        let posicion = variables.indexOf(variable);
+        if(posicion!=-1){
+            valoresVariables[posicion]-=1;
+            posiciones[hiloAleatorio]+=1;
+
+            return true;
+        }
+    }
+
+    return false;
+}
+
+
+function esSuma(elemento,hiloAleatorio){
+    
+    if(elemento.includes("++;")){
+        let listIncremento = elemento.split("+");
+        let variable = listIncremento [0];
+        let posicion = variables.indexOf(variable);
+
+        if(posicion!=-1){
+            valoresVariables[posicion]+=1;
+            posiciones[hiloAleatorio]+=1;
+            return true;
+        }
+    }
+
+    return false;
+}
+
+function redefinirVariables(){
+    let textVariables = "";
+    for (let index = 0; index < variables.length; index++) {
+        const element = variables[index];
+        textVariables+=element+"="+valoresVariables[index]+ ",";        
+    }
+    textVariables = textVariables.substring(0,textVariables.length-1);
+    return textVariables;
+}
+
+function encontrarHilosBloqueados(){
+    let textHilosBloqueados = "";
+    let cantidadSemaforos=0;
+    for (let index = 0; index < sema.length; index++) {
+
+        if(sema[index].length!=0){
+            textHilosBloqueados+="S"+(index+1)+" : [";
+        }
+        
+        for (let index_j = 0; index_j < sema[index].length; index_j++) {
+            const element = sema[index][index_j];
+            textHilosBloqueados+="Hilo "+(element+1)+" , "
+            cantidadSemaforos++;
+        }
+        
+        if(sema[index].length!=0){
+            textHilosBloqueados = textHilosBloqueados.substring(0,textHilosBloqueados.length-2);
+            textHilosBloqueados+=" ] , "
+        }
+    }
+    if(cantidadSemaforos>0){
+        textHilosBloqueados = textHilosBloqueados.substring(0,textHilosBloqueados.length-2);
+    }else{
+        textHilosBloqueados = textHilosBloqueados.substring(0,textHilosBloqueados.length-1);
+    }
+    
+    return textHilosBloqueados;
+}
+
+function encontrarSalidaCondicional(cuerpo){
+   let lista = cuerpo.split('\n');
+   let posicionSalida = lista.indexOf("}");
+   if(posicionSalida!=-1){
+       return posicionSalida;
+   }else{
+       alert("La llave de salida '}' no existe");
+   }
+}
+
+function almacenarVariablesYvalores(textVariables){
+    let listaResultados = textVariables.replaceAll(",","=");
+    let listaVariablesYValores = listaResultados.split("=");
+
+    for (let index = 0; index < listaVariablesYValores.length; index++) {
+        const element = listaVariablesYValores[index].replace(/ /g, "");
+        let ascii = element.toUpperCase().charCodeAt(0);
+	    let esLetra = ascii > 64 && ascii < 91;
+
+        if(element === "="){
+            continue;
+        }
+
+        if(esLetra){
+            variables.push(element);
+        }else if(!isNaN(element)){
+            valoresVariables.push(parseInt(element,10));
+        }else{
+            alert("Se presentó un error en ingresando las variables")
+        }
+    }
 }
 
 function inicializarVariablesGlobales (textSemaforos,tablaEntrada){
-
+    variables = [];
+    valoresVariables = [];
     posiciones = [0,0,0,0,0];
     salida = new Array();
     hilosDormidos = new Array();
@@ -161,7 +329,7 @@ function definirComportamiento(posSemaforo,hiloAleatorio,elemento,esAcquire,esRe
 
         if(valorSemaforo===0){
             sema[posSemaforo].push(hiloAleatorio);
-            textHilosBloqueados+="Hilo_"+(hiloAleatorio+1)+" , "
+            
         }else{
             valores[posSemaforo]-=1;
         }

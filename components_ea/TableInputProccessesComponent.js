@@ -31,6 +31,7 @@ const TableInputProccessesComponent = (props) => {
               <DataTable.Cell ><TextInput value={row.solicita} onChangeText={(data)=>updateLista(index,"solicita",data)} style={styles.inputTable}/></DataTable.Cell>
               <DataTable.Cell ><TextInput value={row.libera} onChangeText={(data)=>updateLista(index,"libera",data)} style={styles.inputTable}/></DataTable.Cell>
             </DataTable.Row>
+
             ))}
           </DataTable > 
         </View>   

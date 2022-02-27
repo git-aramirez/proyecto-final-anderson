@@ -36,6 +36,16 @@ export const styles = StyleSheet.create({
       marginLeft:20
     },
 
+    textInput_variables_sp: {
+      width: 200,
+      height: 30,
+      borderWidth: 1,
+      textAlign: 'center',
+      color:'black',
+      fontSize: 17,
+      marginLeft:20
+    },
+
     textInput_salida_sp: {
       width: 400,
       height: 30,
