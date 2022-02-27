@@ -84,6 +84,13 @@ function App () {
     //Llamado al metodo para el ingreso de la particion.
     await funciones.ingresarParticion(discos, array);
 
+    // Limpia campos  de texto 
+    settLibre("");
+    settNuevo("");
+    setlibreA("");
+    setnombreP("");
+    setetiqueta("");
+
     return onRefresh();
   }
  
@@ -127,6 +134,7 @@ function App () {
 
     // Limpia campos
     setTamaño("");
+    setNombre("");
 
     // Refresca componentes
     return onRefresh();
@@ -294,7 +302,7 @@ function App () {
     <View>
       <View >
         <Text >Particiones del disco</Text>
-          <SafeAreaView >
+          <View>
             <NumberFormat
               value={tamaño}
               displayType={'text'}
@@ -311,6 +319,7 @@ function App () {
             />
             <TextInput
               onChangeText={(val) => setNombre(val)}
+              value={nombre}
               placeholder="Ingrese nombre del disco"
               style={styles.input}
               keyboardType='text' 
@@ -339,7 +348,7 @@ function App () {
               onPress= { ()=>CrearDisco()}
             />
             
-          </SafeAreaView>
+          </View>
           <StatusBar style="auto" />
 
           <Picker
@@ -351,8 +360,8 @@ function App () {
           </Picker>
 
           <Button 
-          title   = "Eliminar Disco"
-          onPress= { ()=>EliminarDisco()}
+            title   = "Eliminar Disco"
+            onPress= { ()=>EliminarDisco()}
           />
         </View>
         
@@ -420,7 +429,6 @@ function App () {
               <DataTable.Cell text>
                 <Picker
                   selectedValue={sistemaA}
-                  //style={{ height: 50, width: 150 }}
                   onValueChange={(itemValue, itemIndex) => setsistemaA(itemValue)}
                 >
                   {sistemasArchivos}
@@ -433,7 +441,6 @@ function App () {
               <DataTable.Cell numeric>
                 <Picker
                   selectedValue={alinear}
-                  //style={{ height: 50, width: 150 }}
                   onValueChange={(itemValue, itemIndex) => setalinear(itemValue)}
                 >
                   {listaAlinear}
@@ -460,11 +467,7 @@ function App () {
 
         }}>
           <Button 
-            title   = "Cancelar"
-            onPress={() => arreglo.datosPorDisco(discos)}
-          /> 
-          <Button 
-            title   = "Aplicar"
+            title   = "Crear partición"
             onPress={() =>{llenarDatosParticion()}}
           />
         </View>
