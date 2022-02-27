@@ -9,6 +9,8 @@ import * as funciones from '../scripts_sm/Main';
 import ProcessList from './ProcessListComponent';
 import PhysicalMemory from './PhysicalMemoryComponent';
 import SegmentList from './SegmentListComponent';
+import { styles } from './styles';
+import NumberFormat from 'react-number-format';
 import Speaker from '../components_drawer/Speaker';
 
 function segmentation() {
@@ -56,10 +58,14 @@ function segmentation() {
         if (palabra.length <= funciones.EspaciosDisponibles) {
             // Invoca al metodo crear proceso
             funciones.crearProceso(palabra);
+
+            // Limpia campo de texto
+            setPalabra("");
+
             //Refresco de la tabla del algortimo de asignacion
             return onRefresh();
         }
-        return alert("NO HAY ESPACIO SUFICIENTE PARA GUARDAR LA PALABRA");
+        return alert("No hay espacio suficiente para guardar el proceso");
     }
 
     /**
@@ -67,17 +73,35 @@ function segmentation() {
      */
     function solictarItem() {
 
+        // Variable auxiliar 
+        let palabraClone = segmentoSolicitado.trim();  
+
+        // Valida que la palabra no este vacia
+        if (palabraClone == "") {          
+            return alert("Ingrese un índice de segmento.");
+        }
+        palabraClone = posicionSolicitada.trim();  
+
+        // Valida que la palabra no este vacia
+        if (palabraClone == "") {          
+            return alert("Ingrese el índice de la posición dentro del segmento a solicitar.");
+        }
+
         // Valida si el segmento existe
         if (!funciones.TablaProcesos[segmentoSolicitado-1] || funciones.TablaProcesos[segmentoSolicitado-1][0] == '' ) {
             return alert("No existe el segmento");
         }
         // Valida si el indice solicitado esta en el rango del segmento
-        else if (funciones.TablaProcesos[segmentoSolicitado-1][2] >= posicionSolicitada) {
+        else if (funciones.TablaDatos[segmentoSolicitado-1][1] >= posicionSolicitada) {
             // Invoca el metodo que trae el item solicitado
             funciones.solicitarItem(segmentoSolicitado, posicionSolicitada);
+
+            //Limpia campos de texto
+            setSegmentoSolicitado("");
+            setPosicionSolicitada("");
+
             return onRefresh();
         }
-
         return alert("El índice excede el tamaño del segmento");
     }
 
@@ -85,8 +109,25 @@ function segmentation() {
      * Permite eliminar un proceso o segmento
      */
     function eliminarSegmento() {
+        // Variable auxiliar 
+        let palabraClone = eliminarItem.trim();  
+
+        // Valida que la palabra no este vacia
+        if (palabraClone == "") {          
+            return alert("Ingrese el índice del segmento a eliminar.");
+        }
+
+        // Valida si el segmento existe
+        if (!funciones.TablaProcesos[eliminarItem-1]) {
+            return alert("No existe el segmento índicado.");
+        }
+
         // Invoca el metodo que elimina de los array la palabra indicada
         funciones.eliminarSegmento(eliminarItem);
+
+        // Limpia campos de texto
+        setEliminarItem("");
+
         //Refresco de la tabla del algortimo de asignacion
         return onRefresh();
     }
@@ -104,6 +145,7 @@ function segmentation() {
                 <TextInput
                     onChangeText={(val) => setPalabra(val)}
                     value={palabra}
+                    style={styles.input}
                     placeholder="Palabra"
                     keyboardType='default' 
                 />
@@ -117,17 +159,33 @@ function segmentation() {
             </View>
             {/**View de los Input pagina y posicion solicitada*/}
             <View>
-                <TextInput
-                    onChangeText={(val) => setSegmentoSolicitado(val)}
+                <NumberFormat
                     value={segmentoSolicitado}
-                    placeholder="Índice de segmento"
-                    keyboardType='default' 
+                    displayType={'text'}
+                    renderText={ (segmentoSolicitado) => (
+                        <TextInput
+                            underlineColorAndroid="transparent"
+                            onChangeText={(val) => setSegmentoSolicitado(val)}
+                            value={segmentoSolicitado}
+                            placeholder="Ingrese índice del segmento"
+                            style={styles.input}
+                            keyboardType="numeric"
+                        />
+                    )}
                 />
-                <TextInput
-                    onChangeText={(val) => setPosicionSolicitada(val)}
+                <NumberFormat
                     value={posicionSolicitada}
-                    placeholder="Posicion"
-                    keyboardType='default' 
+                    displayType={'text'}
+                    renderText={ (posicionSolicitada) => (
+                        <TextInput
+                            underlineColorAndroid="transparent"
+                            onChangeText={(val) => setPosicionSolicitada(val)}
+                            value={posicionSolicitada}
+                            placeholder="Ingrese índice del segmento"
+                            style={styles.input}
+                            keyboardType="numeric"
+                        />
+                    )}
                 />
             </View>
             {/**View del boton realizar solicitud */}
@@ -139,11 +197,19 @@ function segmentation() {
             </View>
             {/**View del input eliminar proceso - palabra con el indice*/}
             <View>
-                <TextInput
-                    onChangeText={(val) => setEliminarItem(val)}
+                <NumberFormat
                     value={eliminarItem}
-                    placeholder="Índice del segmento a eliminar"
-                    keyboardType='default' 
+                    displayType={'text'}
+                    renderText={ (eliminarItem) => (
+                        <TextInput
+                            underlineColorAndroid="transparent"
+                            onChangeText={(val) => setEliminarItem(val)}
+                            value={eliminarItem}
+                            placeholder="Ingrese índice del segmento a eliminar"
+                            style={styles.input}
+                            keyboardType="numeric"
+                        />
+                    )}
                 />
             </View>
             {/**View del boton eliminar proceso - palabra */}

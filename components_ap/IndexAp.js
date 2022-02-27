@@ -1,6 +1,6 @@
 import React , {useState} from 'react';
 import {styles} from '../styles/styles';
-import {View,SafeAreaView, ScrollView,Picker,Button,TextInput} from 'react-native';
+import {View,SafeAreaView, ScrollView,Picker,Button,TextInput, TouchableOpacity, Text} from 'react-native';
 import TableInputComponent from './TableInputComponet';
 
 import * as main from '../scripts_ap/main';

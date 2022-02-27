@@ -1585,6 +1585,13 @@ export function limpiarDiscos() {
         inicioIndexadaCombinada  = [];
         //Arreglo con las posiciones ocupadas por cada archivo
         posicionesIndexadaCombinada  = [];
+    
+    //Limpia log de discos
+    logContigua = '';
+    logEnlazada = '';
+    logIndexadaCombinada = '';
+    logIndexadaEnlazada = '';
+    logIndexadaMultinivel = '';
 }
 
 /**

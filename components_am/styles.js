@@ -12,12 +12,11 @@ export const styles = StyleSheet.create({
 
   input: {
     height: 40,
-    width: (Dimensions.get('window').width) - 250,
-    margin: 12,
+    margin: 8,
     borderWidth: 1,
     padding: 10,
-    alignItems: "center",
-    justifyContent: "center"
+    color:'black',
+    fontSize: 17
   },
 
   area: {

@@ -30,8 +30,8 @@ function ProcessList(props) {
  
           <DataTable id="tabla_salida" style={{flexDirection: 'column'}}>
             <DataTable.Header style={{width:150}}>
-              <DataTable.Title>Pagina</DataTable.Title>
-              <DataTable.Title>Memoria</DataTable.Title>
+              <DataTable.Title adjustsFontSizeToFit >Pagina</DataTable.Title>
+              <DataTable.Title adjustsFontSizeToFit >Memoria</DataTable.Title>
             </DataTable.Header>
         
             {array.map((row, index) => (

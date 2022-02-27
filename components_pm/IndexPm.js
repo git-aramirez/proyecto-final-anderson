@@ -7,6 +7,8 @@ import React from 'react';
 import { View , ScrollView, Button, TextInput} from 'react-native';
 import * as funciones from '../scripts_pm/Main';
 import ProcessList from './ProcessListComponent';
+import { styles } from './styles';
+import NumberFormat from 'react-number-format';
 import Speaker from '../components_drawer/Speaker';
 
 function paginacion() {
@@ -48,7 +50,7 @@ function paginacion() {
         
         // Valida que la palabra no este vacia
         if (palabraClone == "") {          
-            return alert("No se admiten Palabras vaciass");
+            return alert("No se admiten Palabras vacias");
         }
         // Valida que la palabra sea maximo del tamaño del bloque
         if (palabra.length <= funciones.TamañoBloque) {
@@ -65,8 +67,29 @@ function paginacion() {
      * Permite traer de la memoria fisica el dato solicitado
      */
     function solictarItem() {
+        // Variable auxiliar 
+        let palabraClone = paginaSolicitada.trim();  
+
+        // Valida que la palabra no este vacia
+        if (palabraClone == "") {          
+            return alert("Ingrese índice de página a solicitar.");
+        }
+
+        // Variable auxiliar 
+        palabraClone = posicionSolicitada.trim();  
+
+        // Valida que la palabra no este vacia
+        if (palabraClone == "") {          
+            return alert("Ingrese índice de la posición a solicitar.");
+        }
+
         // Invoca el metodo que trae el item solicitado
         funciones.solicitarItem(paginaSolicitada, posicionSolicitada);
+
+        //Limpia campos de texto
+        setPaginaSolicitada("");
+        setPosicionSolicitada("");
+
         return onRefresh();
     }
 
@@ -74,8 +97,25 @@ function paginacion() {
      * Permite eliminar o vaciar el bloque que contiene una palabra que se especifica por un indice
      */
     function eliminarPalabra() {
+
+        // Variable auxiliar 
+        let palabraClone = eliminarItem.trim();  
+
+        // Valida que la palabra no este vacia
+        if (palabraClone == "") {          
+            return alert("Indique índice de palabra a eliminar.");
+        }
+        // Valida que el indice digitado exista
+        if (funciones.TablaProcesos.length < eliminarItem) {
+            return alert("No existe índice de palabra.");
+        }
+
         // Invoca el metodo que elimina de los array la palabra indicada
         funciones.eliminarPalabra(eliminarItem);
+        
+        // Limpia campo de texto
+        setEliminarItem("");
+
         return onRefresh();
     }
       
@@ -92,6 +132,7 @@ function paginacion() {
                 <TextInput
                     onChangeText={(val) => setPalabra(val)}
                     value={palabra}
+                    style={styles.input}
                     placeholder="Palabra"
                     keyboardType='default' 
                 />
@@ -105,17 +146,34 @@ function paginacion() {
             </View>
             {/**View de los Input pagina y posicion solicitada*/}
             <View>
-                <TextInput
-                    onChangeText={(val) => setPaginaSolicitada(val)}
+
+                <NumberFormat
                     value={paginaSolicitada}
-                    placeholder="Pagina"
-                    keyboardType='default' 
+                    displayType={'text'}
+                    renderText={ (paginaSolicitada) => (
+                        <TextInput
+                            underlineColorAndroid="transparent"
+                            onChangeText={(val) => setPaginaSolicitada(val)}
+                            value={paginaSolicitada}
+                            placeholder="Ingrese índice de la página"
+                            style={styles.input}
+                            keyboardType="numeric"
+                        />
+                    )}
                 />
-                <TextInput
-                    onChangeText={(val) => setPosicionSolicitada(val)}
+                <NumberFormat
                     value={posicionSolicitada}
-                    placeholder="Posicion"
-                    keyboardType='default' 
+                    displayType={'text'}
+                    renderText={ (posicionSolicitada) => (
+                        <TextInput
+                            underlineColorAndroid="transparent"
+                            onChangeText={(val) => setPosicionSolicitada(val)}
+                            value={posicionSolicitada}
+                            placeholder="Ingrese índice de la posición"
+                            style={styles.input}
+                            keyboardType="numeric"
+                        />
+                    )}
                 />
             </View>
             {/**View del boton realizar solicitud */}
@@ -127,11 +185,19 @@ function paginacion() {
             </View>
             {/**View del input eliminar proceso - palabra con el indice*/}
             <View>
-                <TextInput
-                    onChangeText={(val) => setEliminarItem(val)}
+                <NumberFormat
                     value={eliminarItem}
-                    placeholder="Indice de palabra a eliminar"
-                    keyboardType='default' 
+                    displayType={'text'}
+                    renderText={ (eliminarItem) => (
+                        <TextInput
+                            underlineColorAndroid="transparent"
+                            onChangeText={(val) => setEliminarItem(val)}
+                            value={eliminarItem}
+                            placeholder="Ingrese índice de palabra a eliminar"
+                            style={styles.input}
+                            keyboardType="numeric"
+                        />
+                    )}
                 />
             </View>
             {/**View del boton eliminar proceso - palabra */}
