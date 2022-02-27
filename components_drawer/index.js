@@ -1,11 +1,11 @@
 // In App.js in a new project
 import * as React from 'react';
-import IndexAp from '../components_ap/IndexAp';
 import { View, Text , TouchableOpacity,TextInput} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import {styles} from '../styles/styles';
 import { createDrawerNavigator } from '@react-navigation/drawer';
+import IndexAp from '../components_ap/IndexAp';
 import IndexEa from '../components_ea/IndexEa';
 import IndexSp from '../components_sp/IndexSp';
 import IndexPm from '../components_pm/IndexPm';

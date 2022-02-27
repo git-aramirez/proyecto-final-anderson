@@ -4,7 +4,7 @@
  */
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { SafeAreaView, Text, TextInput, View, Picker, Button} from 'react-native';
+import { Text, TextInput, View, Picker, Button} from 'react-native';
 import * as funciones from '../scripts_pd/Main';
 import { DataTable } from 'react-native-paper';
 import { styles } from './styles';
@@ -302,7 +302,7 @@ function App () {
     <View>
       <View >
         <Text >Particiones del disco</Text>
-          <View>
+          <View >
             <NumberFormat
               value={tamaño}
               displayType={'text'}

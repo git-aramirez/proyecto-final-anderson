@@ -1,6 +1,6 @@
 import React , {useState} from 'react';
 import {styles} from '../styles/styles';
-import {View,SafeAreaView, ScrollView,Picker,TextInput, Button,TouchableOpacity,Text} from 'react-native';
+import {View, ScrollView,Picker,TextInput, Button,TouchableOpacity,Text} from 'react-native';
 import TableInputThreadsComponent from './TableInputThreadsComponent';
 import * as main from '../scripts_sp/Main';
 
@@ -10,6 +10,7 @@ export default function IndexSp() {
   const [refreshing, setRefreshing] = React.useState(false);
   const [cantidadSemaforos, setCantidadSemaforos] = useState(0);
   const [textSemaforos, setTextSemaforos] = useState(0);
+  const [textVariables, setTextVariables] = useState("");
   const [textSalida, setTextSalida] = useState("");
   const [textHilosBloqueados, setTextHilosBloqueados] = useState("");
   const [verTablaEntrada, setVerTablaEntrada] = useState(false);
@@ -56,7 +57,7 @@ function  crearTablaEntrada (){
       textSemaforos += "[ S"+(index+1)+" valor: 1 ]"
     }
     setTextSemaforos(textSemaforos);
-    
+    setTextVariables("c=0,s=0,t=1,x=1");
     init();
     //setverCantidadFilas(true);
   }
@@ -69,18 +70,25 @@ function  crearTablaEntrada (){
     return(<></>);
   }
 
+  function textInputVariablesComponent(){
+    if(verTablaEntrada){
+      return(<TextInput style={styles.textInput_variables_sp} onChangeText={(val)=>setTextVariables(val)} placeholder="variables" value={textVariables}/>);
+    }
+  
+    return(<></>);
+  }
+
   function generarSemaforosAleatorios(){
    var matrizEntrada= main.generarSemaforosAleatorios(textSemaforos,tablaEntrada);
    setTablaEntrada({Hilo_1:matrizEntrada[0], Hilo_2:matrizEntrada[1], Hilo_3:matrizEntrada[2], Hilo_4:matrizEntrada[3] ,Hilo_5: matrizEntrada[4]});
   }
 
   function ejecutarAlgoritmo(){
-    let resultado =  main.ejecutarAlgoritmo(textSemaforos,tablaEntrada);
-    let listaSalida = resultado[0];
+    let resultado =  main.ejecutarAlgoritmo(textSemaforos,tablaEntrada,textVariables);
     let estaBloqueadoElSistema = resultado[1];
-    let hilosBloqueados = resultado[2];
-    setTextHilosBloqueados(hilosBloqueados);
-    setTextSalida(listaSalida);
+    setTextHilosBloqueados(resultado[2]);
+    setTextSalida(resultado[0]);
+    setTextVariables(resultado[3]);
     if(estaBloqueadoElSistema){
       alert("Se bloqueo el sistema !");
     }
@@ -90,6 +98,8 @@ function  crearTablaEntrada (){
     setTextHilosBloqueados("");
     setTextSalida("");
     setTextSemaforos("");
+    setTextVariables("");
+    crearTablaEntrada();
    }
 
 
@@ -159,6 +169,7 @@ function  crearTablaEntrada (){
                 <Text style={{color:'white', fontSize: 17}}>Establecer Semaforos</Text>
               </TouchableOpacity>
           </View>
+            {textInputVariablesComponent()}
             {textInputSemaforosComponent()}
             {buttonClear()}
         </View>

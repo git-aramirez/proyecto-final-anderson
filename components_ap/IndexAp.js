@@ -1,6 +1,6 @@
 import React , {useState} from 'react';
 import {styles} from '../styles/styles';
-import {View,SafeAreaView, ScrollView,Picker,Button,TextInput, TouchableOpacity, Text} from 'react-native';
+import {View,ScrollView,Picker,Button,TextInput,TouchableOpacity,Text} from 'react-native';
 import TableInputComponent from './TableInputComponet';
 
 import * as main from '../scripts_ap/main';
@@ -108,16 +108,16 @@ function tableProcessComponent (){
   if(banderaSalida){
     return(
       <ScrollView 
-      horizontal={true}
-      contentContainerStyle={{ width: `${100 * 5}%` }}
-      showsHorizontalScrollIndicator={true}
-      scrollEventThrottle={200}
-      decelerationRate="fast"
-      pagingEnabled
+        horizontal={true}
+        contentContainerStyle={{ width: `${100 * 5}%` }}
+        showsHorizontalScrollIndicator={true}
+        scrollEventThrottle={200}
+        decelerationRate="fast"
+        pagingEnabled
       
       >
-    <TableProcessComponent tablaStyles={tablaStyles} />
-    </ScrollView>
+        <TableProcessComponent tablaStyles={tablaStyles} />
+      </ScrollView>
   );}
   return(<></>);
 }
@@ -143,7 +143,7 @@ function pickerAlgortimos(){
   
   <View style={{width: `100%` ,height: `100%`,backgroundColor: '#fff',alignItems: 'center',justifyContent: 'center' }}>
 
-      <SafeAreaView style={{top:20 ,flex: 1,
+      <View style={{top:20 ,flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
         flexDirection: 'column'}}>
@@ -153,40 +153,38 @@ function pickerAlgortimos(){
         <TextInput style={styles.input} onChangeText={(val)=>setNumeroNucleos(val)} placeholder="número de núcleos"/>
         <TextInput style={styles.input} onChangeText={(val)=>setQuantum(val)} placeholder="Quantum"/>
     
-        <SafeAreaView style={{margin: 10} }>
+        <View style={{margin: 10} }>
           {pickerAlgortimos()}
-        </SafeAreaView>
+        </View>
        
-        <SafeAreaView style={{margin: 10} }>
+        <View style={{margin: 10} }>
         <TouchableOpacity style={{marginTop:0, width: 190, height: 40, backgroundColor: 'blue',padding:10,alignItems: 'center',borderRadius: 5}} onPress={()=>init()} >
                 <Text style={{color:'white', fontSize: 17}}>Crear Tabla</Text>
         </TouchableOpacity>
-        </SafeAreaView>
+        </View>
        
-        <SafeAreaView style={{margin: 10} }>
+        <View style={{margin: 10} }>
         {buttonEjecutarAlgoritmoComponent()} 
-        </SafeAreaView>
+        </View>
 
-        <SafeAreaView style={{margin: 10} }>
+        <View style={{margin: 10} }>
         {bottonInicializarTablaeEntrada()}
-        </SafeAreaView>
+        </View>
 
-       <SafeAreaView style={{margin: 20} }>
+       <View style={{margin: 20} }>
        {tableInputComponent()}
-       </SafeAreaView>
+       </View>
 
-       <SafeAreaView style={{margin: 20} }>
+       <View style={{margin: 20} }>
        {tableOutComponent()}
-       </SafeAreaView>
+       </View>
 
-       <SafeAreaView style={{margin: 20}}>
+       <View style={{margin: 20}}>
            {tableProcessComponent()} 
-       </SafeAreaView>
+       </View>
     
-       </SafeAreaView>
+       </View>
 
     </View>
   );
 }
-
-

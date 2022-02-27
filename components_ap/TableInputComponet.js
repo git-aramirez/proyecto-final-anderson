@@ -1,8 +1,6 @@
-import React, { Component,useState } from 'react';
 import { View,TextInput} from 'react-native';
 import {DataTable} from 'react-native-paper';
 import {styles} from '../styles/styles';
-import ReactDOM from 'react-dom';
 
 const TableInputComponent = (props) => {
 
