@@ -8,12 +8,11 @@ export default function IndexSp() {
 
   //Variable que acciona el refresco de la tabla
   const [refreshing, setRefreshing] = React.useState(false);
-  const [cantidadCeldas, setCantidadCeldas] = useState(0);
   const [cantidadSemaforos, setCantidadSemaforos] = useState(0);
   const [textSemaforos, setTextSemaforos] = useState(0);
   const [textSalida, setTextSalida] = useState("");
+  const [textHilosBloqueados, setTextHilosBloqueados] = useState("");
   const [verTablaEntrada, setVerTablaEntrada] = useState(false);
-  const [verCantidadFilas, setverCantidadFilas] = useState(false);
   const [tablaEntrada, setTablaEntrada] = useState([]);
 
   /**
@@ -36,33 +35,14 @@ const onRefresh = React.useCallback(() => {
 
 function tableInputThreadsComponent (){
   if(verTablaEntrada){
-    return(<TableInputThreadsComponent  height={50 * cantidadCeldas} tablaEntrada={tablaEntrada} setTablaEntrada={setTablaEntrada} />);
+    return(<TableInputThreadsComponent  height={300} tablaEntrada={tablaEntrada} setTablaEntrada={setTablaEntrada} />);
   }
 
   return(<></>);
 }
-
-function initCantidadFilasComponent(){
-  if(verCantidadFilas){
-    return(
-      <View style={{margin: 20,flex: 1,alignItems: 'center',justifyContent: 'center',flexDirection: 'row'}}>
-        <TextInput style={styles.input} onChangeText={(val)=>setCantidadCeldas(val)} placeholder="Cantidad de Filas"/>
-        <TouchableOpacity style={{width: 170, height: 40, backgroundColor: 'blue',padding:10,alignItems: 'center',borderRadius: 5}} onPress={()=>init()} >
-          <Text style={{color:'white', fontSize: 17}}>Crear Tablas</Text>
-        </TouchableOpacity>
-    </View>);
-  }
-
-  return(<></>);
-}
-
 
 function  crearTablaEntrada (){
-    let tablaEntrada = [];
-    for (let index = 0; index < cantidadCeldas; index++) {
-      tablaEntrada.push({Hilo_1 : "", Hilo_2: "", Hilo_3: "", Hilo_4: "", Hilo_5: ""})
-    }
-    setTablaEntrada(tablaEntrada);
+    setTablaEntrada({Hilo_1 : "", Hilo_2: "", Hilo_3: "", Hilo_4: "", Hilo_5: ""});
   }
 
   function init(){
@@ -73,10 +53,12 @@ function  crearTablaEntrada (){
   function establecerSemaforos(){
     let textSemaforos = "";
     for (let index = 0; index < cantidadSemaforos; index++) {
-      textSemaforos += "[ S"+(index+1)+" valor: 0 ]"
+      textSemaforos += "[ S"+(index+1)+" valor: 1 ]"
     }
     setTextSemaforos(textSemaforos);
-    setverCantidadFilas(true);
+    
+    init();
+    //setverCantidadFilas(true);
   }
  
   function textInputSemaforosComponent(){
@@ -89,12 +71,25 @@ function  crearTablaEntrada (){
 
   function generarSemaforosAleatorios(){
    var matrizEntrada= main.generarSemaforosAleatorios(textSemaforos,tablaEntrada);
-   inicializarTablaSalida(matrizEntrada);
+   setTablaEntrada({Hilo_1:matrizEntrada[0], Hilo_2:matrizEntrada[1], Hilo_3:matrizEntrada[2], Hilo_4:matrizEntrada[3] ,Hilo_5: matrizEntrada[4]});
   }
 
   function ejecutarAlgoritmo(){
-    var listaSalida = main.ejecutarAlgoritmo(textSemaforos,tablaEntrada);
+    let resultado =  main.ejecutarAlgoritmo(textSemaforos,tablaEntrada);
+    let listaSalida = resultado[0];
+    let estaBloqueadoElSistema = resultado[1];
+    let hilosBloqueados = resultado[2];
+    setTextHilosBloqueados(hilosBloqueados);
     setTextSalida(listaSalida);
+    if(estaBloqueadoElSistema){
+      alert("Se bloqueo el sistema !");
+    }
+   }
+
+   function limpiarCampos(){
+    setTextHilosBloqueados("");
+    setTextSalida("");
+    setTextSemaforos("");
    }
 
 
@@ -121,24 +116,37 @@ function  crearTablaEntrada (){
     return(<></>);
   }
 
-  function textAreaComponent(){
+  function buttonClear(){
+    if(verTablaEntrada){
+      return(
+        <TouchableOpacity style={{marginLeft:20, width: 100, height: 40, backgroundColor: 'red',padding:10,alignItems: 'center',borderRadius: 5}}onPress={()=>limpiarCampos()} >
+          <Text style={{color:'white', fontSize: 17}}>Limpiar</Text>
+        </TouchableOpacity>);
+    }
+  
+    return(<></>);
+  }
+
+  function textAreaSalidaComponent(){
     if(verTablaEntrada){
       return (
         <TextInput style={styles.textInput_salida_sp} 
-        onChangeText={(text) => setTextSalida(text)} placeholder="salida" value={textSalida}/>
+        onChangeText={(text) => setTextSalida(text)} placeholder="Salida" value={textSalida}/>
       );
     }
 
     return (<></>)
   }
 
-  function inicializarTablaSalida(matrizEntrada){
-    let tablaSalida = [];
-    for (let i = 0; i < matrizEntrada.length; i++) {
-      tablaSalida.push({Hilo_1:matrizEntrada[i][0], Hilo_2:matrizEntrada[i][1], Hilo_3:matrizEntrada[i][2], Hilo_4:matrizEntrada[i][3] ,Hilo_5: matrizEntrada[i][4]});
+  function textAreaHilosBloqueadosComponent(){
+    if(verTablaEntrada){
+      return (
+        <TextInput style={styles.textInput_hilos_bloqueados_sp} 
+        onChangeText={(text) => setTextHilosBloqueados(text)} placeholder="Hilos Bloqueados" value={textHilosBloqueados}/>
+      );
     }
-    setTablaEntrada(tablaSalida);
-    //setBanderaSalida(true);
+
+    return (<></>)
   }
 
  return (
@@ -151,16 +159,15 @@ function  crearTablaEntrada (){
                 <Text style={{color:'white', fontSize: 17}}>Establecer Semaforos</Text>
               </TouchableOpacity>
           </View>
-            {initCantidadFilasComponent()}
             {textInputSemaforosComponent()}
+            {buttonClear()}
         </View>
-
         {tableInputThreadsComponent()}
-
         <View style={{top:20 ,flex: 2,alignItems: 'center',justifyContent: 'center',flexDirection: 'row'}}>
           {buttonGenerarSemaforosAleatoriosComponent()}
           {buttonEjecutarAlgoritmo()}
-          {textAreaComponent()}
+          {textAreaSalidaComponent()}
+          {textAreaHilosBloqueadosComponent()}
         </View>
     </View>
     );
