@@ -54,6 +54,7 @@ function paginacion() {
         if (palabra.length <= funciones.TamañoBloque) {
             // Invoca al metodo crear proceso
             funciones.crearProceso(palabra);
+            setPalabra("");
             //Refresco de la tabla del algortimo de asignacion
             return onRefresh();
         }
