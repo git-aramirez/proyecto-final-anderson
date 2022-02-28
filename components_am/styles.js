@@ -12,7 +12,7 @@ export const styles = StyleSheet.create({
 
   input: {
     height: 40,
-    width: (Dimensions.get('window').width) - 250,
+    width: 150,
     margin: 12,
     borderWidth: 1,
     padding: 10,
