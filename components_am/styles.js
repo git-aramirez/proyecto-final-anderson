@@ -12,7 +12,17 @@ export const styles = StyleSheet.create({
 
   input: {
     height: 40,
-    width: 150,
+    width: 200,
+    margin: 12,
+    borderWidth: 1,
+    padding: 10,
+    color:'black',
+    fontSize: 17
+  },
+
+  input_tamanio_archivo: {
+    height: 40,
+    width: 300,
     margin: 12,
     borderWidth: 1,
     padding: 10,
@@ -45,17 +55,19 @@ export const styles = StyleSheet.create({
     paddingLeft: 1,
     paddingRight: 1,
     paddingBottom: 2,
-    fontSize: 9,
+    fontSize: 15,
     fontWeight: 'bold',
-    backgroundColor: 'rgba(247,247,247,1.0)',
-    width:50,
-    height:18,
+    width:85,
+    height:25,
+    marginEnd: 20,
+    marginBottom: 7,
+    marginTop: 10
   },
+
   item: {
-    fontSize: 10,
-    height: 12,
-    width:30,
-    fontWeight: 'bold',
+    fontSize: 15,
+    height: 30,
+    width:50,
     alignContent: "center",
     alignItems: "center",
     justifyContent: "center",
@@ -63,7 +75,30 @@ export const styles = StyleSheet.create({
     flexDirection: 'column',
     borderWidth: .25,
     textAlign: 'center',
-    borderBottomWidth: 0
+  },
+
+  item_resultado: {
+    fontSize: 15,
+    height: 100,
+    width:900,
+    alignContent: "center",
+    alignItems: "center",
+    justifyContent: "center",
+    borderColor: 'black',
+    flexDirection: 'column',
+    borderWidth: .25,
+    textAlign: 'center',
+  },
+
+  item_tabla: {
+    fontSize: 20,
+    height: 30,
+    width:50,
+    alignContent: "center",
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection: 'column',
+    textAlign: 'center',
   },
 
   itemFatList: {
