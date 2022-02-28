@@ -4,7 +4,7 @@
  */
 
  import React from 'react';
- import { Text, View, SectionList, Picker, TextInput, Button,TouchableOpacity} from 'react-native';
+ import { Text, View, SectionList, Picker, TextInput, Button,TouchableOpacity,ScrollView} from 'react-native';
  import * as funciones from '../scripts_am/Main';
  import ProcessList from './ProcessListComponent';
  import BitsMap from './BitsMap';
@@ -125,16 +125,11 @@
         }
 
         return (
-            <View>
-                <TextInput
-                    multiline={true}
-                    numberOfLines={8}
-                    value={log}
-                />
-                <Button
-                    title   = "Reproducir"
-                    onPress={ ()=> Speaker(log)}
-                />
+            <View style={{top:500,width: `100%`,backgroundColor: '#fff',alignItems: 'center',flexDirection: 'column'}}>
+                <TextInput style={styles.item_resultado} multiline={true} numberOfLines={8} value={log}/>
+                <TouchableOpacity style={{marginTop:15, width: 160, height: 40, backgroundColor: 'blue',padding:10,alignItems: 'center',borderRadius: 5}} onPress= { ()=> Speaker(log)}>
+                    <Text style={{color:'white', fontSize: 17}}>Reproducir</Text>
+                </TouchableOpacity>
             </View>
         )
     }
@@ -168,10 +163,8 @@
         }
 
         return (
-            <View>
-                <BitsMap
-                    map = {mapaBits}
-                />
+            <View style={{top: 0,marginLeft:20}}> 
+                <BitsMap map = {mapaBits}/>
             </View>
         )
     }
@@ -205,11 +198,9 @@
         }
 
         return (
-            <View>
-                <ProcessList
-                    procesos = {tablaProcesos}
-                />
-            </View>
+            <ScrollView vertical={true} style={{top: 100 ,width: 400 ,height: 600}}> 
+                <ProcessList procesos = {tablaProcesos}/>
+            </ScrollView>
         )
     }
 
@@ -259,14 +250,8 @@
  
         //Retorna las SectionList con los datos
         return(
-            <View style={{
-            flexDirection: 'row',
-            alignContent: "center",
-            alignItems: "center",
-            justifyContent: "center",
-            padding: 1,
-            }}>
-                <SectionList 
+            <View style={{top:150, marginRight:70, marginLeft: 20, width: 400 ,height: 500,flexDirection: 'row',alignContent: "center",alignItems: "center",justifyContent: "center",padding: 1}}>
+                <SectionList  style={{marginEnd: 20}}
                     sections={[
                         {title: 'Bloque 1', data: array[0]},
                         {title: 'Bloque 5', data: array[4]},
@@ -322,17 +307,13 @@
     return(
         <View style={{width: `100%` ,height: `100%`,backgroundColor: '#fff',alignItems: 'center',flexDirection: 'column'}}>
             
-            <View style={{top: 50,flex: 1,flexDirection: 'row',alignContent: "center",alignItems: "center",justifyContent: "center"}}>
+            <View style={{top: 0,flex: 1,flexDirection: 'row',alignContent: "center",alignItems: "center",justifyContent: "center"}}>
                 
                 <TextInput onChangeText={(val) => setnombreArchivo(val)} value={nombreArchivo} placeholder="Nombre del Archivo" style={styles.input} keyboardType='default' clearButtonMode="always"/>
-                <TextInput onChangeText={(val) => settamañoCaracteres(val)} value={tamañoCaracteres} placeholder="Tamaño de caracteres del Archivo" style={styles.input} keyboardType='numeric' />
+                <TextInput onChangeText={(val) => settamañoCaracteres(val)} value={tamañoCaracteres} placeholder="Tamaño de caracteres del Archivo" style={styles.input_tamanio_archivo} keyboardType='numeric' />
                 
                 <TouchableOpacity style={{marginLeft:15, width: 130, height: 40, backgroundColor: 'blue',padding:10,alignItems: 'center',borderRadius: 5}} onPress= { ()=>limpiarDisco()}>
                     <Text style={{color:'white', fontSize: 17}}>Limpiar Discos</Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity style={{marginLeft:15, width: 190, height: 40, backgroundColor: 'blue',padding:10,alignItems: 'center',borderRadius: 5}} onPress= { ()=>informacionDisco()}>
-                    <Text style={{color:'white', fontSize: 17}}>Informacion del Disco</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity style={{marginLeft:15, width: 130, height: 40, backgroundColor: 'blue',padding:10,alignItems: 'center',borderRadius: 5}} onPress= { ()=>crearArchivo()}>
@@ -349,12 +330,12 @@
 
             </View>
             
-            <View style={{top: 100}}>
+            <View style={{width: '80%' ,height: 500,top: 50,flex: 1,flexDirection: 'row',alignContent: "center",alignItems: "center",justifyContent: "center"}}>
                 {processTable()}
+                {mapas()}
                 {mapaBits()}
             </View>
 
-            {mapas()}
             {diskLog()}
         </View>
     )
