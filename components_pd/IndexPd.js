@@ -4,7 +4,7 @@
  */
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { Text, TextInput, View, Picker, Button} from 'react-native';
+import { Text, TextInput, View, Picker, Button,TouchableOpacity} from 'react-native';
 import * as funciones from '../scripts_pd/Main';
 import { DataTable } from 'react-native-paper';
 import { styles } from './styles';
@@ -178,7 +178,7 @@ function App () {
     
     //Retorna la tabla de particiones
     return(
-      <View >
+      <View style={{width: `70%` ,height: 450, top: 100}}>
         <DataTable id="tablaParticiones">
           <DataTable.Header>
             <DataTable.Title>Nombre Particion</DataTable.Title>
@@ -192,10 +192,7 @@ function App () {
               <DataTable.Cell>{row.tipoParticion}</DataTable.Cell>
               <DataTable.Cell>{row.tamañoNuevo}</DataTable.Cell>
               <DataTable.Cell>
-                <Button 
-                  title   = "Eliminar"
-                  onPress= { ()=> EliminarParticion(row.nombreParticion)}
-                />
+                <Button title = "Eliminar" onPress= { ()=> EliminarParticion(row.nombreParticion)}/>
               </DataTable.Cell>
             </DataTable.Row>
             ))
@@ -223,16 +220,12 @@ function App () {
     
     //Retorna la tabla de particiones
     return(
-      <View>
-        <TextInput
-          multiline={true}
-          numberOfLines={5}
-          value={array}
-        />
-        <Button
-          title   = "Reproducir"
-          onPress={ ()=> Speaker(array)}
-        />
+      <View style={{alignItems: 'center',flexDirection: 'column'}}>
+        <Text style={{color:'black',width: `70%`}} multiline={true} numberOfLines={5} value={array}></Text>
+
+        <TouchableOpacity style={{marginLeft:20, width: 190, height: 40, backgroundColor: 'blue',padding:10,alignItems: 'center',borderRadius: 5}} onPress={()=> Speaker(array)}>
+          <Text style={{color:'white', fontSize: 17}}>Reproducir</Text>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -299,96 +292,61 @@ function App () {
   });
 
   return (
-    <View>
-      <View >
-        <Text >Particiones del disco</Text>
-          <View >
-            <NumberFormat
-              value={tamaño}
-              displayType={'text'}
-              renderText={ (tamaño) => (
-                <TextInput
-                  underlineColorAndroid="transparent"
-                  onChangeText={(val) => setTamaño(val)}
-                  value={tamaño}
-                  placeholder="Ingrese tamaño del disco en MB"
-                  style={styles.input}
-                  keyboardType="numeric"
-                />
-              )}
-            />
-            <TextInput
-              onChangeText={(val) => setNombre(val)}
-              value={nombre}
-              placeholder="Ingrese nombre del disco"
-              style={styles.input}
-              keyboardType='text' 
-            />
-            <View style={{
-              flex: 1,
-              flexDirection: 'row',
-              alignContent: "center",
-              alignItems: "center",
-              justifyContent: "center"
+    <View style={{width: `100%` ,height: `100%`,backgroundColor: '#fff',alignItems: 'center',flexDirection: 'column'}}>
 
-            }}>
-              <Text> Tipo de Disco</Text>
-              
-              <Picker
-                selectedValue={tipo}
-                onValueChange={(itemValue, itemIndex) => setTipo(itemValue)}
-              >
+        <View style={{top:30 ,flex: 2,alignItems: 'center',justifyContent: 'center',flexDirection: 'row'}}>
+            
+            <NumberFormat value={tamaño} displayType={'text'} renderText={ (tamaño) => (
+                <TextInput underlineColorAndroid="transparent" onChangeText={(val) => setTamaño(val)} value={tamaño} placeholder="Tamaño del disco en MB" style={styles.input} keyboardType="numeric"/>
+            )}/>
+
+            <TextInput onChangeText={(val) => setNombre(val)} placeholder="Nombre del disco" style={styles.input} keyboardType='text'/>
+
+            <Text style={{marginLeft:20}} > Tipo de Disco</Text>
+
+            <Picker style={{marginLeft:20}} selectedValue={tipo} onValueChange={(itemValue, itemIndex) => setTipo(itemValue)}>
                 <Picker.Item label={"MBR"}  value={"MBR"}/>
                 <Picker.Item label={"GPT"}  value={"GPT"}/>
-              </Picker>
-            </View>
-            
-            <Button 
-              title   = "Crear Disco"
-              onPress= { ()=>CrearDisco()}
-            />
-            
-          </View>
+            </Picker>
+
+            <TouchableOpacity style={{marginLeft:20, width: 190, height: 40, backgroundColor: 'blue',padding:10,alignItems: 'center',borderRadius: 5}} onPress={()=>CrearDisco()} >
+              <Text style={{color:'white', fontSize: 17}}>Crear Disco</Text>
+            </TouchableOpacity>
+
+        </View>
+
+        <View style={{width: 500,height: 40, top:100, left:50 ,flex: 2,alignItems: 'center',justifyContent: 'center',flexDirection: 'row'}}>
+              
           <StatusBar style="auto" />
 
-          <Picker
-            selectedValue={discos}
-            style={{ height: 50, width: 150 }}
-            onValueChange={(itemValue) => setDisco(itemValue)}
-          >
+          <Picker selectedValue={discos} style={{ height: 40, width: 150, marginLeft:20}} onValueChange={(itemValue) => setDisco(itemValue)}>
             {itemsInPicker}
           </Picker>
 
-          <Button 
-            title   = "Eliminar Disco"
-            onPress= { ()=>EliminarDisco()}
-          />
+          <TouchableOpacity style={{marginLeft:20, width: 190, height: 40, backgroundColor: 'blue',padding:10,alignItems: 'center',borderRadius: 5}} onPress={()=>EliminarDisco()} >
+              <Text style={{color:'white', fontSize: 17}}>Eliminar Disco</Text>
+          </TouchableOpacity>
+
         </View>
-        
-        <View >
+
+        <View style={{width: `70%` ,height: 450, top: 140}}> 
+
           <DataTable id="tablaParticion">
             <DataTable.Header>
               <DataTable.Title></DataTable.Title>
               <DataTable.Title></DataTable.Title>
-              <DataTable.Title ></DataTable.Title>
-              <DataTable.Title ></DataTable.Title>
+              <DataTable.Title></DataTable.Title>
+              <DataTable.Title></DataTable.Title>
             </DataTable.Header>
 
-            <DataTable.Row>
+            <DataTable.Row >
               <DataTable.Cell>Espacio Libre precedente (Mib)</DataTable.Cell>
-              <DataTable.Cell numeric>
-                <TextInput
-                onChangeText={(val) => settLibre(val)}
-                value={tLibre}
-                placeholder="espacio libre"
-                keyboardType='numeric' />
+              <DataTable.Cell  numeric>
+                <TextInput onChangeText={(val) => settLibre(val)} value={tLibre} placeholder="espacio libre" keyboardType='numeric' />
               </DataTable.Cell>
               <DataTable.Cell text>Crear Como</DataTable.Cell>
               <DataTable.Cell text>
-                <Picker
-                selectedValue={tipoP}
-                onValueChange={(itemValue, itemIndex) => settipoP(itemValue)}
-                >
+                <Picker selectedValue={tipoP} onValueChange={(itemValue, itemIndex) => settipoP(itemValue)}>
                   {listaTipo}
                 </Picker>
               </DataTable.Cell>
@@ -397,84 +355,58 @@ function App () {
             <DataTable.Row>
               <DataTable.Cell>Tamaño nuevo (Mib)</DataTable.Cell>
               <DataTable.Cell numeric>
-                <TextInput
-                  onChangeText={(val) => settNuevo(val)}
-                  value={tNuevo}
-                  placeholder="tamaño nuevo"
-                  keyboardType='numeric'
-                />
+                <TextInput onChangeText={(val) => settNuevo(val)} value={tNuevo} placeholder="tamaño nuevo" keyboardType='numeric'/>
               </DataTable.Cell>
               <DataTable.Cell>Nombre de la particion</DataTable.Cell>
               <DataTable.Cell text>
-                <TextInput
-                  onChangeText={(val) => setnombreP(val)}
-                  value={nombreP}
-                  placeholder="nombre particion"
-                  keyboardType='text'
-                />
+                <TextInput onChangeText={(val) => setnombreP(val)} value={nombreP} placeholder="nombre particion" keyboardType='text'/>
               </DataTable.Cell>
             </DataTable.Row>
 
             <DataTable.Row>
               <DataTable.Cell>Espacio Libre a continuacion (Mib)</DataTable.Cell>
               <DataTable.Cell numeric>
-                <TextInput
-                  onChangeText={(val) => setlibreA(val)}
-                  value={libreA}
-                  placeholder="libre acontinuacion"
-                  keyboardType='numeric'
-                />
+                <TextInput onChangeText={(val) => setlibreA(val)} value={libreA} placeholder="libre acontinuacion" keyboardType='numeric'/>
               </DataTable.Cell>
               <DataTable.Cell>Sistema de archivos</DataTable.Cell>
               <DataTable.Cell text>
-                <Picker
-                  selectedValue={sistemaA}
-                  onValueChange={(itemValue, itemIndex) => setsistemaA(itemValue)}
-                >
+                <Picker selectedValue={sistemaA} onValueChange={(itemValue, itemIndex) => setsistemaA(itemValue)}>
                   {sistemasArchivos}
                 </Picker>
               </DataTable.Cell>
             </DataTable.Row>
 
             <DataTable.Row>
-              <DataTable.Cell>alinear con: </DataTable.Cell>
-              <DataTable.Cell numeric>
-                <Picker
-                  selectedValue={alinear}
-                  onValueChange={(itemValue, itemIndex) => setalinear(itemValue)}
-                >
+              <DataTable.Cell>Alinear con: </DataTable.Cell>
+              <DataTable.Cell text>
+                <Picker selectedValue={alinear} onValueChange={(itemValue, itemIndex) => setalinear(itemValue)}>
                   {listaAlinear}
                 </Picker>
               </DataTable.Cell>
               <DataTable.Cell>Etiqueta</DataTable.Cell>
               <DataTable.Cell text>
-                <TextInput
-                  onChangeText={(val) => setetiqueta(val)}
-                  value={etiqueta}
-                  placeholder="etiqueta"
-                  keyboardType='text'
-                />
+                <TextInput  onChangeText={(val) => setetiqueta(val)}value={etiqueta} placeholder="etiqueta" keyboardType='text'/>
               </DataTable.Cell>
             </DataTable.Row>     
           </DataTable> 
 
-        <View style={{
-          flex: 1,
-          flexDirection: 'row',
-          alignContent: "center",
-          alignItems: "center",
-          justifyContent: "center"
+          </View>
 
-        }}>
-          <Button 
-            title   = "Crear partición"
-            onPress={() =>{llenarDatosParticion()}}
-          />
-        </View>
+          <View style={{top:5 ,flex: 2,alignItems: 'center',justifyContent: 'center',flexDirection: 'row'}}>
+
+          <TouchableOpacity style={{marginLeft:20, width: 190, height: 40, backgroundColor: 'red',padding:10,alignItems: 'center',borderRadius: 5}} onPress={() => arreglo.datosPorDisco(discos)} >
+             <Text style={{color:'white', fontSize: 17}}>Cancelar</Text>
+           </TouchableOpacity>
+
+          <TouchableOpacity style={{marginLeft:20, width: 190, height: 40, backgroundColor: 'blue',padding:10,alignItems: 'center',borderRadius: 5}} onPress={()=>llenarDatosParticion()} >
+            <Text style={{color:'white', fontSize: 17}}>Aplicar</Text>
+          </TouchableOpacity>
+
+          </View>
+
         {tablePartitions()}
         {diskLog()}
       </View>
-    </View>
   );
 }
 export default App;

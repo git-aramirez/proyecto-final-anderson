@@ -4,7 +4,7 @@
  */
 
  import React from 'react';
- import { Text, View, SectionList, Picker, TextInput, Button} from 'react-native';
+ import { Text, View, SectionList, Picker, TextInput, Button,TouchableOpacity} from 'react-native';
  import * as funciones from '../scripts_am/Main';
  import ProcessList from './ProcessListComponent';
  import BitsMap from './BitsMap';
@@ -320,83 +320,36 @@
  
     //Retorna la view de los algortimos de asignacion de espacio y mapa de bits
     return(
-        <View style={{
+        <View style={{width: `100%` ,height: `100%`,backgroundColor: '#fff',alignItems: 'center',flexDirection: 'column'}}>
+            
+            <View style={{top: 50,flex: 1,flexDirection: 'row',alignContent: "center",alignItems: "center",justifyContent: "center"}}>
+                
+                <TextInput onChangeText={(val) => setnombreArchivo(val)} value={nombreArchivo} placeholder="Nombre del Archivo" style={styles.input} keyboardType='default' clearButtonMode="always"/>
+                <TextInput onChangeText={(val) => settamañoCaracteres(val)} value={tamañoCaracteres} placeholder="Tamaño de caracteres del Archivo" style={styles.input} keyboardType='numeric' />
+                
+                <TouchableOpacity style={{marginLeft:15, width: 130, height: 40, backgroundColor: 'blue',padding:10,alignItems: 'center',borderRadius: 5}} onPress= { ()=>limpiarDisco()}>
+                    <Text style={{color:'white', fontSize: 17}}>Limpiar Discos</Text>
+                </TouchableOpacity>
 
-            alignContent: "center",
-            alignItems: "center",
-            justifyContent: "center",
-            marginTop: 30
+                <TouchableOpacity style={{marginLeft:15, width: 190, height: 40, backgroundColor: 'blue',padding:10,alignItems: 'center',borderRadius: 5}} onPress= { ()=>informacionDisco()}>
+                    <Text style={{color:'white', fontSize: 17}}>Informacion del Disco</Text>
+                </TouchableOpacity>
 
-        }}>
-            <View style={{
-                flex: 1,
-                flexDirection: 'row',
-                alignContent: "center",
-                alignItems: "center",
-                justifyContent: "center",
-            }}>
-                <Button 
-                    title   = "Limpiar Discos"
-                    onPress= { ()=>limpiarDisco()}
-                />
+                <TouchableOpacity style={{marginLeft:15, width: 130, height: 40, backgroundColor: 'blue',padding:10,alignItems: 'center',borderRadius: 5}} onPress= { ()=>crearArchivo()}>
+                    <Text style={{color:'white', fontSize: 17}}>Crear Archivo</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity style={{marginLeft:15, width: 160, height: 40, backgroundColor: 'blue',padding:10,alignItems: 'center',borderRadius: 5}} onPress= { ()=>eliminarArchivo()}>
+                    <Text style={{color:'white', fontSize: 17}}>Eliminar Archivo</Text>
+                </TouchableOpacity>
+                
+                <Picker style={{marginLeft:20}} key="uniqueId1" selectedValue={algoritmo} onValueChange={(itemValue, itemIndex) => setAlgoritmo(itemValue)}>
+                    {listaPicker}
+                </Picker>
+
             </View>
-
-            <View style={{
-                flex: 1,
-                flexDirection: 'row',
-                alignContent: "center",
-                alignItems: "center",
-                justifyContent: "center",
-            }}>
-                <TextInput
-                    onChangeText={(val) => setnombreArchivo(val)}
-                    value={nombreArchivo}
-                    placeholder="Nombre del Archivo"
-                    style={styles.input}
-                    keyboardType='default'
-                    clearButtonMode="always"
-                />
-                <NumberFormat
-                    value={tamañoCaracteres}
-                    displayType={'text'}
-                    renderText={ (tamañoCaracteres) => (
-                        <TextInput
-                            underlineColorAndroid="transparent"
-                            onChangeText={(val) => settamañoCaracteres(val)}
-                            value={tamañoCaracteres}
-                            placeholder="Ingrese tamaño de caracteres del archivo"
-                            style={styles.input}
-                            keyboardType="numeric"
-                        />
-                    )}
-                />
-            </View>
-
-            <View style={{
-                flex: 1,
-                flexDirection: 'row',
-                alignContent: "center",
-                alignItems: "center",
-                justifyContent: "center",
-            }}>
-                <Button 
-                title   = "Crear Archivo"
-                onPress= { ()=>crearArchivo() }
-                />
-                <Button
-                title   = "Eliminar Archivo"
-                onPress= { ()=>eliminarArchivo()}
-                />
-            </View>
-
-            <Picker
-                key="uniqueId1"
-                selectedValue={algoritmo}
-                onValueChange={(itemValue, itemIndex) => setAlgoritmo(itemValue)}
-            >
-                {listaPicker}
-            </Picker>
-            <View>
+            
+            <View style={{top: 100}}>
                 {processTable()}
                 {mapaBits()}
             </View>

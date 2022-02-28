@@ -12,7 +12,8 @@ export const styles = StyleSheet.create({
 
   input: {
     height: 40,
-    margin: 8,
+    width: 150,
+    margin: 12,
     borderWidth: 1,
     padding: 10,
     color:'black',

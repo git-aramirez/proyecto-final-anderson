@@ -15,13 +15,7 @@ function BitsMap(props) {
     let array = props.map;
         
     return(
-        <View style={{
-            flexDirection: 'row',
-            alignContent: "center",
-            alignItems: "center",
-            justifyContent: "center",
-            padding: 1,
-            }}>
+        <View style={{flexDirection: 'row',alignContent: "center", alignItems: "center",justifyContent: "center",padding: 1,}}>
                 <SectionList 
                     sections={[
                         {title: 'Bloque 1', data: array[0]},
