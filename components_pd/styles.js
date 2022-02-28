@@ -34,7 +34,6 @@ export const styles = StyleSheet.create({
     color:'black',
     fontSize: 17
   },
-
   textInput_salida_sp: {
     width: 400,
     height: 30,
@@ -44,7 +43,18 @@ export const styles = StyleSheet.create({
     color:'black',
     fontSize: 17
   },
-
+  item_resultado: {
+    fontSize: 15,
+    height: 100,
+    width:900,
+    alignContent: "center",
+    alignItems: "center",
+    justifyContent: "center",
+    borderColor: 'black',
+    flexDirection: 'column',
+    borderWidth: .25,
+    textAlign: 'center',
+  },
   container: {
       flex: 1,
       backgroundColor: '#fff',

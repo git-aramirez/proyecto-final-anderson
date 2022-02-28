@@ -18,26 +18,18 @@ function ProcessList(props) {
         
     return(
 
-      <View
-      style={{
-          flexDirection: 'row',
-          alignContent: "center",
-          alignItems: "center",
-          justifyContent: "center",
-          padding: 1,
-          width:150 
-        }}>
+      <View style={{top: 40, flexDirection: 'row',alignContent: "center",justifyContent: "center",padding: 1, right: 40 }}>
  
           <DataTable id="tabla_salida" style={{flexDirection: 'column'}}>
-            <DataTable.Header style={{width:150}}>
-              <DataTable.Title adjustsFontSizeToFit >Pagina</DataTable.Title>
-              <DataTable.Title adjustsFontSizeToFit >Memoria</DataTable.Title>
+            <DataTable.Header style={{width:200}}>
+              <DataTable.Title adjustsFontSizeToFit ><Text style={styles.item_tabla}>Página</Text></DataTable.Title>
+              <DataTable.Title adjustsFontSizeToFit ><Text style={styles.item_tabla}>Memoria</Text></DataTable.Title>
             </DataTable.Header>
         
             {array.map((row, index) => (
-            <DataTable.Row style={{width:150, height: array[index]*20, minHeight: '40%' }}> 
+            <DataTable.Row > 
               <DataTable.Cell style={{width:75, height: 50, borderBottomWidth: 0}}>{index+1}</DataTable.Cell>
-              <DataTable.Cell style={{width:75,height: array[index]*20 , flexDirection: 'column'}}>
+              <DataTable.Cell style={{width:100, height: array[index]*20 , flexDirection: 'column'}}>
               <View style={{flexDirection: 'column', margin: 0}}>
                 {array[index].map((row, index1) =>(
                   <Text style={styles.item}>{array[index][index1]}</Text>

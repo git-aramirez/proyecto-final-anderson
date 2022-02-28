@@ -18,10 +18,9 @@ export const styles = StyleSheet.create({
     marginBottom: 10
   },
   item: {
-    fontSize: 10,
-    height: 12,
-    width:30,
-    fontWeight: 'bold',
+    fontSize: 15,
+    height: 30,
+    width:70,
     alignContent: "center",
     alignItems: "center",
     justifyContent: "center",
@@ -29,7 +28,26 @@ export const styles = StyleSheet.create({
     flexDirection: 'column',
     borderWidth: .25,
     textAlign: 'center',
-    borderBottomWidth: 0
+  },
+  item_resultado: {
+    fontSize: 15,
+    height: 100,
+    width:900,
+    alignContent: "center",
+    alignItems: "center",
+    justifyContent: "center",
+    borderColor: 'black',
+    flexDirection: 'column',
+    borderWidth: .25,
+    textAlign: 'center',
+  },
+  item_tabla: {
+    fontSize: 20,
+    alignContent: "center",
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection: 'column',
+    textAlign: 'center',
   },
   itemExtend: {
     fontSize: 10,

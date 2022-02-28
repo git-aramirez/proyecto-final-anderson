@@ -4,7 +4,7 @@
  */
 
 import React from 'react';
-import { View , ScrollView,Button,TextInput} from 'react-native';
+import { View , ScrollView, Button, TextInput, TouchableOpacity, Text} from 'react-native';
 import * as funciones from '../scripts_sm/Main';
 import ProcessList from './ProcessListComponent';
 import PhysicalMemory from './PhysicalMemoryComponent';
@@ -221,7 +221,7 @@ function segmentation() {
             </View>
             {/**View tabla de procesos */}
             <View
-                style={{ flexDirection: 'row'}}>
+                style={{ flexDirection: 'row',width: "100%", alignContent: "center", justifyContent: "center"}}>
                 <ProcessList
                     procesos = {funciones.TablaProcesos}
                 />
@@ -232,16 +232,16 @@ function segmentation() {
                     procesos = {funciones.MemoriaFisica}
                 />
             </View>
-            <View>
+            <View style={{top: 30, backgroundColor: '#fff',alignItems: 'center',flexDirection: 'column'}}>
                 <TextInput
+                    style={styles.item_resultado}
                     multiline={true}
                     numberOfLines={8}
                     value={funciones.logSegmentacion}
                 />
-                <Button
-                    title   = "Reproducir"
-                    onPress={ ()=> Speaker(funciones.logSegmentacion)}
-                />
+                <TouchableOpacity style={{marginTop:15, width: 160, height: 40, backgroundColor: 'blue',padding:10,alignItems: 'center',borderRadius: 5}} onPress= { ()=> Speaker(funciones.logSegmentacion)}>
+                    <Text style={{color:'white', fontSize: 17}}>Reproducir</Text>
+                </TouchableOpacity>
             </View>
         </ScrollView>
     )
