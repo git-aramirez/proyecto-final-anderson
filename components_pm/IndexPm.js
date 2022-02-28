@@ -126,9 +126,8 @@ function paginacion() {
     return(
 
         // View Global
-        <ScrollView>
-            {/**View de los Input proceso - palabra */}
-            <View >
+        <View style={{width: `100%` ,height: `100%`,backgroundColor: '#fff',alignItems: 'center',justifyContent: 'center' }}>
+            <View style={{top:20 ,flex: 2,alignItems: 'center',justifyContent: 'center',flexDirection: 'row'}}>
                 <TextInput
                     onChangeText={(val) => setPalabra(val)}
                     value={palabra}
@@ -136,16 +135,13 @@ function paginacion() {
                     placeholder="Palabra"
                     keyboardType='default' 
                 />
-            </View>
-            {/**View del boton crear proceso*/}
-            <View>
+
                 <Button 
                     title   = "Crear Proceso"
                     onPress= { ()=>crearProceso() }
                 />
             </View>
-            {/**View de los Input pagina y posicion solicitada*/}
-            <View>
+            <View style={{top:20 ,flex: 2,alignItems: 'center',justifyContent: 'center',flexDirection: 'row'}}>
 
                 <NumberFormat
                     value={paginaSolicitada}
@@ -175,16 +171,13 @@ function paginacion() {
                         />
                     )}
                 />
-            </View>
-            {/**View del boton realizar solicitud */}
-            <View>
+
                 <Button
                     title   = "Realizar Solicitud"
                     onPress= { ()=>solictarItem() }
                 />
             </View>
-            {/**View del input eliminar proceso - palabra con el indice*/}
-            <View>
+            <View style={{top:20 ,flex: 2,alignItems: 'center',justifyContent: 'center',flexDirection: 'row'}}>
                 <NumberFormat
                     value={eliminarItem}
                     displayType={'text'}
@@ -199,9 +192,7 @@ function paginacion() {
                         />
                     )}
                 />
-            </View>
-            {/**View del boton eliminar proceso - palabra */}
-            <View>
+
                 <Button 
                     title   = "Eliminar palabra"
                     onPress= { ()=>eliminarPalabra() }
@@ -217,7 +208,7 @@ function paginacion() {
                         procesos = {funciones.TablaPaginas}
                     />
                     <View
-                    style={{ flexDirection: 'column', marginTop: 50, alignItems: "center"}}>
+                        style={{ flexDirection: 'column', marginTop: 50, alignItems: "center"}}>
                         <ProcessList
                             procesos = {funciones.MemoriaFisica}
                         />
@@ -228,7 +219,7 @@ function paginacion() {
 
             </View>
 
-            <View>
+            <View style={{top:20 ,flex: 2,alignItems: 'center',justifyContent: 'center',flexDirection: 'row'}}>
                 <TextInput
                     multiline={true}
                     numberOfLines={8}
@@ -240,7 +231,7 @@ function paginacion() {
                 />
             </View>
 
-        </ScrollView>
+        </View>
     )
     
 }

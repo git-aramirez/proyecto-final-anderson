@@ -2,6 +2,7 @@
   "expo": {
     "name": "proyectoFinal",
     "slug": "proyectoFinal",
+    "description": "your app desc",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/arquitectura.png",
@@ -10,6 +11,7 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
+
     "updates": {
       "fallbackToCacheTimeout": 0
     },
