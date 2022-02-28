@@ -108,16 +108,16 @@ function tableProcessComponent (){
   if(banderaSalida){
     return(
       <ScrollView 
-      horizontal={true}
-      contentContainerStyle={{ width: `${100 * 5}%` }}
-      showsHorizontalScrollIndicator={true}
-      scrollEventThrottle={200}
-      decelerationRate="fast"
-      pagingEnabled
+        horizontal={true}
+        contentContainerStyle={{ width: `${100 * 5}%` }}
+        showsHorizontalScrollIndicator={true}
+        scrollEventThrottle={200}
+        decelerationRate="fast"
+        pagingEnabled
       
       >
-    <TableProcessComponent tablaStyles={tablaStyles} />
-    </ScrollView>
+        <TableProcessComponent tablaStyles={tablaStyles} />
+      </ScrollView>
   );}
   return(<></>);
 }

@@ -6,9 +6,10 @@
  import React from 'react';
  import { Text, View, SectionList, Picker, TextInput, Button,TouchableOpacity} from 'react-native';
  import * as funciones from '../scripts_am/Main';
- import { styles } from "./styles";
  import ProcessList from './ProcessListComponent';
  import BitsMap from './BitsMap';
+ import { styles } from './styles';
+ import NumberFormat from 'react-number-format';
  import Speaker from '../components_drawer/Speaker';
  
  /**
@@ -20,7 +21,7 @@
     //Variable que almacena el nombre del archivo a crear o eliminar
     const [nombreArchivo,   setnombreArchivo]       = React.useState("");
     //Variable que almacena el tamaño de caracteres del archivo a crear
-    const [tamañoCaracteres,   settamañoCaracteres] = React.useState(5);
+    const [tamañoCaracteres,   settamañoCaracteres] = React.useState("");
     //Variable que identifica el Tipo de algortimo a proyectar
     const [algoritmo, setAlgoritmo]                 = React.useState("Indexada-Combinada");
     //Variable que acciona el refresco de la tabla
@@ -65,6 +66,10 @@
         }
         //Llamado al metodo de la logica que crea un archivo
         funciones.crearArchivo(nombreArchivo, nombreArchivo.length);
+
+        // Limpia campo de texto
+        setnombreArchivo("");
+
         //Refresco de la tabla del algortimo de asignacion
         onRefresh();
     }
@@ -82,6 +87,10 @@
         }
         //Llamado al metodo de la logica que elimina un archivo
         funciones.eliminarArchivo(nombreArchivo, tamañoCaracteres);
+
+        // Limpia campo de texto
+        setnombreArchivo("");
+
         //Refresco de la tabla del algortimo de asignacion
         onRefresh();
     }

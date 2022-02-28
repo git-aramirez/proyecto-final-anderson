@@ -16,8 +16,8 @@ export const styles = StyleSheet.create({
     margin: 12,
     borderWidth: 1,
     padding: 10,
-    alignItems: "center",
-    justifyContent: "center"
+    color:'black',
+    fontSize: 17
   },
 
   area: {

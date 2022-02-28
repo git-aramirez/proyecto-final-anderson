@@ -67,12 +67,12 @@ export function crearProceso(palabra) { // Falta Tabla de segmentos
     }
 
     // Visualizacion de datos
-    // console.log("Tabla de procesos");
-    // console.log(TablaProcesos);
-    // console.log("Tabla de datos");
-    // console.log(TablaDatos);
-    // console.log("Memoria fisica");
-    // console.log(MemoriaFisica);
+    console.log("Tabla de procesos");
+    console.log(TablaProcesos);
+    console.log("Tabla de datos");
+    console.log(TablaDatos);
+    console.log("Memoria fisica");
+    console.log(MemoriaFisica);
     console.log("log");
     console.log(logSegmentacion);
 }

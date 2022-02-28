@@ -84,6 +84,13 @@ function App () {
     //Llamado al metodo para el ingreso de la particion.
     await funciones.ingresarParticion(discos, array);
 
+    // Limpia campos  de texto 
+    settLibre("");
+    settNuevo("");
+    setlibreA("");
+    setnombreP("");
+    setetiqueta("");
+
     return onRefresh();
   }
  
@@ -127,6 +134,7 @@ function App () {
 
     // Limpia campos
     setTamaño("");
+    setNombre("");
 
     // Refresca componentes
     return onRefresh();

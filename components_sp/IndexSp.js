@@ -173,6 +173,7 @@ function  crearTablaEntrada (){
             {textInputSemaforosComponent()}
             {buttonClear()}
         </View>
+        
         {tableInputThreadsComponent()}
         <View style={{top:20 ,flex: 2,alignItems: 'center',justifyContent: 'center',flexDirection: 'row'}}>
           {buttonGenerarSemaforosAleatoriosComponent()}
