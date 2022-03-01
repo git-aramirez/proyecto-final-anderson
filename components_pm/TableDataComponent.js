@@ -31,17 +31,11 @@ function ProcessList(props) {
             <DataTable.Title >Pagina</DataTable.Title>
             <DataTable.Title>Memoria</DataTable.Title>
           </DataTable.Header>
-          {array.map((row, index) => (
+          {Object.values(array).map((row, index) => (
             <DataTable.Row style={{width:150, height: 40,minHeight: '40%' }}> 
-              <DataTable.Cell style={{width:75, height: 50}}>{index}</DataTable.Cell>
-              <DataTable.Cell style={{width:75,height: 50 , flexDirection: 'column'}}>
-                <View style={{flexDirection: 'column', margin: 0}}>
-                  {array[0].map((row, index1) =>(
-                      <Text style={styles.item}>{array[index][index1]}</Text>
-                  ))}
-                </View>
-            </DataTable.Cell>
-          </DataTable.Row>
+              <DataTable.Cell style={{width:75, height: 50}}>{row.pagina}</DataTable.Cell>
+              <DataTable.Cell style={{width:75,height: 50 }}>{row.memoria}</DataTable.Cell>
+            </DataTable.Row>
           ))}
         </DataTable > 
     </View>

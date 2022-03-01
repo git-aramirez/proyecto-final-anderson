@@ -4,13 +4,20 @@
  */
 
 import React from 'react';
-import { View , ScrollView, Button, TextInput} from 'react-native';
+import { View , ScrollView, Button, TextInput, TouchableOpacity, Text} from 'react-native';
 import * as funciones from '../scripts_pm/Main';
 import ProcessList from './ProcessListComponent';
+import TableData from './TableDataComponent';
+import TableUser from './TableUserComponent';
 import { styles } from './styles';
 import NumberFormat from 'react-number-format';
 import Speaker from '../components_drawer/Speaker';
 
+/**
+ * Genera la vista para los algoritmos de paginación de memoria
+ *
+ * @returns Vista de páginacion de memoria
+ */
 function paginacion() {
 
     //Variable que almacena el indice de la pagina a eliminar
@@ -56,11 +63,14 @@ function paginacion() {
         if (palabra.length <= funciones.TamañoBloque) {
             // Invoca al metodo crear proceso
             funciones.crearProceso(palabra);
+
+            // Limpia campo de texto
             setPalabra("");
+
             //Refresco de la tabla del algortimo de asignacion
             return onRefresh();
         }
-        return alert("EL TAMAÑO DEL PROCESO ES DE MAXIMO 3 CARACTERES");
+        return alert("El tamaño del proceso es de máximo 3 caracteres.");
     }
 
     /**
@@ -126,8 +136,9 @@ function paginacion() {
     return(
 
         // View Global
-        <View style={{width: `100%` ,height: `100%`,backgroundColor: '#fff',alignItems: 'center',justifyContent: 'center' }}>
-            <View style={{top:20 ,flex: 2,alignItems: 'center',justifyContent: 'center',flexDirection: 'row'}}>
+        <View style={{ width: `100%` ,height: `100%`,backgroundColor: '#fff',alignItems: 'center',justifyContent: 'center' }}>
+
+            <View style={{top:90 ,flex: 2,alignItems: 'center',justifyContent: 'center',flexDirection: 'row'}}>
                 <TextInput
                     onChangeText={(val) => setPalabra(val)}
                     value={palabra}
@@ -141,7 +152,7 @@ function paginacion() {
                     onPress= { ()=>crearProceso() }
                 />
             </View>
-            <View style={{top:20 ,flex: 2,alignItems: 'center',justifyContent: 'center',flexDirection: 'row'}}>
+            <View style={{top:140 ,flex: 2,alignItems: 'center',justifyContent: 'center',flexDirection: 'row'}}>
 
                 <NumberFormat
                     value={paginaSolicitada}
@@ -177,7 +188,7 @@ function paginacion() {
                     onPress= { ()=>solictarItem() }
                 />
             </View>
-            <View style={{top:20 ,flex: 2,alignItems: 'center',justifyContent: 'center',flexDirection: 'row'}}>
+            <View style={{top:190 ,flex: 2,alignItems: 'center',justifyContent: 'center',flexDirection: 'row'}}>
                 <NumberFormat
                     value={eliminarItem}
                     displayType={'text'}
@@ -200,11 +211,11 @@ function paginacion() {
             </View>
 
             <View
-                style={{ flexDirection: 'row'}}>
-                    <ProcessList
+                style={{ top: 190, flexDirection: 'row', alignItems: 'center',justifyContent: 'center'}}>
+                    <TableUser
                         procesos = {funciones.TablaUsuario}
                     />
-                    <ProcessList
+                    <TableData
                         procesos = {funciones.TablaPaginas}
                     />
                     <View
@@ -219,17 +230,18 @@ function paginacion() {
 
             </View>
 
-            <View style={{top:20 ,flex: 2,alignItems: 'center',justifyContent: 'center',flexDirection: 'row'}}>
+            <View style={{top: 200, backgroundColor: '#fff',alignItems: 'center',flexDirection: 'column'}}>
                 <TextInput
+                    style={styles.item_resultado}
                     multiline={true}
                     numberOfLines={8}
                     value={funciones.paginationLog}
                 />
-                <Button
-                    title   = "Reproducir"
-                    onPress={ ()=> Speaker(funciones.paginationLog)}
-                />
+                <TouchableOpacity style={{marginTop:15, width: 160, height: 40, backgroundColor: 'blue',padding:10,alignItems: 'center',borderRadius: 5}} onPress= { ()=> Speaker(funciones.paginationLog)}>
+                    <Text style={{color:'white', fontSize: 17}}>Reproducir</Text>
+                </TouchableOpacity>
             </View>
+            
 
         </View>
     )
