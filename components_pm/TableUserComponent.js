@@ -16,15 +16,7 @@ function ProcessList(props) {
         
   return(
 
-    <View
-    style={{
-        flexDirection: 'row',
-        alignContent: "center",
-        alignItems: "center",
-        justifyContent: "center",
-        padding: 1,
-        width:150 
-      }}>
+    <View style={{top: 40, flexDirection: 'row',alignContent: "center",justifyContent: "center",padding: 1, right: 40 }}>
 
         <DataTable id="tabla_salida" style={{flexDirection: 'column'}}>
           <DataTable.Header style={{width:150}}>
@@ -32,9 +24,9 @@ function ProcessList(props) {
             <DataTable.Title>Memoria</DataTable.Title>
           </DataTable.Header>
           {Object.values(array).map((row, index) => (
-            <DataTable.Row style={{width:150, height: 40,minHeight: '40%' }}> 
-              <DataTable.Cell style={{width:75, height: 50}}>{index}</DataTable.Cell>
-              <DataTable.Cell style={{width:75,height: 50 , flexDirection: 'column'}}>
+            <DataTable.Row > 
+              <DataTable.Cell style={{width:75, height: 100}}>{index}</DataTable.Cell>
+              <DataTable.Cell style={{width:100,height: 100 , flexDirection: 'column'}}>
                 <View style={{flexDirection: 'column', margin: 0}}>
                   {Object.values(array[index].data).map((row, index1) => (
                     <Text style={styles.item}>{array[index].data[index1]}</Text>
