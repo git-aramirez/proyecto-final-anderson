@@ -22,14 +22,14 @@ export default function IndexAp() {
   
   function tableInputComponent (){
     if(banderaEntrada){
-      return(<TableInputComponent tablaEntrada={tablaEntrada} setTablaEntrada={setTablaEntrada} />);
+      return(<TableInputComponent  height={200} tablaEntrada={tablaEntrada} setTablaEntrada={setTablaEntrada} />);
     }
     return(<></>);
   }
 
   function tableOutComponent (){
     if(banderaSalida){
-      return( <TableOutComponent tablaSalida={tablaSalida}/>);
+      return( <TableOutComponent height={40*numeroProcesos} tablaSalida={tablaSalida}/>);
     }
 
     return(<></>);
@@ -38,8 +38,8 @@ export default function IndexAp() {
   function buttonEjecutarAlgoritmoComponent (){
     if(banderaEntrada){
       return(
-        <TouchableOpacity style={{marginTop:0, width: 190, height: 40, backgroundColor: 'blue',padding:10,alignItems: 'center',borderRadius: 5}} onPress={()=>iniciarAlgoritmo()} >
-         <Text style={{color:'white', fontSize: 17}}>Ejecutar Algoritmo</Text>
+        <TouchableOpacity style={{marginLeft:20, width: 190, height: 40, backgroundColor: 'blue',padding:10,alignItems: 'center',borderRadius: 5}} onPress={()=>iniciarAlgoritmo()} >
+          <Text style={{color:'white', fontSize: 17}}>Ejecutar Algoritmo</Text>
         </TouchableOpacity>);
     }
 
@@ -54,7 +54,7 @@ function init(){
 function crearTablaEntrada(){
   let tablaEntrada = [];
   for (let index = 0; index < numeroProcesos; index++) {
-    tablaEntrada.push({pid: index+1, T_llegada: "", T_ejecucion: "", prioridad:""})
+    tablaEntrada.push({pid: index+1, t_llegada: "", t_ejecucion: "", prioridad:""})
   }
   setTablaEntrada(tablaEntrada);
 }
@@ -98,7 +98,10 @@ function inicializarTablaEntradaNumerosAleatorios(){
 
 function bottonInicializarTablaeEntrada(){
   if(banderaEntrada){
-    return(<Button onPress={()=>inicializarTablaEntradaNumerosAleatorios()} title={"Generar Aleatorios"} />);
+    return(
+    <TouchableOpacity style={{marginLeft:20, width: 190, height: 40, backgroundColor: 'blue',padding:10,alignItems: 'center',borderRadius: 5}} onPress={()=>inicializarTablaEntradaNumerosAleatorios()} >
+      <Text style={{color:'white', fontSize: 17}}>Generar Aleatorios</Text>
+    </TouchableOpacity>);
   }
 
   return(<></>);
@@ -106,19 +109,8 @@ function bottonInicializarTablaeEntrada(){
 
 function tableProcessComponent (){
   if(banderaSalida){
-    return(
-      <ScrollView 
-        horizontal={true}
-        contentContainerStyle={{ width: `${100 * 5}%` }}
-        showsHorizontalScrollIndicator={true}
-        scrollEventThrottle={200}
-        decelerationRate="fast"
-        pagingEnabled
-      
-      >
-        <TableProcessComponent tablaStyles={tablaStyles} />
-      </ScrollView>
-  );}
+    return(<TableProcessComponent tablaStyles={tablaStyles} />);
+  }
   return(<></>);
 }
 
@@ -140,51 +132,26 @@ function pickerAlgortimos(){
 
 
  return (
-  
-  <View style={{width: `100%` ,height: `100%`,backgroundColor: '#fff',alignItems: 'center',justifyContent: 'center' }}>
+  <View style={{width: `100%` ,height: `100%`,backgroundColor: '#fff',alignItems: 'center',flexDirection: 'column'}}>
 
-      <View style={{top:20 ,flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-        flexDirection: 'column'}}>
-
-        <TextInput style={styles.input} onChangeText={(val)=>setNumeroProcesos(val)} placeholder="número de procesos"/>
-        <TextInput style={styles.input} onChangeText={(val)=>setNumeroCPU(val)} placeholder="número de CPU´S"/>
-        <TextInput style={styles.input} onChangeText={(val)=>setNumeroNucleos(val)} placeholder="número de núcleos"/>
-        <TextInput style={styles.input} onChangeText={(val)=>setQuantum(val)} placeholder="Quantum"/>
-    
-        <View style={{margin: 10} }>
-          {pickerAlgortimos()}
-        </View>
-       
-        <View style={{margin: 10} }>
-        <TouchableOpacity style={{marginTop:0, width: 190, height: 40, backgroundColor: 'blue',padding:10,alignItems: 'center',borderRadius: 5}} onPress={()=>init()} >
-                <Text style={{color:'white', fontSize: 17}}>Crear Tabla</Text>
-        </TouchableOpacity>
-        </View>
-       
-        <View style={{margin: 10} }>
-        {buttonEjecutarAlgoritmoComponent()} 
-        </View>
-
-        <View style={{margin: 10} }>
-        {bottonInicializarTablaeEntrada()}
-        </View>
-
-       <View style={{margin: 20} }>
-       {tableInputComponent()}
-       </View>
-
-       <View style={{margin: 20} }>
-       {tableOutComponent()}
-       </View>
-
-       <View style={{margin: 20}}>
-           {tableProcessComponent()} 
-       </View>
-    
-       </View>
-
+    <View style={{top:15 ,alignItems: 'center',justifyContent: 'center',flexDirection: 'row'}}>
+      <TextInput style={styles.input} onChangeText={(val)=>setNumeroProcesos(val)} placeholder="número de procesos"/>
+      <TextInput style={styles.input} onChangeText={(val)=>setNumeroCPU(val)} placeholder="número de CPU´S"/>
+      <TextInput style={styles.input} onChangeText={(val)=>setNumeroNucleos(val)} placeholder="número de núcleos"/>
+      <TextInput style={styles.input} onChangeText={(val)=>setQuantum(val)} placeholder="Quantum"/>
+      <TouchableOpacity style={{marginTop:0, width: 190, height: 40, backgroundColor: 'blue',padding:10,alignItems: 'center',borderRadius: 5}} onPress={()=>init()} >
+        <Text style={{color:'white', fontSize: 17}}>Crear Tabla</Text>
+      </TouchableOpacity>
     </View>
+    
+    <View style={{top:25 ,alignItems: 'center',justifyContent: 'center',flexDirection: 'row'}}>
+      {pickerAlgortimos()}
+      {bottonInicializarTablaeEntrada()}
+      {buttonEjecutarAlgoritmoComponent()} 
+    </View>
+      {tableInputComponent()} 
+      {tableOutComponent()}
+      {tableProcessComponent()} 
+  </View>
   );
 }

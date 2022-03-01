@@ -1,6 +1,7 @@
 import { View,TextInput} from 'react-native';
 import {DataTable} from 'react-native-paper';
 import {styles} from '../styles/styles';
+import React from 'react';
 
 const TableInputComponent = (props) => {
 
@@ -13,7 +14,7 @@ const TableInputComponent = (props) => {
   }
 
       return(
-        <View style={styles.container_table}>
+        <View style={{width:400,height:props.height, top:90}}>
           <DataTable id="tabla">
             <DataTable.Header>
               <DataTable.Title >pid</DataTable.Title>

@@ -1,13 +1,14 @@
 import { View,TextInput} from 'react-native';
 import {DataTable} from 'react-native-paper';
 import {styles} from '../styles/styles';
+import React from 'react';
 
 const TableOutComponent = (props) => {
 
   const tablaSalida = props.tablaSalida;
 
   return(
-    <View style={styles.container_table}>
+    <View style={{width:700,height:props.height, top:150}}>
       <DataTable id="tabla_salida">
         <DataTable.Header>
           <DataTable.Title>pid</DataTable.Title>

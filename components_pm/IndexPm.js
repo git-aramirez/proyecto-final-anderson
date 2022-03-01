@@ -4,7 +4,7 @@
  */
 
 import React from 'react';
-import { View , ScrollView, Button, TextInput, TouchableOpacity, Text} from 'react-native';
+import { View , ScrollView, Button, TextInput,TouchableOpacity, Text} from 'react-native';
 import * as funciones from '../scripts_pm/Main';
 import ProcessList from './ProcessListComponent';
 import TableData from './TableDataComponent';
@@ -136,114 +136,53 @@ function paginacion() {
     return(
 
         // View Global
-        <View style={{ width: `100%` ,height: `100%`,backgroundColor: '#fff',alignItems: 'center',justifyContent: 'center' }}>
+    <View style={{width: `100%` ,height: `100%`,backgroundColor: '#fff',alignItems: 'center',flexDirection: 'column'}}>
 
-            <View style={{top:90 ,flex: 2,alignItems: 'center',justifyContent: 'center',flexDirection: 'row'}}>
-                <TextInput
-                    onChangeText={(val) => setPalabra(val)}
-                    value={palabra}
-                    style={styles.input}
-                    placeholder="Palabra"
-                    keyboardType='default' 
-                />
-
-                <Button 
-                    title   = "Crear Proceso"
-                    onPress= { ()=>crearProceso() }
-                />
-            </View>
-            <View style={{top:140 ,flex: 2,alignItems: 'center',justifyContent: 'center',flexDirection: 'row'}}>
-
-                <NumberFormat
-                    value={paginaSolicitada}
-                    displayType={'text'}
-                    renderText={ (paginaSolicitada) => (
-                        <TextInput
-                            underlineColorAndroid="transparent"
-                            onChangeText={(val) => setPaginaSolicitada(val)}
-                            value={paginaSolicitada}
-                            placeholder="Ingrese índice de la página"
-                            style={styles.input}
-                            keyboardType="numeric"
-                        />
-                    )}
-                />
-                <NumberFormat
-                    value={posicionSolicitada}
-                    displayType={'text'}
-                    renderText={ (posicionSolicitada) => (
-                        <TextInput
-                            underlineColorAndroid="transparent"
-                            onChangeText={(val) => setPosicionSolicitada(val)}
-                            value={posicionSolicitada}
-                            placeholder="Ingrese índice de la posición"
-                            style={styles.input}
-                            keyboardType="numeric"
-                        />
-                    )}
-                />
-
-                <Button
-                    title   = "Realizar Solicitud"
-                    onPress= { ()=>solictarItem() }
-                />
-            </View>
-            <View style={{top:190 ,flex: 2,alignItems: 'center',justifyContent: 'center',flexDirection: 'row'}}>
-                <NumberFormat
-                    value={eliminarItem}
-                    displayType={'text'}
-                    renderText={ (eliminarItem) => (
-                        <TextInput
-                            underlineColorAndroid="transparent"
-                            onChangeText={(val) => setEliminarItem(val)}
-                            value={eliminarItem}
-                            placeholder="Ingrese índice de palabra a eliminar"
-                            style={styles.input}
-                            keyboardType="numeric"
-                        />
-                    )}
-                />
-
-                <Button 
-                    title   = "Eliminar palabra"
-                    onPress= { ()=>eliminarPalabra() }
-                />
-            </View>
-
-            <View
-                style={{ top: 190, flexDirection: 'row', alignItems: 'center',justifyContent: 'center'}}>
-                    <TableUser
-                        procesos = {funciones.TablaUsuario}
-                    />
-                    <TableData
-                        procesos = {funciones.TablaPaginas}
-                    />
-                    <View
-                        style={{ flexDirection: 'column', marginTop: 50, alignItems: "center"}}>
-                        <ProcessList
-                            procesos = {funciones.MemoriaFisica}
-                        />
-                        <ProcessList
-                            procesos = {funciones.MemoriaVirtual}
-                        />
-                    </View>
-
-            </View>
-
-            <View style={{top: 200, backgroundColor: '#fff',alignItems: 'center',flexDirection: 'column'}}>
-                <TextInput
-                    style={styles.item_resultado}
-                    multiline={true}
-                    numberOfLines={8}
-                    value={funciones.paginationLog}
-                />
-                <TouchableOpacity style={{marginTop:15, width: 160, height: 40, backgroundColor: 'blue',padding:10,alignItems: 'center',borderRadius: 5}} onPress= { ()=> Speaker(funciones.paginationLog)}>
-                    <Text style={{color:'white', fontSize: 17}}>Reproducir</Text>
+        <View style={{top:50 ,flex: 2,alignItems: 'center',justifyContent: 'center',flexDirection: 'row'}}>
+            <View style={{flex: 2,alignItems: 'center',justifyContent: 'center',flexDirection: 'row'}}>
+                <TextInput onChangeText={(val) => setPalabra(val)} value={palabra} style={styles.input} placeholder="Palabra" keyboardType='default' />
+                <TouchableOpacity style={{marginTop:0, width: 190, height: 40, backgroundColor: 'blue',padding:10,alignItems: 'center',borderRadius: 5}} onPress={()=>crearProceso()} >
+                    <Text style={{color:'white', fontSize: 17}}>Crear Proceso</Text>
                 </TouchableOpacity>
             </View>
-            
 
+            <View style={{left:50 ,flex: 2,alignItems: 'center',justifyContent: 'center',flexDirection: 'row'}}>
+                <NumberFormat value={paginaSolicitada} displayType={'text'} renderText={ (paginaSolicitada) => (
+                        <TextInput underlineColorAndroid="transparent" onChangeText={(val) => setPaginaSolicitada(val)} value={paginaSolicitada} placeholder="índice de página" style={styles.input_indices} keyboardType="numeric"/>)}/>
+                <NumberFormat alue={posicionSolicitada} displayType={'text'} renderText={ (posicionSolicitada) => (
+                        <TextInput underlineColorAndroid="transparent" onChangeText={(val) => setPosicionSolicitada(val)} value={posicionSolicitada} placeholder="índice de posición" style={styles.input_indices} keyboardType="numeric"/>)}/>
+                <TouchableOpacity style={{marginTop:0, width: 190, height: 40, backgroundColor: 'green',padding:10,alignItems: 'center',borderRadius: 5}} onPress={()=>solictarItem()} >
+                    <Text style={{color:'white', fontSize: 17}}>Realizar Solicitud</Text>
+                </TouchableOpacity>
+            </View>
         </View>
+            
+        <View style={{top:115,flex: 2,alignItems: 'center',justifyContent: 'center',flexDirection: 'row'}}>
+                <NumberFormat value={eliminarItem} displayType={'text'} renderText={ (eliminarItem) => (
+                        <TextInput underlineColorAndroid="transparent" onChangeText={(val) => setEliminarItem(val)} value={eliminarItem} placeholder="índice de palabra a eliminar" style={styles.input_eliminiar} keyboardType="numeric"/>)}/>
+                <TouchableOpacity style={{marginTop:0, width: 190, height: 40, backgroundColor: 'red',padding:10,alignItems: 'center',borderRadius: 5}} onPress={()=>eliminarPalabra()} >
+                    <Text style={{color:'white', fontSize: 17}}>Eliminar palabra</Text>
+                </TouchableOpacity>
+        </View>
+
+        <View style={{top:400,flexDirection: 'row'}}>
+            <TableUser procesos = {funciones.TablaUsuario}/>
+            <TableData procesos = {funciones.TablaPaginas}/>
+            <View style={{ flexDirection: 'column', marginTop: 50, alignItems: "center"}}>
+                <ProcessList procesos = {funciones.MemoriaFisica}/>
+                <ProcessList procesos = {funciones.MemoriaVirtual}/>
+            </View>
+        </View>
+
+
+        <View style={{top: 600,flex: 2,alignItems: 'center',justifyContent: 'center',flexDirection: 'row'}}>
+            <TextInput multiline={true} numberOfLines={8} value={funciones.paginationLog}/>
+            <TouchableOpacity style={{marginTop:0, width: 190, height: 40, backgroundColor: 'blue',padding:10,alignItems: 'center',borderRadius: 5}} onPress={ ()=> Speaker(funciones.paginationLog)} >
+                <Text style={{color:'white', fontSize: 17}}>Reproducir</Text>
+            </TouchableOpacity>
+        </View>
+
+    </View>
     )
     
 }
