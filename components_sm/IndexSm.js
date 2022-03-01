@@ -139,111 +139,49 @@ function segmentation() {
     return(
 
         // View Global
-        <ScrollView>
+        <View style={{width: `100%` ,height: `100%`,backgroundColor: '#fff',alignItems: 'center',flexDirection: 'column'}}>
             {/**View de los Input proceso - palabra */}
-            <View >
-                <TextInput
-                    onChangeText={(val) => setPalabra(val)}
-                    value={palabra}
-                    style={styles.input}
-                    placeholder="Palabra"
-                    keyboardType='default' 
-                />
+            
+            <View style={{top:50 ,flex: 2,alignItems: 'center',justifyContent: 'center',flexDirection: 'row'}}>
+                <TextInput onChangeText={(val) => setPalabra(val)} value={palabra} style={styles.input} placeholder="Palabra" keyboardType='default' />
+                {/**View del boton crear proceso*/}
+                <TouchableOpacity style={{width: 160, height: 40, backgroundColor: 'blue',padding:10,alignItems: 'center',borderRadius: 5}} onPress= { ()=>crearProceso() }>
+                    <Text style={{color:'white', fontSize: 17}}>Crear Proceso</Text>
+                </TouchableOpacity>
+                {/**View de los Input pagina y posicion solicitada*/}
+                <NumberFormat value={segmentoSolicitado} displayType={'text'} renderText={ (segmentoSolicitado) => (
+                    <TextInput underlineColorAndroid="transparent" onChangeText={(val) => setSegmentoSolicitado(val)} value={segmentoSolicitado} placeholder="Ingrese índice del segmento" style={styles.input} keyboardType="numeric"/>)}/>
+                <NumberFormat value={posicionSolicitada} displayType={'text'} renderText={ (posicionSolicitada) => (
+                    <TextInput underlineColorAndroid="transparent" onChangeText={(val) => setPosicionSolicitada(val)} value={posicionSolicitada} placeholder="Ingrese índice del segmento" style={styles.input} keyboardType="numeric"/>)}/>
+                {/**View del boton realizar solicitud */}
+                <TouchableOpacity style={{width: 160, height: 40, backgroundColor: 'green',padding:10,alignItems: 'center',borderRadius: 5}} onPress= { ()=>solictarItem() }>
+                    <Text style={{color:'white', fontSize: 17}}>Realizar Solicitud</Text>
+                </TouchableOpacity>
             </View>
-            {/**View del boton crear proceso*/}
-            <View>
-                <Button 
-                    title   = "Crear Proceso"
-                    onPress= { ()=>crearProceso() }
-                />
+            
+             {/**View del input eliminar proceso - palabra con el indice*/}
+            <View style={{top:130 ,flex: 2,alignItems: 'center',justifyContent: 'center',flexDirection: 'row'}}>
+                <NumberFormat value={eliminarItem} displayType={'text'} renderText={ (eliminarItem) => (
+                    <TextInput underlineColorAndroid="transparent" onChangeText={(val) => setEliminarItem(val)} value={eliminarItem} placeholder="Ingrese índice del segmento a eliminar" style={styles.input} keyboardType="numeric" />)}/>
+                    <TouchableOpacity style={{ width: 160, height: 40, backgroundColor: 'red',padding:10,alignItems: 'center',borderRadius: 5}} onPress= { ()=>eliminarSegmento() }>
+                        <Text style={{color:'white', fontSize: 17}}>Eliminar segmento</Text>
+                    </TouchableOpacity>
             </View>
-            {/**View de los Input pagina y posicion solicitada*/}
-            <View>
-                <NumberFormat
-                    value={segmentoSolicitado}
-                    displayType={'text'}
-                    renderText={ (segmentoSolicitado) => (
-                        <TextInput
-                            underlineColorAndroid="transparent"
-                            onChangeText={(val) => setSegmentoSolicitado(val)}
-                            value={segmentoSolicitado}
-                            placeholder="Ingrese índice del segmento"
-                            style={styles.input}
-                            keyboardType="numeric"
-                        />
-                    )}
-                />
-                <NumberFormat
-                    value={posicionSolicitada}
-                    displayType={'text'}
-                    renderText={ (posicionSolicitada) => (
-                        <TextInput
-                            underlineColorAndroid="transparent"
-                            onChangeText={(val) => setPosicionSolicitada(val)}
-                            value={posicionSolicitada}
-                            placeholder="Ingrese índice del segmento"
-                            style={styles.input}
-                            keyboardType="numeric"
-                        />
-                    )}
-                />
-            </View>
-            {/**View del boton realizar solicitud */}
-            <View>
-                <Button 
-                    title   = "Realizar Solicitud"
-                    onPress= { ()=>solictarItem() }
-                />
-            </View>
-            {/**View del input eliminar proceso - palabra con el indice*/}
-            <View>
-                <NumberFormat
-                    value={eliminarItem}
-                    displayType={'text'}
-                    renderText={ (eliminarItem) => (
-                        <TextInput
-                            underlineColorAndroid="transparent"
-                            onChangeText={(val) => setEliminarItem(val)}
-                            value={eliminarItem}
-                            placeholder="Ingrese índice del segmento a eliminar"
-                            style={styles.input}
-                            keyboardType="numeric"
-                        />
-                    )}
-                />
-            </View>
-            {/**View del boton eliminar proceso - palabra */}
-            <View>
-                <Button 
-                    title   = "Eliminar segmento"
-                    onPress= { ()=>eliminarSegmento() }
-                />
-            </View>
+           
             {/**View tabla de procesos */}
-            <View
-                style={{ flexDirection: 'row',width: "100%", alignContent: "center", justifyContent: "center"}}>
-                <ProcessList
-                    procesos = {funciones.TablaProcesos}
-                />
-                <SegmentList
-                    procesos = {funciones.TablaDatos}
-                />
-                <PhysicalMemory
-                    procesos = {funciones.MemoriaFisica}
-                />
+            <View style={{top:150, flexDirection: 'row',width: "100%", alignContent: "center", justifyContent: "center"}}>
+                <ProcessList procesos = {funciones.TablaProcesos}/>
+                <SegmentList procesos = {funciones.TablaDatos}/>
+                <PhysicalMemory procesos = {funciones.MemoriaFisica}/>
             </View>
-            <View style={{top: 30, backgroundColor: '#fff',alignItems: 'center',flexDirection: 'column'}}>
-                <TextInput
-                    style={styles.item_resultado}
-                    multiline={true}
-                    numberOfLines={8}
-                    value={funciones.logSegmentacion}
-                />
-                <TouchableOpacity style={{marginTop:15, width: 160, height: 40, backgroundColor: 'blue',padding:10,alignItems: 'center',borderRadius: 5}} onPress= { ()=> Speaker(funciones.logSegmentacion)}>
+
+            <View style={{top: 230, backgroundColor: '#fff',alignItems: 'center',flexDirection: 'column'}}>
+                <TextInput style={styles.item_resultado} multiline={true} numberOfLines={8} value={funciones.logSegmentacion}/>
+                <TouchableOpacity style={{marginTop:20,width: 160, height: 40, backgroundColor: 'blue',padding:10,alignItems: 'center',borderRadius: 5}} onPress= { ()=> Speaker(funciones.logSegmentacion)}>
                     <Text style={{color:'white', fontSize: 17}}>Reproducir</Text>
                 </TouchableOpacity>
             </View>
-        </ScrollView>
+        </View>
     )
     
 }

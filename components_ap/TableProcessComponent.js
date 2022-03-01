@@ -1,4 +1,4 @@
-import React, { Component,useState } from 'react';
+import React from 'react';
 import { View,Text} from 'react-native';
 import {DataTable} from 'react-native-paper';
 import {styles} from '../styles/styles';
@@ -25,7 +25,7 @@ const TableProcessComponent = (props) => {
   }
 
   return(
-    <View style={{width:600,height:200}}>
+    <View style={{width:600,height:200, top: 300}}>
       <DataTable>
        {tablaStyles.map((row,i) => (
         <DataTable.Row >

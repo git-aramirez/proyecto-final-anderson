@@ -198,7 +198,7 @@
         }
 
         return (
-            <ScrollView vertical={true} style={{top: 100 ,width: 400 ,height: 600}}> 
+            <ScrollView vertical={true} style={{ top: 100 ,width: 100 ,height: 600}}> 
                 <ProcessList procesos = {tablaProcesos}/>
             </ScrollView>
         )
@@ -250,7 +250,7 @@
  
         //Retorna las SectionList con los datos
         return(
-            <View style={{top:150, marginRight:70, marginLeft: 20, width: 400 ,height: 500,flexDirection: 'row',alignContent: "center",alignItems: "center",justifyContent: "center",padding: 1}}>
+            <View style={{top:150, marginRight:0, marginLeft: 20, width: 400 ,height: 500,flexDirection: 'row',alignContent: "center",alignItems: "center",justifyContent: "center",padding: 1}}>
                 <SectionList  style={{marginEnd: 20}}
                     sections={[
                         {title: 'Bloque 1', data: array[0]},
@@ -307,12 +307,12 @@
     return(
         <View style={{width: `100%` ,height: `100%`,backgroundColor: '#fff',alignItems: 'center',flexDirection: 'column'}}>
             
-            <View style={{top: 0,flex: 1,flexDirection: 'row',alignContent: "center",alignItems: "center",justifyContent: "center"}}>
+            <View style={{top:0 ,flex: 0.5,alignItems: 'center',justifyContent: 'center',flexDirection: 'row'}}>
                 
                 <TextInput onChangeText={(val) => setnombreArchivo(val)} value={nombreArchivo} placeholder="Nombre del Archivo" style={styles.input} keyboardType='default' clearButtonMode="always"/>
                 <TextInput onChangeText={(val) => settamañoCaracteres(val)} value={tamañoCaracteres} placeholder="Tamaño de caracteres del Archivo" style={styles.input_tamanio_archivo} keyboardType='numeric' />
                 
-                <TouchableOpacity style={{marginLeft:15, width: 130, height: 40, backgroundColor: 'blue',padding:10,alignItems: 'center',borderRadius: 5}} onPress= { ()=>limpiarDisco()}>
+                <TouchableOpacity style={{marginLeft:15, width: 130, height: 40, backgroundColor: 'green',padding:10,alignItems: 'center',borderRadius: 5}} onPress= { ()=>limpiarDisco()}>
                     <Text style={{color:'white', fontSize: 17}}>Limpiar Discos</Text>
                 </TouchableOpacity>
 
@@ -320,7 +320,7 @@
                     <Text style={{color:'white', fontSize: 17}}>Crear Archivo</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={{marginLeft:15, width: 160, height: 40, backgroundColor: 'blue',padding:10,alignItems: 'center',borderRadius: 5}} onPress= { ()=>eliminarArchivo()}>
+                <TouchableOpacity style={{marginLeft:15, width: 160, height: 40, backgroundColor: 'red',padding:10,alignItems: 'center',borderRadius: 5}} onPress= { ()=>eliminarArchivo()}>
                     <Text style={{color:'white', fontSize: 17}}>Eliminar Archivo</Text>
                 </TouchableOpacity>
                 

@@ -178,7 +178,7 @@ function App () {
     
     //Retorna la tabla de particiones
     return(
-      <View style={{width: `70%` ,height: 450, top: 100}}>
+      <View style={{width: `70%` ,height: ((400)+(60*array.length)), top: 100}}>
         <DataTable id="tablaParticiones">
           <DataTable.Header>
             <DataTable.Title>Nombre Particion</DataTable.Title>
@@ -192,7 +192,9 @@ function App () {
               <DataTable.Cell>{row.tipoParticion}</DataTable.Cell>
               <DataTable.Cell>{row.tamañoNuevo}</DataTable.Cell>
               <DataTable.Cell>
-                <Button title = "Eliminar" onPress= { ()=> EliminarParticion(row.nombreParticion)}/>
+                <TouchableOpacity  style={{marginTop:15, width: 160, height: 40, backgroundColor: 'red',padding:10,alignItems: 'center',borderRadius: 5}}  onPress= { ()=> EliminarParticion(row.nombreParticion)}>
+                  <Text style={{color:'white', fontSize: 17}}>Eliminar</Text>
+                </TouchableOpacity>
               </DataTable.Cell>
             </DataTable.Row>
             ))
@@ -220,7 +222,7 @@ function App () {
     
     //Retorna la tabla de particiones
     return(
-      <View style={{width: 200,backgroundColor: '#fff',alignItems: 'center',flexDirection: 'column'}}>
+      <View style={{top:170,width: 200,backgroundColor: '#fff',alignItems: 'center',flexDirection: 'column'}}>
         <TextInput style={styles.item_resultado} multiline={true} numberOfLines={8} value={array}/>
         <TouchableOpacity  style={{marginTop:15, width: 160, height: 40, backgroundColor: 'blue',padding:10,alignItems: 'center',borderRadius: 5}} onPress={()=> Speaker(array)}>
           <Text style={{color:'white', fontSize: 17}}>Reproducir</Text>
@@ -293,7 +295,7 @@ function App () {
   return (
     <View style={{width: `100%` ,height: `100%`,backgroundColor: '#fff',alignItems: 'center',flexDirection: 'column'}}>
 
-        <View style={{top:30 ,flex: 2,alignItems: 'center',justifyContent: 'center',flexDirection: 'row'}}>
+        <View style={{top:50 ,flex: 2,alignItems: 'center',justifyContent: 'center',flexDirection: 'row'}}>
             
             <NumberFormat value={tamaño} displayType={'text'} renderText={ (tamaño) => (
                 <TextInput underlineColorAndroid="transparent" onChangeText={(val) => setTamaño(val)} value={tamaño} placeholder="Tamaño del disco en MB" style={styles.input} keyboardType="numeric"/>
@@ -314,7 +316,7 @@ function App () {
 
         </View>
 
-        <View style={{width: 500,height: 40, top:100, left:50 ,flex: 2,alignItems: 'center',justifyContent: 'center',flexDirection: 'row'}}>
+        <View style={{width: 500,height: 40, top:110, left:50 ,flex: 2,alignItems: 'center',justifyContent: 'center',flexDirection: 'row'}}>
               
           <StatusBar style="auto" />
 
@@ -322,7 +324,7 @@ function App () {
             {itemsInPicker}
           </Picker>
 
-          <TouchableOpacity style={{marginLeft:20, width: 190, height: 40, backgroundColor: 'blue',padding:10,alignItems: 'center',borderRadius: 5}} onPress={()=>EliminarDisco()} >
+          <TouchableOpacity style={{marginLeft:20, width: 190, height: 40, backgroundColor: 'red',padding:10,alignItems: 'center',borderRadius: 5}} onPress={()=>EliminarDisco()} >
               <Text style={{color:'white', fontSize: 17}}>Eliminar Disco</Text>
           </TouchableOpacity>
 

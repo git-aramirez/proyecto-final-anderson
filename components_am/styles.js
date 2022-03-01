@@ -91,9 +91,9 @@ export const styles = StyleSheet.create({
   },
 
   item_tabla: {
-    fontSize: 20,
+    fontSize: 16,
     height: 30,
-    width:50,
+    width:35,
     alignContent: "center",
     alignItems: "center",
     justifyContent: "center",

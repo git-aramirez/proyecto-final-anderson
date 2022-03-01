@@ -10,6 +10,27 @@ export const styles = StyleSheet.create({
     color:'black',
     fontSize: 17
   },
+
+  input_eliminiar: {
+    height: 40,
+    width: 250,
+    margin: 8,
+    borderWidth: 1,
+    padding: 10,
+    color:'black',
+    fontSize: 17
+  },
+
+  input_indices: {
+    height: 40,
+    width:160,
+    margin: 8,
+    borderWidth: 1,
+    padding: 10,
+    color:'black',
+    fontSize: 17
+  },
+
   inputTable:{
     width: 40,
     borderWidth: 1,
@@ -28,8 +49,8 @@ export const styles = StyleSheet.create({
     borderColor: 'black',
     flexDirection: 'column',
     borderWidth: .25,
-    textAlign: 'center',
-    borderBottomWidth: 0
+    textAlign: 'center'
   },
+  
 });
 
