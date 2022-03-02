@@ -7,21 +7,21 @@ var matrizIntermedia;
 export function ejecutarAlgoritmo(item_algoritmo,tablaEntrada,nucleos,quantum){
     switch (item_algoritmo) {
         case "FCFS":
-           return FCFS(tablaEntrada,nucleos);
+           return [FCFS(tablaEntrada,nucleos),cantidadColumnas];
         case "SJF":
-            return SJF(tablaEntrada,nucleos);
+            return [SJF(tablaEntrada,nucleos),cantidadColumnas];
         case "SRTF":
-            return SRTF(tablaEntrada,nucleos);
+            return [SRTF(tablaEntrada,nucleos),cantidadColumnas];
         case "externoExpulsivo":
-            return externoExpulsivo(tablaEntrada,nucleos);
+            return [externoExpulsivo(tablaEntrada,nucleos),cantidadColumnas];
         case "externoNoExpulsivo":
-            return externoNoExpulsivo(tablaEntrada,nucleos);
+            return [externoNoExpulsivo(tablaEntrada,nucleos),cantidadColumnas];
         case "HRN":
-                return HRN(tablaEntrada,nucleos);
+                return [HRN(tablaEntrada,nucleos),cantidadColumnas];
         case "HRN_PRIMA":
-                return HRN_PRIMA(tablaEntrada,nucleos);
+                return [HRN_PRIMA(tablaEntrada,nucleos),cantidadColumnas];
         case "RR":
-                return RR(tablaEntrada,nucleos,quantum);
+                return [RR(tablaEntrada,nucleos,quantum),cantidadColumnas];
         default:
           break;
       }
@@ -47,10 +47,11 @@ export function inicializarTablaEntradaNumerosAleatorios(tablaEntrada){
     //return tablaEntrada;
 }
 
+var cantidadColumnas;
 
 export function crearTablaDeEstilos(){
     let tablaStyles = [];
-    let cantidadColumnas = buscarTiempoFinalMasLejano()+1;
+    cantidadColumnas = buscarTiempoFinalMasLejano()+1;
 
     //crear tabla
     for (let index = 0; index < matrizDeDatos.length+1; index++) {
@@ -70,7 +71,6 @@ export function crearTablaDeEstilos(){
                 continue;
             }
             tablaStyles[index_k][index_j]='#0DC114';
-            //2196F3
         }
     }
 
@@ -116,6 +116,17 @@ function guardarDatos(tabla) {
         matrizDeDatos[i][2] = parseInt(tabla[i].t_ejecucion);
         matrizDeDatos[i][3] = parseInt(tabla[i].prioridad);
     }
+
+    for (let k = 1; k < matrizDeDatos.length; k++) {
+        for (let i = 0; i < (matrizDeDatos.length - k); i++) {
+            if (matrizDeDatos[i][1] > matrizDeDatos[i + 1][1]) {
+                let aux = matrizDeDatos[i];
+                matrizDeDatos[i] = matrizDeDatos[i + 1];
+                matrizDeDatos[i + 1] = aux;
+            }
+        }
+    }
+
     matrizDeSalida = new Array(tabla.length+1);
     for (let i = 0; i < matrizDeSalida.length; i++) {
         matrizDeSalida[i] = new Array(5);
@@ -136,7 +147,7 @@ function verificarIntercepcionDeProcesos(tiempo_llegada) {
     return cantidadIntercepciones;
 }
 
- function editarTablaSalida(nombre_tabla) {
+ function editarTablaSalida() {
     let suma = 0;
     for (let i = 0; i < (matrizDeSalida.length-1); i++) {
         var tiempo_espera_total = 0;
@@ -162,7 +173,7 @@ function verificarIntercepcionDeProcesos(tiempo_llegada) {
         matrizDeSalida[i][4]=Math.round(matrizDeSalida[i][4] * 100) / 100;
     }
 
-    matrizDeSalida[matrizDeSalida.length-1][0]="PROMEDIO"  
+    matrizDeSalida[matrizDeSalida.length-1][0]="Promedio"  
     matrizDeSalida[matrizDeSalida.length-1][3]= suma/(matrizDeSalida.length-1);
     matrizDeSalida[matrizDeSalida.length-1][3]= Math.round( matrizDeSalida[matrizDeSalida.length-1][3] * 100) / 100;
 }
@@ -171,8 +182,6 @@ function verificarIntercepcionDeProcesos(tiempo_llegada) {
 //------------------- ALGORITMOS -------------------
 
 function FCFS(tabla,nucleos) {
-    //canvas = document.getElementById("my-canvas");
-    // dibujarGrafica();
     guardarDatos(tabla);
     matrizIntermedia = new Array();
     let i = 0;
@@ -196,10 +205,9 @@ function FCFS(tabla,nucleos) {
             matrizDeDatos[0][1] = tiempo_fin;
         }
         i++;
+       
     }
     guardarDatos(tabla);
-    //graficarTiempos();
-    // graficarLlegadas();
     editarTablaSalida();
     return matrizDeSalida;
 }
@@ -207,8 +215,6 @@ function FCFS(tabla,nucleos) {
 //--------------------------------------------------------------------------------------
 
 function SJF(tabla,nucleos) {
-    //canvas = document.getElementById("canvas-sjf");
-    //dibujarGrafica();
     guardarDatos(tabla);
     matrizIntermedia = new Array();
     var i = 0;
@@ -428,8 +434,6 @@ function externoExpulsivo(tabla,nucleos) {
     }
 
     guardarDatos(tabla);
-    //graficarTiempos();
-    //graficarLlegadas();
     editarTablaSalida();
     return matrizDeSalida;
 }
@@ -438,6 +442,7 @@ function obtenerTiempoFinEje_EXT_EXP(tiempo_llegada_eje, tiempo_ejecucion) {
     var bandera = true;
     let tiempo_acumulado = tiempo_llegada_eje;
     while (tiempo_ejecucion != 0 && bandera) {
+
         tiempo_acumulado += 1;
         for (let i = 0; i < matrizDeDatos.length && bandera; i++) {
             if (tiempo_acumulado == parseInt(matrizDeDatos[i][1])) {
@@ -454,6 +459,7 @@ function obetenerPosPIDConMayorPrioridad_EXT_EXP(tiempo_llegada) {
     let mayor = 0.0;
     let pospid = 0;
     for (let j = 0; j < matrizDeDatos.length; j++) {
+
         if (matrizDeDatos[j][1] == tiempo_llegada) {
             if (parseFloat(matrizDeDatos[j][3]) > mayor) {
                 mayor = matrizDeDatos[j][3];
@@ -468,19 +474,19 @@ function obetenerPosPIDConMayorPrioridad_EXT_EXP(tiempo_llegada) {
 //--------------------------------------------------------------------------------------
 
 function externoNoExpulsivo(tabla,nucleos) {
-    //canvas = document.getElementById("canvas-pene");
-    //dibujarGrafica();
     guardarDatos(tabla);
     matrizIntermedia = new Array();
     var i = 0;
     var pids_habilitados = new Array();
     while (matrizDeDatos.length != 0) {
+
         let tiempo_llegada_eje = parseInt(matrizDeDatos[0][1]);
         let pospidMayor = parseInt(obetenerPosPIDConMayorPrioridad_EXT_NO_EXP(tiempo_llegada_eje, pids_habilitados));
         tiempo_llegada_eje = parseInt(matrizDeDatos[pospidMayor][1]);
         var pid = matrizDeDatos[pospidMayor][0];
         pids_habilitados = new Array();
         if (verificarIntercepcionDeProcesos(tiempo_llegada_eje) < nucleos) {
+
             matrizIntermedia.push();
             matrizIntermedia[i] = new Array(5);
             let tiempo_fin_eje = parseInt(matrizDeDatos[pospidMayor][1]) + parseInt(matrizDeDatos[pospidMayor][2]);
@@ -492,6 +498,7 @@ function externoNoExpulsivo(tabla,nucleos) {
             matrizDeDatos.splice(pospidMayor, 1);
             i++;
         } else {
+
             let tiempo_llegada_esp = parseInt(matrizDeDatos[pospidMayor][1]);
             i = matrizIntermedia.length;
             matrizIntermedia.push();
@@ -509,9 +516,8 @@ function externoNoExpulsivo(tabla,nucleos) {
             i++;
         }
     }
+
     guardarDatos(tabla);
-    //graficarTiempos();
-    //graficarLlegadas();
     editarTablaSalida();
     return matrizDeSalida;
 }
@@ -542,18 +548,18 @@ function obetenerPosPIDConMayorPrioridad_EXT_NO_EXP(tiempo_llegada, pids_habilit
 //--------------------------------------------------------------------------------------
 
  function HRN(tabla,nucleos) {
-    //canvas = document.getElementById("canvas-hrn");
-   //dibujarGrafica();
     guardarDatos(tabla);
     var ejecutados = new Array();
     matrizIntermedia = new Array();
     var cant_nucleos;
     var i = 0;
     while (matrizDeDatos.length != 0) {
+
         cant_nucleos = nucleos;
         matrizIntermedia.push();
         matrizIntermedia[i] = new Array(5);
         asignarPrioridad();
+
         let pospidMayor = parseInt(obetenerPosPIDConMayorPrioridad_HRN());
         let tiempo_llegada_eje = parseInt(matrizDeDatos[pospidMayor][1]);
         let tiempo_fin_eje = parseInt(matrizDeDatos[pospidMayor][1]) + 1;
@@ -566,6 +572,7 @@ function obetenerPosPIDConMayorPrioridad_EXT_NO_EXP(tiempo_llegada, pids_habilit
         matrizDeDatos[pospidMayor][1] = tiempo_fin_eje;
         cant_nucleos--;
         if (matrizDeDatos[pospidMayor][2] == 0) {
+
             ejecutados.push(pospidMayor);
         }
         i++;
@@ -577,6 +584,7 @@ function obetenerPosPIDConMayorPrioridad_EXT_NO_EXP(tiempo_llegada, pids_habilit
             let pospidMayor = parseInt(obetenerPosPIDConMayorPrioridad_HRN(pid_ignorado));
             let tiempo_llegada_eje = parseInt(matrizDeDatos[pospidMayor][1]);
             if (verificarIntercepcionDeProcesos(tiempo_llegada_eje) < nucleos) {
+
                 let tiempo_fin_eje = parseInt(matrizDeDatos[pospidMayor][1]) + 1;
                 console.log("inicio " + tiempo_llegada_eje + "   fin " + tiempo_fin_eje);
                 matrizIntermedia[i][0] = matrizDeDatos[pospidMayor][0];
@@ -620,17 +628,13 @@ function obetenerPosPIDConMayorPrioridad_EXT_NO_EXP(tiempo_llegada, pids_habilit
     }
 
     guardarDatos(tabla);
-    //graficarTiempos();
-    //graficarLlegadas();
     editarTablaSalida();
-    return matrizDeSalida;
 
+    return matrizDeSalida;
 }
 
 
  function HRN_PRIMA(tabla,nucleos) {
-    //canvas = document.getElementById("canvas-hrn_prima");
-    //dibujarGrafica();
     guardarDatos(tabla);
     matrizIntermedia = new Array();
     var i = 0;
@@ -639,6 +643,7 @@ function obetenerPosPIDConMayorPrioridad_EXT_NO_EXP(tiempo_llegada, pids_habilit
         let pospidMayor = parseInt(obetenerPosPIDConMayorPrioridad_HRN());
         let tiempo_llegada_eje = parseInt(matrizDeDatos[pospidMayor][1]);
         if (verificarIntercepcionDeProcesos(tiempo_llegada_eje) < nucleos) {
+
             matrizIntermedia.push();
             matrizIntermedia[i] = new Array(5);
             let tiempo_fin_eje = parseInt(matrizDeDatos[pospidMayor][1]) + parseInt(matrizDeDatos[pospidMayor][2]);
@@ -649,9 +654,12 @@ function obetenerPosPIDConMayorPrioridad_EXT_NO_EXP(tiempo_llegada, pids_habilit
             matrizIntermedia[i][4] = tiempo_fin_eje - tiempo_llegada_eje;
             matrizDeDatos.splice(pospidMayor, 1);
             i++;
+
         } else {
+
             for (let j = 0; j < matrizDeDatos.length; j++) {
                 let tiempo_llegada_esp = parseInt(matrizDeDatos[j][1]);
+
                 if (tiempo_llegada_eje == tiempo_llegada_esp) {
                     i = matrizIntermedia.length;
                     matrizIntermedia.push();
@@ -669,13 +677,10 @@ function obetenerPosPIDConMayorPrioridad_EXT_NO_EXP(tiempo_llegada, pids_habilit
             }
         }
     }
-
     guardarDatos(tabla);
-    //graficarTiempos();
-    //graficarLlegadas();
     editarTablaSalida();
-    return matrizDeSalida;
 
+    return matrizDeSalida;
 }
 
 //---------------------------------------------------------------------------------------
@@ -722,10 +727,10 @@ function obetenerPosPIDConMayorPrioridad_HRN() {
     let mayor = 0.0;
     let pospid = 0;
     for (let i = 0; i < matrizDeDatos.length; i++) {
-        if (parseFloat(matrizDeDatos[i][3]) > mayor) {
-            mayor = matrizDeDatos[i][3];
-            pospid = i;
-        }
+            if (parseFloat(matrizDeDatos[i][3]) > mayor) {
+                mayor = matrizDeDatos[i][3];
+                pospid = i;
+            }
     }
     return pospid;
 }
@@ -733,95 +738,131 @@ function obetenerPosPIDConMayorPrioridad_HRN() {
 //------------------------------------------------------------------------
 
 function RR(tabla,nucleos,quantum) {
-    //canvas = document.getElementById("canvas-rr");
-    //dibujarGrafica();
+
     guardarDatos(tabla);
+
     matrizIntermedia = new Array();
+
     var cola = new Array();
+
     var i = 0;
+
     var ejecutados = new Array();
+
     while (matrizDeDatos.length != 0) {
+
         let posPID = obtenerPosPID_RR(cola);
         let tiempo_llegada_eje = parseInt(matrizDeDatos[posPID][1]);
+
         ejecutados = new Array();
+
         if (verificarIntercepcionDeProcesos(tiempo_llegada_eje) < nucleos) {
+
             matrizIntermedia.push();
             matrizIntermedia[i] = new Array(5);
+
             if (existePID_Cola_RR(parseInt(matrizDeDatos[0][0]), cola) == false) {
                 cola.push(parseInt(matrizDeDatos[0][0]));
             }
+
             tiempo_llegada_eje = obtenerTiempollegadaReal_RR(parseInt(matrizDeDatos[posPID][1]), posPID);
             let tiempo_ejecucion = parseInt(matrizDeDatos[posPID][2]);
+
             for (let i = 0; i < matrizDeDatos.length; i++) {
+
                 let pid = parseInt(matrizDeDatos[i][0]);
+
                 if (existePID_Cola_RR(pid, cola) == false) {
+
                     let tiempo_llegada_tem = obtenerTiempollegadaReal_RR(parseInt(matrizDeDatos[i][1]), parseInt(matrizDeDatos[i][0]));
+
                     if (tiempo_llegada_eje == tiempo_llegada_tem) {
+
                         cola.push(parseInt(matrizDeDatos[i][0]));
                     }
                 }
             }
             tiempo_llegada_eje = parseInt(matrizDeDatos[posPID][1]);
+
             let tiempo_fin_eje = tiempo_llegada_eje;
-            //quantum = document.getElementById("Quantum").value;
-            while (quantum != 0 && tiempo_ejecucion != 0) {
-                quantum--;
+            let quantumTem = quantum;
+
+            while (quantumTem != 0 && tiempo_ejecucion != 0) {
+
+                quantumTem--;
                 tiempo_ejecucion--;
                 tiempo_fin_eje++;
+
                 for (let i = 0; i < matrizDeDatos.length; i++) {
+
                     let tiempo_llegada_tem = obtenerTiempollegadaReal_RR(parseInt(matrizDeDatos[i][1]), parseInt(matrizDeDatos[i][0]));
+
                     if (tiempo_fin_eje == tiempo_llegada_tem) {
                         cola.push(parseInt(matrizDeDatos[i][0]));
                     }
                 }
             }
+
             if (tiempo_ejecucion == 0) {
                 cola.splice(0, 1);
             }
+
             if (cola.length != 0 && tiempo_ejecucion != 0) {
                 let pid = parseInt(cola[0]);
                 cola.splice(0, 1);
                 cola.push(pid);
             }
+
             matrizIntermedia[i][0] = matrizDeDatos[posPID][0];
             matrizIntermedia[i][1] = tiempo_llegada_eje;
             matrizIntermedia[i][2] = tiempo_fin_eje;
+            //si es tiempo de ejecucion se alamacena un 1 , si es de espera se almacena un 0
             matrizIntermedia[i][3] = 1;
+            // se almacena el tiempo de ejecucion del proceso
             matrizIntermedia[i][4] = tiempo_fin_eje - tiempo_llegada_eje;
             matrizDeDatos[posPID][1] = tiempo_fin_eje;
             matrizDeDatos[posPID][2] = matrizDeDatos[posPID][2] - (tiempo_fin_eje - tiempo_llegada_eje);
+
             if (matrizDeDatos[posPID][2] == 0) {
                 ejecutados.push(posPID);
             }
             i++;
+
         } else {
+
             let tiempo_llegada_esp = parseInt(matrizDeDatos[posPID][1]);
+
             i = matrizIntermedia.length;
             matrizIntermedia.push();
             matrizIntermedia[i] = new Array(5);
-            pid = parseInt(matrizDeDatos[posPID][0]);
+
+            let pid = parseInt(matrizDeDatos[posPID][0]);
             let tiempo_fin_esp = tiempo_llegada_esp + 1;;
+
             matrizIntermedia[i][0] = pid;
             matrizIntermedia[i][1] = tiempo_llegada_esp;
             matrizIntermedia[i][2] = tiempo_fin_esp;
+            //si es tiempo de ejecucion se alamacena un 1 , si es de espera se almacena un 0
             matrizIntermedia[i][3] = 0;
+            // se almacena el tiempo de espera del proceso
             matrizIntermedia[i][4] = tiempo_fin_esp - tiempo_llegada_esp;
             matrizDeDatos[posPID][1] = tiempo_fin_esp;
             i++;
+
         }
+
         for (let i = 0; i < ejecutados.length; i++) {
             let pos = ejecutados[i];
             matrizDeDatos.splice(pos, 1);
         }
     }
     guardarDatos(tabla);
-    //graficarTiempos();
-    //graficarLlegadas();
     editarTablaSalida();
+    return matrizDeSalida;
 }
 
 function obtenerTiempollegadaReal_RR(tiempo_llegada, posPID) {
-    tiempo_acumulado = 0;
+    let tiempo_acumulado = 0;
     for (let i = 0; i < matrizIntermedia.length; i++) {
         if (parseInt(matrizIntermedia[i][0]) == posPID) {
             tiempo_acumulado += matrizIntermedia[i][4];
@@ -854,4 +895,3 @@ function obtenerPosPID_RR(cola) {
     return posPID;
 }
 
-//export  default ejecutarAlgoritmo;

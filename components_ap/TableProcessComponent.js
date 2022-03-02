@@ -1,5 +1,5 @@
 import React from 'react';
-import { View,Text} from 'react-native';
+import { View,Text,ScrollView} from 'react-native';
 import {DataTable} from 'react-native-paper';
 import {styles} from '../styles/styles';
 
@@ -13,33 +13,29 @@ const TableProcessComponent = (props) => {
   }
 
   function obtenerDataTablaStyle(i,data){
-    return i!==tablaStyles.length-1 ? obtenerTextProcess(data) : data;
-  }
-
-  function obtenerTextProcess(data){
-    return data==='#ED391E' ? '////////////////////': '';
+    return i!==(tablaStyles.length-1) ? data==='#ED391E' : data;
   }
 
   function obtenerStyleProcess(i){
-    return i!==tablaStyles.length-1 ? '#FFFFFF' : '#000000';
+    return i!==(tablaStyles.length-1) ? '#FFFFFF' : '#000000';
   }
 
   return(
-    <View style={{width:600,height:200, top: 300}}>
-      <DataTable>
-       {tablaStyles.map((row,i) => (
-        <DataTable.Row >
-            <DataTable.Cell>{obtenerPID(i+1)}</DataTable.Cell>
-            {row.map((data) => (
-            <>
-            <DataTable.Cell style={{ backgroundColor: data}}>
-              <Text style={{color: obtenerStyleProcess(i)}}>{obtenerDataTablaStyle(i,data)}</Text>
-            </DataTable.Cell>
-            </>
-            ))}
-        </DataTable.Row>
-        ))}
-      </DataTable> 
+    <View style={{width:props.width,height:200, top: props.top}}>
+        <DataTable>
+        {tablaStyles.map((row,i) => (
+          <DataTable.Row >
+              <DataTable.Cell>{obtenerPID(i+1)}</DataTable.Cell>
+              {row.map((data) => (
+              <>
+              <DataTable.Cell style={{ backgroundColor: data}}>
+                <Text style={{color: obtenerStyleProcess(i)}}>{obtenerDataTablaStyle(i,data)}</Text>
+              </DataTable.Cell>
+              </>
+              ))}
+          </DataTable.Row>
+          ))}
+        </DataTable> 
     </View>   
   );  
 }

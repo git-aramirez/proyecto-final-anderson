@@ -10,7 +10,10 @@ export const styles = StyleSheet.create({
     fontSize: 17
   },
   inputTable:{
-    width: 40,
+    textAlign: 'center',
+    fontSize: 25,
+    width: 60,
+    height:40,
     borderWidth: 1,
   },
   button_style: {

@@ -22,14 +22,14 @@ export default function IndexAp() {
   
   function tableInputComponent (){
     if(banderaEntrada){
-      return(<TableInputComponent  height={200} tablaEntrada={tablaEntrada} setTablaEntrada={setTablaEntrada} />);
+      return(<TableInputComponent  height={160+(40*numeroProcesos)} tablaEntrada={tablaEntrada} setTablaEntrada={setTablaEntrada} />);
     }
     return(<></>);
   }
 
   function tableOutComponent (){
     if(banderaSalida){
-      return( <TableOutComponent height={40*numeroProcesos} tablaSalida={tablaSalida}/>);
+      return( <TableOutComponent top={60+(15*numeroProcesos)} height={40*numeroProcesos} tablaSalida={tablaSalida}/>);
     }
 
     return(<></>);
@@ -66,13 +66,37 @@ function inicializarTablaSalida(matrizSalida){
   }
   setTablaSalida(tablaSalida);
   setBanderaSalida(true);
+  onRefresh();
 }
 
+const [tiempoMasLejano, setTiempoMasLejano] = useState(0);
+
 function iniciarAlgoritmo (){
-  setNumeroNucleos(numeroNucleos*numeroCPU);
-  let matrizSalida = main.ejecutarAlgoritmo(item_algoritmo,tablaEntrada,numeroNucleos,quantum);
-  inicializarTablaSalida(matrizSalida);
-  setTablaStyles(main.crearTablaDeEstilos());
+  let nucleosTotal = parseInt(numeroNucleos)*parseInt(numeroCPU);
+  let resultado = main.ejecutarAlgoritmo(item_algoritmo,tablaEntrada,nucleosTotal,parseInt(quantum));
+   setTiempoMasLejano(resultado[1]);
+   setTablaStyles(main.crearTablaDeEstilos());
+   inicializarTablaSalida(resultado[0]);
+}
+
+//Variable que acciona el refresco de la tabla
+const [refreshing, setRefreshing] = React.useState(false);
+
+/**
+ * Metodo que realiza las operaciones para el refresco de la tabla
+ */
+const onRefresh = React.useCallback(() => {
+  setRefreshing(true);
+  wait(2000).then(() => setRefreshing(false));
+}, []);
+
+/**
+   * Metodo que realiza la espera mientras se ejecuta una accion
+   * @param {*} timeout Tiempo de espera que se quiere
+   * @returns El tiempo de espera
+   */
+ const wait = (timeout) => {
+  return new Promise(resolve => setTimeout(resolve, timeout));
 }
 
 const [tablaStyles, setTablaStyles] = useState(new Array());
@@ -93,6 +117,7 @@ function crearStyles(){
 
 function inicializarTablaEntradaNumerosAleatorios(){
   main.inicializarTablaEntradaNumerosAleatorios(tablaEntrada);
+  return onRefresh();
  //setTablaEntrada(tabla);
 }
 
@@ -109,7 +134,11 @@ function bottonInicializarTablaeEntrada(){
 
 function tableProcessComponent (){
   if(banderaSalida){
-    return(<TableProcessComponent tablaStyles={tablaStyles} />);
+    return(
+      //<View style={{top:300+(10*numeroProcesos), width: 1000, height:1000}}>
+          <TableProcessComponent top = {300+(10*numeroProcesos)} width={1000} tablaStyles={tablaStyles} />
+      //</View>
+    );
   }
   return(<></>);
 }

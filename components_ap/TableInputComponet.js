@@ -1,4 +1,4 @@
-import { View,TextInput} from 'react-native';
+import { View,TextInput,Text} from 'react-native';
 import {DataTable} from 'react-native-paper';
 import {styles} from '../styles/styles';
 import React from 'react';
@@ -14,18 +14,18 @@ const TableInputComponent = (props) => {
   }
 
       return(
-        <View style={{width:400,height:props.height, top:90}}>
+        <View style={{width:600,height:props.height, top:90}}>
           <DataTable id="tabla">
             <DataTable.Header>
-              <DataTable.Title >pid</DataTable.Title>
-              <DataTable.Title >T-Llegada</DataTable.Title>
-              <DataTable.Title >T-Ejecucion</DataTable.Title>
-              <DataTable.Title >Prioridad</DataTable.Title>
+              <DataTable.Title ><Text style={{fontSize: 20}}>pid</Text></DataTable.Title>
+              <DataTable.Title ><Text style={{fontSize: 20}}>T-Llegada</Text></DataTable.Title>
+              <DataTable.Title ><Text style={{fontSize: 20}}>T-Ejecucion</Text></DataTable.Title>
+              <DataTable.Title ><Text style={{fontSize: 20}}>Prioridad</Text></DataTable.Title>
             </DataTable.Header>
         
            {tablaEntrada.map((row,index) => (
             <DataTable.Row>
-              <DataTable.Cell >{row.pid}</DataTable.Cell>
+              <DataTable.Cell ><Text style={{fontSize: 20}}>{row.pid}</Text></DataTable.Cell>
               <DataTable.Cell ><TextInput value={row.t_llegada} onChangeText={(data)=>updateLista(index,"t_llegada",data)} style={styles.inputTable}/></DataTable.Cell>
               <DataTable.Cell ><TextInput value={row.t_ejecucion} onChangeText={(data)=>updateLista(index,"t_ejecucion",data)} style={styles.inputTable}/></DataTable.Cell>
               <DataTable.Cell ><TextInput value={row.prioridad} onChangeText={(data)=>updateLista(index,"prioridad",data)} style={styles.inputTable}/></DataTable.Cell>
