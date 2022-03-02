@@ -7,10 +7,17 @@ import React from 'react';
 import { View , ScrollView, Button, TextInput,TouchableOpacity, Text} from 'react-native';
 import * as funciones from '../scripts_pm/Main';
 import ProcessList from './ProcessListComponent';
+import TableData from './TableDataComponent';
+import TableUser from './TableUserComponent';
 import { styles } from './styles';
 import NumberFormat from 'react-number-format';
 import Speaker from '../components_drawer/Speaker';
 
+/**
+ * Genera la vista para los algoritmos de paginación de memoria
+ *
+ * @returns Vista de páginacion de memoria
+ */
 function paginacion() {
 
     //Variable que almacena el indice de la pagina a eliminar
@@ -56,11 +63,14 @@ function paginacion() {
         if (palabra.length <= funciones.TamañoBloque) {
             // Invoca al metodo crear proceso
             funciones.crearProceso(palabra);
+
+            // Limpia campo de texto
             setPalabra("");
+
             //Refresco de la tabla del algortimo de asignacion
             return onRefresh();
         }
-        return alert("EL TAMAÑO DEL PROCESO ES DE MAXIMO 3 CARACTERES");
+        return alert("El tamaño del proceso es de máximo 3 caracteres.");
     }
 
     /**
@@ -156,8 +166,8 @@ function paginacion() {
         </View>
 
         <View style={{top:400,flexDirection: 'row'}}>
-            <ProcessList procesos = {funciones.TablaUsuario}/>
-            <ProcessList procesos = {funciones.TablaPaginas}/>
+            <TableUser procesos = {funciones.TablaUsuario}/>
+            <TableData procesos = {funciones.TablaPaginas}/>
             <View style={{ flexDirection: 'column', marginTop: 50, alignItems: "center"}}>
                 <ProcessList procesos = {funciones.MemoriaFisica}/>
                 <ProcessList procesos = {funciones.MemoriaVirtual}/>

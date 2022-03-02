@@ -88,11 +88,11 @@ function segmentation() {
         }
 
         // Valida si el segmento existe
-        if (!funciones.TablaProcesos[segmentoSolicitado-1] || funciones.TablaProcesos[segmentoSolicitado-1][0] == '' ) {
+        if (!funciones.TablaProcesos[segmentoSolicitado]) {
             return alert("No existe el segmento");
         }
         // Valida si el indice solicitado esta en el rango del segmento
-        else if (funciones.TablaDatos[segmentoSolicitado-1][1] >= posicionSolicitada) {
+        else if (funciones.TablaDatos[segmentoSolicitado].tamaño >= posicionSolicitada) {
             // Invoca el metodo que trae el item solicitado
             funciones.solicitarItem(segmentoSolicitado, posicionSolicitada);
 

@@ -33,7 +33,6 @@ export let TablaProcesos   = new Array();
 export let TablaUsuario    = crearArrayUsuario();
 // Inicializa el array de tabla de paginas
 export let TablaPaginas    = crearTablaPaginas();
-
 // Texto con las acciones realizadas
 export let paginationLog = '';
 
@@ -45,9 +44,9 @@ export let paginationLog = '';
   * @returns El arreglo de Procesos inicializado
   */
 function crearArrayProcesos() {
-
     //arreglo de Procesos totales
     let array = new Array(NumeroProcesos);
+
     //recorre el arreglo
     for (let index = 0; index < array.length; index++) {
         //inicializa la posicion en el arreglo en "".
@@ -57,7 +56,6 @@ function crearArrayProcesos() {
     }
 
     return array;
-    
 }
 
 /**
@@ -66,19 +64,17 @@ function crearArrayProcesos() {
   * @returns El arreglo de memoria virtual inicializado
   */
 function crearArrayMemoriaVirtual() {
-
     //arreglo de Capacidad total
     let array = new Array(CapacidadMemoriaVirtual);
+
     //recorre el arreglo
     for (let index = 0; index < array.length; index++) {
         //inicializa la posicion en el arreglo en "".
         array.push();
         array[index] = ["","",""];
-        
     }
 
     return array;
-    
 }
 
 /**
@@ -86,20 +82,20 @@ function crearArrayMemoriaVirtual() {
  * 
  * @returns El arreglo de paginas que ve el usuario inicializado
  */
- function crearArrayUsuario() {
-
+function crearArrayUsuario() {
     //arreglo de Capacidad total
     let array = new Array(NumeroPaginas);
+
     //recorre el arreglo
     for (let index = 0; index < array.length; index++) {
         //inicializa la posicion en el arreglo en "".
-        array.push();
-        array[index] = ["","",""];
-        
+        array[index] = {
+            'libre': 0,
+            'data': ["","",""]
+        };
     }
 
     return array;
-    
 }
 
 /**
@@ -107,20 +103,20 @@ function crearArrayMemoriaVirtual() {
   * 
   * @returns El arreglo de Procesos inicializado
   */
- function crearTablaPaginas() {
-
+function crearTablaPaginas() {
     //arreglo de Procesos totales
     let array = new Array(NumeroPaginas);
+
     //recorre el arreglo
     for (let index = 0; index < array.length; index++) {
         //inicializa la posicion en el arreglo en "".
-        array.push();
-        array[index] = ["", ""];
-        
+        array[index] = {
+            'pagina': '',
+            'memoria': ''
+        };
     }
 
     return array;
-    
 }
 
 /**
@@ -129,7 +125,6 @@ function crearArrayMemoriaVirtual() {
   * @param {*} indicePagina indice de la pagina a eliminar
   */
 export function eliminarPalabra(indicePagina) {
-
     // Ingresa registro al log
     paginationLog += 'Se solicita eliminar el proceso número '+ indicePagina +'\n';
 
@@ -141,47 +136,53 @@ export function eliminarPalabra(indicePagina) {
     // Recorre tabla de paginas
     for (let index = 0; index < TablaPaginas.length; index++) {
         // Valida si coincide el registro con el indice a eliminar
-        if (TablaPaginas[index][0] == indicePagina) {
+        if (TablaPaginas[index].pagina == indicePagina) {
             // Valida si la palabra esta en memoria virtual
-            if (/^MV/.test(TablaPaginas[index][1])) {
+            if (/^MV/.test(TablaPaginas[index].memoria)) {
                 
-                let indice = TablaPaginas[index][1];
+                let indice = TablaPaginas[index].memoria;
+
                 // Invoca el metodo que elimina una palabra que esta en memoria virtual
                 eliminarPalabraMemoriaVirtual(indice);
 
             } else {
                 // Toma el indice de la palabar en el array de memoria fisica
-                indiceMemoria      = TablaPaginas[index][1]-1;
+                indiceMemoria      = TablaPaginas[index].memoria;
+
                 // Invoca el metodo para limpiar los espacios del bloque de memoria
                 limpiarArray(MemoriaFisica[indiceMemoria]);
-                // Ingresa registro al log
-                paginationLog += ' Se elimina el proceso del espacio '+ parseInt(indiceMemoria+1) +' de la memoria fisica\n';
-            }
-            // Toma el indice de la palabar en el array que ve el usuario
-            indiceTablaPaginas = TablaPaginas[index][0]-1;
-            // Invoca el metodo para limpiar los espacios del bloque de memoria
-            limpiarArray(TablaUsuario[indiceTablaPaginas]);
 
-            TablaPaginas[index][0] = "";
-            TablaPaginas[index][1] = "";
+                // Ingresa registro al log
+                paginationLog += ' Se elimina el proceso del espacio '+ parseInt(indiceMemoria) +' de la memoria fisica. \n';
+            }
+
+            // Toma el indice de la palabar en el array que ve el usuario
+            indiceTablaPaginas = TablaPaginas[index].pagina;
+
+            // Invoca el metodo para limpiar los espacios del bloque de memoria
+            limpiarArray(TablaUsuario[indiceTablaPaginas].data);
+
+            TablaUsuario[indiceTablaPaginas].libre = 0;
+            TablaPaginas[index].pagina = "";
+            TablaPaginas[index].memoria = "";
             EspaciosDisponibles++;
 
             // Ingresa registro al log
             paginationLog += ' Se liberan los espacios ocupados por el proceso en la tabla de páginas \n';
 
             ///** Visualizacion de datos
-                console.log("Tabla Procesos");
-                console.log(TablaProcesos);
-                console.log("Memoria Fisica");
-                console.log(MemoriaFisica);
-                console.log("Memoria Virtual");
-                console.log(MemoriaVirtual);
-                console.log("Tabla Usuario");
-                console.log(TablaUsuario);
-                console.log("Tabla Paginas");
-                console.log(TablaPaginas);
-                console.log("Log");
-                console.log(paginationLog);
+                // console.log("Tabla Procesos");
+                // console.log(TablaProcesos);
+                // console.log("Memoria Fisica");
+                // console.log(MemoriaFisica);
+                // console.log("Memoria Virtual");
+                // console.log(MemoriaVirtual);
+                // console.log("Tabla Usuario");
+                // console.log(TablaUsuario);
+                // console.log("Tabla Paginas");
+                // console.log(TablaPaginas);
+                // console.log("Log");
+                // console.log(paginationLog);
             //*/ 
             break;
         }
@@ -192,16 +193,16 @@ export function eliminarPalabra(indicePagina) {
  * Elimina un proceso que se encuentra en memoria virtual
  */
 function eliminarPalabraMemoriaVirtual(indice) {
-
     // Separa los datos dentro del array de paginas
     let posicion = indice.split('-');
     // Ubica la posicion dentro de la memoria virtual 
     let array = MemoriaVirtual[posicion[1]];
+
     // Limpia el bloque de datos
     limpiarArray(array);
     
     // Ingresa registro al log
-    paginationLog += ' Se elimina el proceso del espacio '+ parseInt(posicion[1])+1 +' de la memoria virtual\n';
+    paginationLog += ' Se elimina el proceso del espacio '+ parseInt(posicion[1]) +' de la memoria virtual\n';
 }
 
 /**
@@ -210,14 +211,11 @@ function eliminarPalabraMemoriaVirtual(indice) {
   * @param {*} array array a limpiar
   */
 function limpiarArray(array) {
-
     // Recorre los espacios del array
     for (let index = 0; index < array.length; index++) {
         // setea el espacio en ""
         array[index] = "";
-        
     }
-    
 }
 
 /**
@@ -231,26 +229,20 @@ export function solicitarItem (numPagina, numPos) {
     // Ingresa registro al log
     paginationLog += 'Se solicita el item '+ numPos +' de la página '+ numPagina +'\n';
 
-    // Imprime el dato solictado de la pagina
-    console.log("En paginas (vista usuario) "+TablaUsuario[numPagina-1][numPos-1]);
     // Recorre la tabla de paginas
     for (let index = 0; index < TablaPaginas.length; index++) {
         // Valida si el numero de la pagina coincide
-        if (TablaPaginas[index][0] == numPagina) {
+        if (TablaPaginas[index].pagina == numPagina) {
             // Valida si esta en memoria virtual
-            if (/^MV/.test(TablaPaginas[index][1])) {
+            if (/^MV/.test(TablaPaginas[index].memoria)) {
                 // Trae el item solicitado
-                let item = solicitarItemMemoriaVirtual(TablaPaginas[index], numPos);
-
-                // Imprime el dato desde la memoria fisica
-                console.log("En memoria Fisica "+ MemoriaFisica[item][numPos-1]);
-                break;
+                solicitarItemMemoriaVirtual(TablaPaginas[index], numPos);
 
             } else {
                 // Ingresa registro al log
-                paginationLog += 'Se obtiene el item solicitado: '+ MemoriaFisica[TablaPaginas[index][1]-1][numPos-1] +'\n';
+                paginationLog += 'Se obtiene el item solicitado: '+ MemoriaFisica[TablaPaginas[index].memoria][numPos] +'\n';
                 // Imprime el dato desde la memoria fisica
-                console.log("En memoria Fisica "+ MemoriaFisica[TablaPaginas[index][1]-1][numPos-1]);
+                console.log("En memoria Fisica "+ MemoriaFisica[TablaPaginas[index].memoria][numPos]);
             }
             break;
         }
@@ -285,9 +277,9 @@ export function solicitarItem (numPagina, numPos) {
 function solicitarItemMemoriaVirtual (indiceMV, numPos) {
     // Ingresa registro al log
     paginationLog += ' Proceso ubicado en memoria virtual \n';
-    
+    console.log("entra");
     // Separa los datos dentro del array de paginas
-    let posicion = indiceMV[1].split('-');
+    let posicion = indiceMV.memoria.split('-');
     // clona la informcion del array a subir
     let arraySubir = Object.assign({}, MemoriaVirtual[posicion[1]]);
     // Ubica la posicion dentro de la memoria virtual 
@@ -306,7 +298,7 @@ function solicitarItemMemoriaVirtual (indiceMV, numPos) {
         // Recorre la tabla de paginas
         for (let index = 0; index < TablaPaginas.length; index++) {
             // Valida si el registro coincide con el aleatorio
-            if (TablaPaginas[index][1] == numero) {
+            if (TablaPaginas[index].memoria == numero) {
                 // Clona la informacion del array a bajar
                 arrayBajar = Object.assign({}, MemoriaFisica[numero]);
                 // Inidice en tabla de paginas
@@ -320,7 +312,7 @@ function solicitarItemMemoriaVirtual (indiceMV, numPos) {
     // Ingresa registro al log
     paginationLog += ' Se baja el proceso '+ parseInt(numero) +' a memoria virtual \n';
     // Ingresa registro al log
-    paginationLog += ' Se sube el proceso '+ parseInt(indiceMV[0]) +'a memoria fisica \n';
+    paginationLog += ' Se sube el proceso '+ parseInt(indiceMV.pagina) +'a memoria fisica \n';
 
     // Ingresa registro al log
     paginationLog += ' Se actualizan los datos en la tabla de páginas \n';
@@ -328,12 +320,12 @@ function solicitarItemMemoriaVirtual (indiceMV, numPos) {
     // Sube el array a memoria fisica
     MemoriaFisica[numero] = Object.values(arraySubir);
     // Actualiza el indice en la tabla de paginas
-    indiceMV[1] = numero;
+    indiceMV.memoria = numero;
 
     // Baja el array a memoria virtual
     MemoriaVirtual[posicion[1]] = Object.values(arrayBajar);
     // Actualiza el indice en la tabla de paginas
-    TablaPaginas[indiceTabla][1] = "MV-"+posicion[1];
+    TablaPaginas[indiceTabla].memoria = "MV-"+posicion[1];
 
     // Ingresa registro al log
     paginationLog += 'Se obtiene el item solicitado: '+ MemoriaFisica[numero][numPos] +'\n';
@@ -358,7 +350,9 @@ export function crearProceso(palabra) {
         // valida si en la memoria fisica hay espacio para almacenar
         if (EspaciosDisponibles != 0) {
             agregarPalabraMemoriaFisica(palabra);
-        }else { // Se baja un proceso a memoria virtual para el ingreso del proceso
+        }
+        // Se baja un proceso a memoria virtual para el ingreso del proceso
+        else {
             agregarPalabraMemoriaVirtual(palabra);
         }
 
@@ -380,10 +374,12 @@ export function crearProceso(palabra) {
         console.log(paginationLog);
         //*/  
 
-    }else{ // No existe memoria disponible para el ingreso de la palabra
-        console.log("Memoria Insuficiente para almacenar el proceso");
+    }
+    // No existe memoria disponible para el ingreso de la palabra
+    else{
         // Ingresa registro al log
         paginationLog += 'No hay memoria suficiente para almacenar el proceso, por lo cual se reporta un fallo en la operación. \n';
+        alert("Memoria Insuficiente para almacenar el proceso");
     }
 }
 
@@ -409,41 +405,43 @@ function agregarPalabraMemoriaVirtual (palabra) {
     // Recorre la tabla de paginas
     for (let index = 0; index < TablaPaginas.length; index++) {
         // Valida si el registro coincide con el aleatorio
-        if (TablaPaginas[index][1] == numero) {
+        if (TablaPaginas[index].memoria == numero) {
             // Clona el registro de indices
             indices = Object.assign({}, TablaPaginas[index]);
             // Asigna un indicativo de que el bloque se traslado a memoria virtual
-            TablaPaginas[index][1] = 'MV-'+(parseInt(disponible)+1);
+            TablaPaginas[index].memoria = 'MV-'+(parseInt(disponible));
             break;
             
         }
     }
 
     // Ingresa registro al log
-    paginationLog += ' Se baja el proceso '+ indices[0] +' a memoria virtual. \n';
+    paginationLog += ' Se baja el proceso '+ indices.pagina +' a memoria virtual. \n';
     paginationLog += ' Se actualiza el cambio en la tabla de páginas. \n';
 
     // Baja proceso a memoria virtual
     for (let index = 0; index < MemoriaFisica[0].length; index++) {
-        MemoriaVirtual[parseInt(disponible)][index] = MemoriaFisica[parseInt(indices[1]-1)][index];
+        MemoriaVirtual[parseInt(disponible)][index] = MemoriaFisica[parseInt(indices.memoria)][index];
     }
 
     // Pone el bloque de memoria en vacio
-    limpiarArray(MemoriaFisica[indices[1]-1]);
+    limpiarArray(MemoriaFisica[indices.memoria]);
 
     // Obtiene posicion en tabla de paginas del proceso nuevo
     let tabla = buscarProcesoPendiente();
 
+    console.log(tabla, indices);
+
     // Ingresa registro al log
-    paginationLog += ' Se relaciona en tabla de paginas que el proceso '+ parseInt(TablaPaginas[parseInt(tabla)][0]) +' quedo en el espacio '+ parseInt(indices[1]) +' de la memoria vírtual. \n';
+    paginationLog += ' Se relaciona en tabla de paginas que el proceso '+ parseInt(TablaPaginas[parseInt(tabla)].pagina) +' quedo en el espacio '+ parseInt(indices.memoria) +' de la memoria vírtual. \n';
 
     // Setea dato del proceso nuevo en memoria fisica
-    TablaPaginas[parseInt(tabla)][1] = parseInt(indices[1]);
+    TablaPaginas[parseInt(tabla)].memoria = parseInt(indices.memoria);
 
     // Recorre el bloque de memoria disponible
     for (let index = 0; index < MemoriaFisica[0].length; index++) {
         // Agrega el item del proceso en el espacio de memoria
-        MemoriaFisica[parseInt(indices[1])-1][index] = palabra.charAt(index);
+        MemoriaFisica[parseInt(indices.memoria)][index] = palabra.charAt(index);
     }
 
     EspaciosMemoriaVirtual--;
@@ -457,7 +455,7 @@ function buscarProcesoPendiente() {
     // Recorre tabla de paginas
     for (let index = 0; index < TablaPaginas.length; index++) {
         // Valiada que sea donde se ubico el proceso nuevo
-        if (TablaPaginas[index][0] != '' && TablaPaginas[index][1] == '') {
+        if (TablaPaginas[index].pagina != '' && TablaPaginas[index].memoria === '') {
             return index;
         }
     }
@@ -494,40 +492,37 @@ function validarMemoriaVirtual() {
  */
 function agregarPalabraTablaUsuarios(palabra) {
 
-    let centinela = true;
+    let indice = false;
     // Recorre el array de posiciones disponibles
     for (let index = 0; index < TablaUsuario.length; index++) {
-        // Valida si el bloque en la primera posicion esta vacia
-        if (TablaUsuario[index][0] == "") {
-            // Bucle que recorre las posiciones del bloque 
-            for (let index2 = 0; index2 < TablaUsuario[0].length; index2++) {
-                // Valida si no esta vacia la posicion
-                if (TablaUsuario[index][index2] != "") {
-                    centinela = false;
-                    break;
-                }
+        // Valida si el bloque esta vacio
+        if (TablaUsuario[index].libre == 0) {
+            indice = index;
 
-            }
-            // Valida si todas las posiciones del bloque de datos estan vacias
-            if (centinela == true) {
-                // Ingresa registro al log
-                paginationLog += ' Se ingresa el proceso en la posición '+(parseInt(index)+1)+' de la tabla de procesos. \n';
-
-                // Bucle que recorre el bloque de datos
-                for (let asignacion = 0; asignacion < TablaUsuario[0].length; asignacion++) {
-                    // Ingresa en la posicion el caracter de la palabra
-                    TablaUsuario[index][asignacion] = palabra.charAt(asignacion);
-                }
-                // Asigna el valor de la pagina en la tabla de paginas
-                TablaPaginas[index][0] = index+1;
-
-                // Ingresa registro al log
-                paginationLog += ' En la tabla de paginas en la posición '+ (parseInt(index)+1) +
-                ' se relaciona la posición del proceso en la tabla de procesos. \n';
-                break;
-            }
+            break;
         }
     }
+
+    // Ingresa registro al log
+    paginationLog += ' Se ingresa el proceso en la posición '+(parseInt(indice))+' de la tabla de procesos. \n';
+
+    let data = new Array();
+    // Bucle que recorre el bloque de datos
+    for (let asignacion = 0; asignacion < palabra.length; asignacion++) {
+        // Ingresa en la posicion el caracter de la palabra
+        data[asignacion] = palabra.charAt(asignacion);
+    }
+
+    // Asigna la informacion de la plabra en array de usuario
+    TablaUsuario[indice].data = data;
+    TablaUsuario[indice].libre = 1;
+
+    // Asigna el valor de la pagina en la tabla de paginas
+    TablaPaginas[indice].pagina = indice;
+
+    // Ingresa registro al log
+    paginationLog += ' En la tabla de paginas en la posición '+ (parseInt(indice)) +
+    ' se relaciona la posición del proceso en la tabla de procesos. \n';
 }
 
 /**
@@ -544,7 +539,7 @@ function agregarPalabraMemoriaFisica(palabra) {
     // Valida si el aleatorio es numero valido
     if (aleatorio != -1) {
         // Ingresa registro al log
-        paginationLog += ' El sistema ubica de forma aleatoria el proceso en la memoria física. El proceso se ubica en el espacio '+ (parseInt(aleatorio)+1) +' de memoria física .\n';
+        paginationLog += ' El sistema ubica de forma aleatoria el proceso en la memoria física. El proceso se ubica en el espacio '+ (parseInt(aleatorio)) +' de memoria física .\n';
 
         // Bucle que recorre los espacios dentro del bloque de memoria
         for (let index1 = 0; index1 < TamañoBloque; index1++) {
@@ -557,8 +552,6 @@ function agregarPalabraMemoriaFisica(palabra) {
         EspaciosDisponibles--;
 
     }else {
-        console.log("No hay espacio suficiente para almacenar la palabra");
-
         // Se ingresa el registro al log
         paginationLog += 'No hay memoria suficiente para almacenar el proceso, por lo cual se reporta un fallo en la operación. \n';
     }
@@ -574,21 +567,18 @@ function agregarTablaPaginas(posicionFisica) {
     // Recorre la tabla de paginas
     for (let index = 0; index < TablaPaginas.length; index++) {
         // Valida que exista datos en el array del usuario
-        if (TablaPaginas[index][0] !== "" || parseInt(TablaPaginas[index][0]) == 0) {
+        if (TablaPaginas[index].pagina !== "") {
             // Valida que falte el dato de la memoria fisica
-            if ((TablaPaginas[index][1] === "")) {
+            if ((TablaPaginas[index].memoria === "")) {
                 // Asigna el valor
-                TablaPaginas[index][1] = posicionFisica+1;
+                TablaPaginas[index].memoria = parseInt(posicionFisica);
 
                 // Ingresa registro al log
-                paginationLog += ' En la tabla de páginas en la posición '+ (parseInt(index)+1) +
-                ' se relaciona que se consumió el espacio '+(posicionFisica+1)+' en memoria física. \n';
+                paginationLog += ' En la tabla de páginas en la posición '+ (parseInt(index)) +
+                ' se relaciona que se consumió el espacio '+(posicionFisica)+' en memoria física. \n';
                 // Sale de la ejecucion
                 break;
             }
-        }
-        else{
-            console.log("else"+ index);
         }
     }
 }
