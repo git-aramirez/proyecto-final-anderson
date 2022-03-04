@@ -1,3 +1,52 @@
+var listaCeldas = new Array(20);
+var index = 0;
+var posicionesBloques;
+
+var posicionesBloquesPasoAPaso;
+var listaCeldasPasoAPaso;
+var bloquePasoAPaso;
+var posicionInicialPasoAPaso;
+var posicionFinalPasoAPaso;
+var solicitudesRealizadasPasoAPaso;
+var solicitudesAgregadasPasoAPaso;
+var tabla;
+var esEjecucionPrimerVez = true;
+
+export function inicializarListasAleatorias(listaProcesos,listaRequerimientos,tablaEntrada){
+    listaProcesos = "";
+    for (let index = 0; index < tablaEntrada.length; index++) {
+        
+        if(index===tablaEntrada.length-1){
+            listaProcesos += tablaEntrada[index].proceso;
+        }else{
+            listaProcesos += tablaEntrada[index].proceso+"\n";
+        }
+        
+        if(tablaEntrada[index].solicita==="--"){
+            listaRequerimientos[index]="Liberar";
+        }else{
+            listaRequerimientos[index]="Solicitar "+tablaEntrada[index].solicita;
+        }
+    }
+    return listaProcesos;
+}
+
+export function inicializarTablaEntrada(listaProcesos,listaRequerimientos,tablaEntrada){
+    let procesos = listaProcesos.split("\n");
+    for (let index = 0; index < listaRequerimientos.length; index++) {
+        tablaEntrada[index].proceso = procesos[index];
+        if(listaRequerimientos[index].includes("Solicitar")){
+            let resultado = listaRequerimientos[index].split("Solicitar");
+            tablaEntrada[index].solicita = parseInt(resultado[1].replace(/ /g, ""));
+            tablaEntrada[index].libera= "--";
+        }else{
+            tablaEntrada[index].solicita = "--";
+            tablaEntrada[index].libera = "X";
+        }        
+    }
+}
+
+
 export function inicializarTablaEntradaNumerosAleatorios(tablaEntrada){
     let celdasALiberar = new Array();
     const MININO_SOLICITA =1;
@@ -59,12 +108,66 @@ function limpiarCeldasLiberadas (celdasALiberar){
     }
 }
 
-var listaCeldas = new Array(20);
-var index = 0;
+export function inicializarVariables(){
+    index =0;
+    listaCeldas = new Array(20);
+    posicionesBloques = new Array();
+    initVariablesGlobalesAlgoritmoSolicitudes();
+}
+
+function initVariablesGlobalesAlgoritmoSolicitudes(){
+    posicionesBloquesPasoAPaso = new Array();
+    listaCeldasPasoAPaso = new Array(20);
+    bloquePasoAPaso = [];
+    posicionInicialPasoAPaso= 0;
+    posicionFinalPasoAPaso= 0;
+    solicitudesRealizadasPasoAPaso = 0;
+    solicitudesAgregadasPasoAPaso = new Array();
+    tabla = [];
+    esEjecucionPrimerVez = true;
+}
+
+function crearParrafoResultado(estrategia,itemAlgoritmoAjuste,tablaEntrada,listaCeldas,isPasoAPaso){
+
+    if(estrategia==="Ajuste Sobre Huecos"){
+
+        if(isPasoAPaso && index!=tablaEntrada.length){
+            return "";
+        }
+    }else{
+
+        if(isPasoAPaso && posicionInicialPasoAPaso!=-1){
+            return "";
+        }
+    }
+
+    let resultado = "Se realizó la ejecución de la estrategia de ajuste sobre: "+estrategia+" por medio del "+itemAlgoritmoAjuste
+    +", mediante el siguiente proceso:\n\n";
+
+    for (let index = 0; index < tablaEntrada.length; index++) {
+        if(tablaEntrada[index].solicita=="--"){
+            resultado+=" se liberó el proceso "+tablaEntrada[index].proceso;
+        }else{
+            resultado+=" se solicitó el proceso "+tablaEntrada[index].proceso;
+        }
+    }
+    resultado+=".\n\n Obteniendose como resultado final los procesos en el siguiente orden: "
+    for (let index = 0; index < listaCeldas.length; index++) {
+        if(listaCeldas[index]!=undefined){
+            resultado+=listaCeldas[index]+ " , ";
+        }
+    }
+    resultado = resultado.substring(0,resultado.length-2);
+    
+    return resultado;
+}
 
 //----------------- Estrategia de Ajuste Sobre Huecos -------------------------------
-export function ejecutarAlgoritmo(itemAjusteHuecos,tablaEntrada,isPasoAPaso){
-    if(index==tablaEntrada.length){
+
+
+
+export function ejecutarAlgoritmoAjusteHuecos(itemAlgoritmoAjuste,tablaEntrada,isPasoAPaso){
+    if(index===tablaEntrada.length){
         listaCeldas = new Array(20);
         index=0;
     }
@@ -73,12 +176,12 @@ export function ejecutarAlgoritmo(itemAjusteHuecos,tablaEntrada,isPasoAPaso){
             if(parseInt(tablaEntrada[index].solicita)<=0){
                 continue;
             }
-            let listaPosiciones = encontrarEspacioEnMemoria(tablaEntrada,index,listaCeldas,itemAjusteHuecos);
+            let listaPosiciones = encontrarEspacioEnMemoria(tablaEntrada,index,listaCeldas,itemAlgoritmoAjuste);
             let posicionFinal=listaPosiciones[0];
             if(posicionFinal===listaCeldas.length){
                 continue;
             }            
-            realizarSolicitud(tablaEntrada,listaCeldas,index,posicionFinal,itemAjusteHuecos,listaPosiciones[1]);
+            realizarSolicitud(tablaEntrada,listaCeldas,index,posicionFinal,itemAlgoritmoAjuste,listaPosiciones[1]);
         }else{
             realizarLiberacion(listaCeldas,tablaEntrada,index);
         }
@@ -88,8 +191,11 @@ export function ejecutarAlgoritmo(itemAjusteHuecos,tablaEntrada,isPasoAPaso){
         } 
     }
 
-    return listaCeldas;
+    let parrafoResultado = crearParrafoResultado("Ajuste Sobre Huecos",itemAlgoritmoAjuste,tablaEntrada,listaCeldas,isPasoAPaso);
+    return [listaCeldas,parrafoResultado];
 }
+
+
 
 function realizarSolicitud(tablaEntrada,listaCeldas,index,posicionFinal,itemAlgoritmo,posicionInicial){
     let cantidadDeEspacios =parseInt(tablaEntrada[index].solicita)-1;
@@ -209,9 +315,16 @@ function encontarEspacioEnMemoriaMejorAjuste(listaCeldas,cantidadDeEspacios){
 }
 //-----------------------------------------------------------------------------------
 //----------------- Estrategia de Ajuste Sobre Solicitudes --------------------------
+//-----------------------------------------------------------------------------------
 
+   
 
-export function ejecutarAlgoritmoAjusteSolicitudes(tablaEntrada){
+export function ejecutarAlgoritmoAjusteSolicitudes(itemAlgoritmoAjuste,tablaEntrada,isPasoAPaso){
+
+    if(!isPasoAPaso){
+        initVariablesGlobalesAlgoritmoSolicitudes();
+    }
+   
     posicionesBloques = new Array();
     listaCeldas = new Array(20);
     let bloque = encontrarBloquesDeMemoria(0);
@@ -220,13 +333,46 @@ export function ejecutarAlgoritmoAjusteSolicitudes(tablaEntrada){
     let solicitudesRealizadas = 0;
     let solicitudesAgregadas = new Array();
 
+    if(posicionInicialPasoAPaso===-1){
+        esEjecucionPrimerVez = true;
+    }
+
+    if(isPasoAPaso && !esEjecucionPrimerVez){
+        posicionesBloques= posicionesBloquesPasoAPaso ;
+        listaCeldas = listaCeldasPasoAPaso;
+        bloque= bloquePasoAPaso;
+        posicionInicial= posicionInicialPasoAPaso ;
+        posicionFinal= posicionFinalPasoAPaso ;
+        solicitudesRealizadas = solicitudesRealizadasPasoAPaso ;
+        solicitudesAgregadas= solicitudesAgregadasPasoAPaso ;
+        tablaEntrada = tabla;
+    }
+
+    if(isPasoAPaso && esEjecucionPrimerVez){
+        esEjecucionPrimerVez=false;
+    }
+
     while(posicionInicial!=-1){
+
         let tamanioBloque = posicionFinal-posicionInicial+1;
         let posicionSolicitud=-1;
-        //posicionSolicitud = realizarMejorAjusteSobreSolicitudes(solicitudesAgregadas,tablaEntrada,posicionSolicitud,tamanioBloque);
-        //posicionSolicitud = realizarPeorAjusteSobreSolicitudes(solicitudesAgregadas,tablaEntrada,posicionSolicitud,tamanioBloque);
-        posicionSolicitud = realizarPrimerAjusteSobreSolicitudes(solicitudesAgregadas,tablaEntrada,posicionSolicitud,tamanioBloque);
+
+        switch (itemAlgoritmoAjuste) {
+            case "Primer Ajuste":
+                posicionSolicitud = realizarPrimerAjusteSobreSolicitudes(solicitudesAgregadas,tablaEntrada,posicionSolicitud,tamanioBloque);
+              break;
+
+            case "Mejor Ajuste":
+                posicionSolicitud = realizarMejorAjusteSobreSolicitudes(solicitudesAgregadas,tablaEntrada,posicionSolicitud,tamanioBloque);
+              break;
+
+              default:
+                 posicionSolicitud = realizarPeorAjusteSobreSolicitudes(solicitudesAgregadas,tablaEntrada,posicionSolicitud,tamanioBloque);
+            break;
+        }
+
         if(posicionSolicitud!=-1){
+
             realizarSolicitudAjusteSolicitudes(tablaEntrada,posicionSolicitud,posicionInicial,solicitudesAgregadas);
             solicitudesRealizadas++;
             if(solicitudesRealizadas==3){
@@ -237,9 +383,22 @@ export function ejecutarAlgoritmoAjusteSolicitudes(tablaEntrada){
         bloque = encontrarBloquesDeMemoria();
         posicionInicial = bloque[0];
         posicionFinal = bloque[1];
+
+        if(isPasoAPaso){
+            posicionesBloquesPasoAPaso = posicionesBloques;
+            listaCeldasPasoAPaso = listaCeldas;
+            bloquePasoAPaso = bloquePasoAPaso;
+            posicionInicialPasoAPaso = posicionInicial;
+            posicionFinalPasoAPaso = posicionFinal;
+            solicitudesRealizadasPasoAPaso = solicitudesRealizadas;
+            solicitudesAgregadasPasoAPaso = solicitudesAgregadas;
+            tabla = tablaEntrada;
+            break;
+        }
     } 
 
-    return listaCeldas;
+    let parrafoResultado = crearParrafoResultado("Ajuste de Solicitudes",itemAlgoritmoAjuste,tablaEntrada,listaCeldas,isPasoAPaso);
+    return [listaCeldas,parrafoResultado];
 }
 
 function realizarPrimerAjusteSobreSolicitudes(solicitudesAgregadas,tablaEntrada,posicionSolicitud,tamanioBloque){
@@ -302,7 +461,6 @@ function realizarLiberacionAjusteSolicitudes(tablaEntrada){
         listaCeldas[posicionLiberar]="";
         posicionLiberar = listaCeldas.indexOf(proceso);
     }
-   // realizarLiberacionPosicionesBloque(index,posicionFinal);
 }
 
 function realizarLiberacionPosicionesBloque(posicionInicial,posicionFinal){
@@ -324,7 +482,7 @@ function realizarSolicitudAjusteSolicitudes(tablaEntrada,index,posicionInicial,s
     realizarLiberacionPosicionesBloque(posicionInicial,cantidadDeEspacios-1);
 }
 
-var posicionesBloques;
+
 
 function encontrarBloquesDeMemoria (){
     let posicionInicial =-1;

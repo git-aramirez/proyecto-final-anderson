@@ -18,11 +18,14 @@ export default function IndexAp() {
   const [tablaSalida, setTablaSalida] = useState([]);
   const [banderaEntrada,setBanderaEntrada] = useState(false);
   const [banderaSalida,setBanderaSalida] = useState(false);
+  const [isQuamtum,setIsQuantum] = useState(false);
   const [item_algoritmo,setItem_algoritmo] = useState("FCFS");
+
+  const [isPrioridad,setIsPrioridad] = useState('none');
   
   function tableInputComponent (){
     if(banderaEntrada){
-      return(<TableInputComponent  height={160+(40*numeroProcesos)} tablaEntrada={tablaEntrada} setTablaEntrada={setTablaEntrada} />);
+      return(<TableInputComponent isPrioridad={isPrioridad} height={160+(40*numeroProcesos)} tablaEntrada={tablaEntrada} setTablaEntrada={setTablaEntrada} />);
     }
     return(<></>);
   }
@@ -54,7 +57,7 @@ function init(){
 function crearTablaEntrada(){
   let tablaEntrada = [];
   for (let index = 0; index < numeroProcesos; index++) {
-    tablaEntrada.push({pid: index+1, t_llegada: "", t_ejecucion: "", prioridad:""})
+    tablaEntrada.push({pid: index+1, t_llegada: "", t_ejecucion: "", prioridad:"",rafaga_es: ""})
   }
   setTablaEntrada(tablaEntrada);
 }
@@ -143,19 +146,44 @@ function tableProcessComponent (){
   return(<></>);
 }
 
+function cambiarValorPickerAlgoritmos(itemValue){
+  setItem_algoritmo(itemValue);
+  if(itemValue==="RR"){
+    setIsQuantum(true);
+  }else{
+    setIsQuantum(false);
+  }
+
+  if(itemValue==="externo Expulsivo" || itemValue==="externo No Expulsivo"){
+    setIsPrioridad('');
+  }else{
+    setIsPrioridad('none');
+  }
+ 
+}
+
 function pickerAlgortimos(){
   if(banderaEntrada){
   return (
-  <Picker selectedValue={item_algoritmo} onValueChange={(itemValue, itemIndex) => setItem_algoritmo(itemValue)}>
+  <Picker selectedValue={item_algoritmo} onValueChange={(itemValue, itemIndex) => cambiarValorPickerAlgoritmos(itemValue)}>
   <Picker.Item label={"FCFS"}  value={"FCFS"}/>
   <Picker.Item label={"SJF"}  value={"SJF"}/>
   <Picker.Item label={"SRTF"}  value={"SRTF"}/>
-  <Picker.Item label={"externoExpulsivo"}  value={"externoExpulsivo"}/>
-  <Picker.Item label={"externoNoExpulsivo"}  value={"externoNoExpulsivo"}/>
+  <Picker.Item label={"externo Expulsivo"}  value={"externo Expulsivo"}/>
+  <Picker.Item label={"externo No Expulsivo"}  value={"externo No Expulsivo"}/>
   <Picker.Item label={"HRN"}  value={"HRN"}/>
   <Picker.Item label={"HRN_PRIMA"}  value={"HRN_PRIMA"}/>
   <Picker.Item label={"RR"}  value={"RR"}/>
 </Picker>);}
+  return(<></>);
+}
+
+function quantumComponent(){
+  if(isQuamtum){
+    return(
+      <TextInput style={styles.input} onChangeText={(val)=>setQuantum(val)} placeholder="Quantum"/>);
+  }
+
   return(<></>);
 }
 
@@ -167,7 +195,7 @@ function pickerAlgortimos(){
       <TextInput style={styles.input} onChangeText={(val)=>setNumeroProcesos(val)} placeholder="número de procesos"/>
       <TextInput style={styles.input} onChangeText={(val)=>setNumeroCPU(val)} placeholder="número de CPU´S"/>
       <TextInput style={styles.input} onChangeText={(val)=>setNumeroNucleos(val)} placeholder="número de núcleos"/>
-      <TextInput style={styles.input} onChangeText={(val)=>setQuantum(val)} placeholder="Quantum"/>
+      {quantumComponent()}
       <TouchableOpacity style={{marginTop:0, width: 190, height: 40, backgroundColor: 'blue',padding:10,alignItems: 'center',borderRadius: 5}} onPress={()=>init()} >
         <Text style={{color:'white', fontSize: 17}}>Crear Tabla</Text>
       </TouchableOpacity>

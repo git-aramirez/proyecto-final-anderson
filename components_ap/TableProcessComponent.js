@@ -6,18 +6,44 @@ import {styles} from '../styles/styles';
 const TableProcessComponent = (props) => {
 
   const tablaStyles = props.tablaStyles;
-  //style={{backgroundColor: '#4B53BC'}}
+  var posicionFinal = tablaStyles.length;
 
-  function obtenerPID(i){
-      return i!==tablaStyles.length? "pid "+i : "";
+  function obtenerPID(){
+      if(posicionFinal!=1){
+         posicionFinal--;
+         return "pid "+posicionFinal;
+      }      
+
+      return "";
+      
   }
 
   function obtenerDataTablaStyle(i,data){
-    return i!==(tablaStyles.length-1) ? data==='#ED391E' : data;
+    return i!==(tablaStyles.length-1) ? data==='#CECECC' : data;
   }
 
   function obtenerStyleProcess(i){
     return i!==(tablaStyles.length-1) ? '#FFFFFF' : '#000000';
+  }
+
+
+  function obtenerBackGound(data){
+    if(isNaN(data)){
+      return data;
+    }
+
+    return '#FFFFFF';
+  }
+
+  function obtenerBorder(data){
+    if(isNaN(data)){
+       if(data==='#FFFFFF'){
+         return 0;
+       }
+      return 0.5;
+    }
+
+    return 0;
   }
 
   return(
@@ -25,10 +51,10 @@ const TableProcessComponent = (props) => {
         <DataTable>
         {tablaStyles.map((row,i) => (
           <DataTable.Row >
-              <DataTable.Cell>{obtenerPID(i+1)}</DataTable.Cell>
+              <DataTable.Cell>{obtenerPID()}</DataTable.Cell>
               {row.map((data) => (
               <>
-              <DataTable.Cell style={{ backgroundColor: data}}>
+              <DataTable.Cell style={{ backgroundColor: obtenerBackGound(data)}}>
                 <Text style={{color: obtenerStyleProcess(i)}}>{obtenerDataTablaStyle(i,data)}</Text>
               </DataTable.Cell>
               </>

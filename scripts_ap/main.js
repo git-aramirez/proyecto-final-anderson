@@ -12,9 +12,9 @@ export function ejecutarAlgoritmo(item_algoritmo,tablaEntrada,nucleos,quantum){
             return [SJF(tablaEntrada,nucleos),cantidadColumnas];
         case "SRTF":
             return [SRTF(tablaEntrada,nucleos),cantidadColumnas];
-        case "externoExpulsivo":
+        case "externo Expulsivo":
             return [externoExpulsivo(tablaEntrada,nucleos),cantidadColumnas];
-        case "externoNoExpulsivo":
+        case "externo No Expulsivo":
             return [externoNoExpulsivo(tablaEntrada,nucleos),cantidadColumnas];
         case "HRN":
                 return [HRN(tablaEntrada,nucleos),cantidadColumnas];
@@ -30,7 +30,8 @@ export function ejecutarAlgoritmo(item_algoritmo,tablaEntrada,nucleos,quantum){
 export function inicializarTablaEntradaNumerosAleatorios(tablaEntrada){
     let min_llegada =0;
     let min_ejecucion_prioridad =1;
-    let max =10; 
+    const max =5;
+    const max_rafaga_es = 3;
    
     for (let index_i = 0; index_i < tablaEntrada.length; index_i++) {
 
@@ -41,8 +42,7 @@ export function inicializarTablaEntradaNumerosAleatorios(tablaEntrada){
         }
         tablaEntrada[index_i].t_ejecucion = parseInt(Math.random() * (max - min_ejecucion_prioridad) + min_ejecucion_prioridad);
         tablaEntrada[index_i].prioridad = parseInt(Math.random() * (max - min_ejecucion_prioridad) + min_ejecucion_prioridad);
-
-
+        tablaEntrada[index_i].rafaga_es = parseInt(Math.random() * (max_rafaga_es - min_ejecucion_prioridad) + min_ejecucion_prioridad);
     }
     //return tablaEntrada;
 }
@@ -67,23 +67,47 @@ export function crearTablaDeEstilos(){
         let index_k= parseInt(matrizIntermedia[index_i][0]-1);
         for (let index_j = tiempoInicial; index_j < tiempoFinal; index_j++) {
             if(matrizIntermedia[index_i][3]===0){
-                tablaStyles[index_k][index_j]='#ED391E';
+                tablaStyles[index_k][index_j]='#CECECC';
                 continue;
             }
             tablaStyles[index_k][index_j]='#0DC114';
         }
     }
 
-    return tablaStyles;
+    let posicionFinal = 0;
+    for (let index = 0; index < tablaStyles.length-1; index++) {
+        for (let index_j = 0; index_j < tablaStyles[index].length; index_j++) {
+            if(tablaStyles[index][index_j]==='#0DC114'){
+                posicionFinal = index_j;
+            }
+        }
+
+        for (let index_j = posicionFinal+1; index_j <= posicionFinal+matrizDeDatos[index][4]; index_j++) {
+            tablaStyles[index][index_j] = '#FAE09A';
+        }
+    }
+
+    let tablaStylesOrdenada = [];
+    for (let index = tablaStyles.length-2 ; index >=0; index--) {
+        tablaStylesOrdenada.push(tablaStyles[index]);
+    }
+    tablaStylesOrdenada.push(tablaStyles[tablaStyles.length-1]);
+
+    return tablaStylesOrdenada;
 }
 
 function buscarTiempoFinalMasLejano(){
     let tiempoFinalLejano=0;
+    let pid = 0;
     for (let index = 0; index < matrizIntermedia.length; index++) {
-       if(parseInt(matrizIntermedia[index][2]) >tiempoFinalLejano){
+       if(parseInt(matrizIntermedia[index][2])>tiempoFinalLejano){
             tiempoFinalLejano=parseInt(matrizIntermedia[index][2]);
+            pid = matrizIntermedia[index][0];
        }
     }
+
+    tiempoFinalLejano = tiempoFinalLejano + matrizDeDatos[pid-1][4];
+
     return tiempoFinalLejano;
 }
 
@@ -110,11 +134,12 @@ function asignarValoresMatrizIntermedia(pid,tiempo_llegada,tiempo_fin,tipoTiempo
 function guardarDatos(tabla) {
     matrizDeDatos = new Array(tabla.length);
     for (let i = 0; i < tabla.length; i++) {
-        matrizDeDatos[i] = new Array(4);
+        matrizDeDatos[i] = new Array(5);
         matrizDeDatos[i][0] = tabla[i].pid;
         matrizDeDatos[i][1] = parseInt(tabla[i].t_llegada);
         matrizDeDatos[i][2] = parseInt(tabla[i].t_ejecucion);
         matrizDeDatos[i][3] = parseInt(tabla[i].prioridad);
+        matrizDeDatos[i][4] = parseInt(tabla[i].rafaga_es);
     }
 
     for (let k = 1; k < matrizDeDatos.length; k++) {
@@ -163,19 +188,22 @@ function verificarIntercepcionDeProcesos(tiempo_llegada) {
         }
         suma += tiempo_espera_total;
         var pid = matrizDeDatos[i][0];
-        var tiempo_servicio = tiempo_ejecucion_total + tiempo_espera_total;
+        var tiempo_servicio = tiempo_ejecucion_total + tiempo_espera_total + parseInt(matrizDeDatos[i][4]);
         var tiempo_salida = tiempo_servicio + parseInt(matrizDeDatos[i][1]);
         matrizDeSalida[i][0]=pid;
-        matrizDeSalida[i][1]=tiempo_salida;
+        matrizDeSalida[i][1]=tiempo_salida + parseInt(matrizDeDatos[i][4]);
         matrizDeSalida[i][2]=tiempo_servicio;
         matrizDeSalida[i][3]=tiempo_espera_total;
         matrizDeSalida[i][4]=(tiempo_ejecucion_total / tiempo_servicio);
-        matrizDeSalida[i][4]=Math.round(matrizDeSalida[i][4] * 100) / 100;
+        var exp = Math.pow(10, 2);
+        matrizDeSalida[i][4] = parseInt(matrizDeSalida[i][4] * exp, 10) / exp;
     }
 
     matrizDeSalida[matrizDeSalida.length-1][0]="Promedio"  
     matrizDeSalida[matrizDeSalida.length-1][3]= suma/(matrizDeSalida.length-1);
-    matrizDeSalida[matrizDeSalida.length-1][3]= Math.round( matrizDeSalida[matrizDeSalida.length-1][3] * 100) / 100;
+    exp = Math.pow(10, 2);
+    matrizDeSalida[matrizDeSalida.length-1][3] = parseInt(matrizDeSalida[matrizDeSalida.length-1][3] * exp, 10) / exp;
+    //matrizDeSalida[matrizDeSalida.length-1][3] = matrizDeSalida[matrizDeSalida.length-1][3].toFixed(2);
 }
 
 
@@ -547,7 +575,7 @@ function obetenerPosPIDConMayorPrioridad_EXT_NO_EXP(tiempo_llegada, pids_habilit
 
 //--------------------------------------------------------------------------------------
 
- function HRN(tabla,nucleos) {
+ function HRN_PRIMA(tabla,nucleos) {
     guardarDatos(tabla);
     var ejecutados = new Array();
     matrizIntermedia = new Array();
@@ -634,7 +662,7 @@ function obetenerPosPIDConMayorPrioridad_EXT_NO_EXP(tiempo_llegada, pids_habilit
 }
 
 
- function HRN_PRIMA(tabla,nucleos) {
+ function HRN(tabla,nucleos) {
     guardarDatos(tabla);
     matrizIntermedia = new Array();
     var i = 0;
@@ -738,15 +766,10 @@ function obetenerPosPIDConMayorPrioridad_HRN() {
 //------------------------------------------------------------------------
 
 function RR(tabla,nucleos,quantum) {
-
     guardarDatos(tabla);
-
     matrizIntermedia = new Array();
-
     var cola = new Array();
-
     var i = 0;
-
     var ejecutados = new Array();
 
     while (matrizDeDatos.length != 0) {

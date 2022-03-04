@@ -22,11 +22,11 @@ export const styles = StyleSheet.create({
 
     textInput_table_sp: {
       width: 150,
-      height: 300,
+      height:520,
       borderWidth: 1,
       textAlign: 'center',
       color:'black',
-      fontSize: 17
+      fontSize: 25
     },
 
     textInput_semaforos_sp: {
@@ -78,8 +78,8 @@ export const styles = StyleSheet.create({
       
       },
       container_table: {
-         width:100,
-         height:200,
+         width:300,
+         height:500,
       },
       container_buttons: {
         flex: 1,
@@ -88,5 +88,17 @@ export const styles = StyleSheet.create({
         width:170,
         height:500,
       }, 
+      item_resultado: {
+        fontSize: 15,
+        height: 200,
+        width:900,
+        justifyContent: "justify",
+        borderColor: 'black',
+        borderWidth: .25,
+        textAlign: 'justify',
+      },
+      checkbox: {
+        alignSelf: "center",
+      },
   });
 

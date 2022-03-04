@@ -7,6 +7,10 @@ const TableInputComponent = (props) => {
 
   const tablaEntrada = props.tablaEntrada;
 
+  function cellPrioridadComponent(){
+
+  }
+
   function updateLista (index,property,value){
     let nuevaLista = [...tablaEntrada];
     nuevaLista[index][property]=value;
@@ -20,7 +24,8 @@ const TableInputComponent = (props) => {
               <DataTable.Title ><Text style={{fontSize: 20}}>pid</Text></DataTable.Title>
               <DataTable.Title ><Text style={{fontSize: 20}}>T-Llegada</Text></DataTable.Title>
               <DataTable.Title ><Text style={{fontSize: 20}}>T-Ejecucion</Text></DataTable.Title>
-              <DataTable.Title ><Text style={{fontSize: 20}}>Prioridad</Text></DataTable.Title>
+              <DataTable.Title style={{display: props.isPrioridad}} ><Text style={{fontSize: 20}}>Prioridad</Text></DataTable.Title>
+              <DataTable.Title ><Text style={{fontSize: 20}}>Rafaga de E/S</Text></DataTable.Title>
             </DataTable.Header>
         
            {tablaEntrada.map((row,index) => (
@@ -28,7 +33,8 @@ const TableInputComponent = (props) => {
               <DataTable.Cell ><Text style={{fontSize: 20}}>{row.pid}</Text></DataTable.Cell>
               <DataTable.Cell ><TextInput value={row.t_llegada} onChangeText={(data)=>updateLista(index,"t_llegada",data)} style={styles.inputTable}/></DataTable.Cell>
               <DataTable.Cell ><TextInput value={row.t_ejecucion} onChangeText={(data)=>updateLista(index,"t_ejecucion",data)} style={styles.inputTable}/></DataTable.Cell>
-              <DataTable.Cell ><TextInput value={row.prioridad} onChangeText={(data)=>updateLista(index,"prioridad",data)} style={styles.inputTable}/></DataTable.Cell>
+              <DataTable.Cell style={{display: props.isPrioridad}} ><TextInput value={row.prioridad} onChangeText={(data)=>updateLista(index,"prioridad",data)} style={styles.inputTable}/></DataTable.Cell>
+              <DataTable.Cell ><TextInput value={row.rafaga_es} onChangeText={(data)=>updateLista(index,"rafaga_es",data)} style={styles.inputTable}/></DataTable.Cell>
             </DataTable.Row>
             ))}
           </DataTable > 

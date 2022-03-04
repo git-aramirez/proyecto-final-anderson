@@ -1,6 +1,6 @@
 // In App.js in a new project
-import * as React from 'react';
-import { View, Text , TouchableOpacity,TextInput} from 'react-native';
+import  React , {useState} from 'react';
+import { View, Text , TouchableOpacity,TextInput,CheckBox} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import {styles} from '../styles/styles';
@@ -13,16 +13,30 @@ import IndexSm from '../components_sm/IndexSm';
 import IndexAm from '../components_am/IndexAm';
 import IndexPd from '../components_pd/IndexPd';
 
-
 function HomeScreen(props) {
+
+  const [estaParrafo, setEstaParrafo] = useState(false);
+  const [estaReproducir, setEstaReproducir] = useState(false);
+
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' ,  backgroundColor: '#fff'}}>
-      <Text style={{fontSize:20}}>Home Screen</Text>
-      <TouchableOpacity 
-      style={{marginTop:20, width: 200, height: 50, backgroundColor: 'blue',padding:10,alignItems: 'center',borderRadius: 5}}
-      onPress={()=>props.navigation.navigate('Perfil')}>
-          <Text style={{color:'white', fontSize: 20}}>Ir a perfil</Text>
-      </TouchableOpacity>
+      <Text style={{fontSize:60}}>Infraestructura Computacional</Text>
+      <Text style={{fontSize:40, marginTop: 40}}>Presentado Por :</Text>
+      <Text style={{fontSize:30,marginTop: 30}}>Kevin David Sanchez Solís</Text>
+      <Text style={{fontSize:20}}>kdsanchezs@uqvirtual.edu.co</Text>
+      <Text style={{fontSize:30}}>Anderson Ramirez Vasquez</Text>
+      <Text style={{fontSize:20}}>aramirezv_1@uqvirtual.edu.co</Text>
+
+      <View style={{ flexDirection: "row", marginBottom: 20, marginTop: 30}}>
+        <CheckBox value={estaParrafo} onValueChange={setEstaParrafo} style={styles.checkbox}/>
+        <Text style={{margin: 8}}>¿Parrafo Final Activo?</Text>
+      </View>
+
+      <View style={{ flexDirection: "row", marginBottom: 20, marginTop: 10}}>
+        <CheckBox value={estaReproducir} onValueChange={setEstaReproducir} style={styles.checkbox}/>
+        <Text style={{margin: 8}}>¿Botón de Reproducir Activo?</Text>
+      </View>
+
     </View>
   );
 }
