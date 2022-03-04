@@ -268,6 +268,8 @@ function App () {
   const archivos = ["Fat32", "NTFS", "exFAT", "Ext2", "Ext3", "Ext4", "HFS+"];
   //Lista de tipo de particion
   const listaParticionTipo = ["Primaria", "Logica", "Extendida"];
+  //Lista de tipo de particion
+  const listaParticionTipoGPT = ["Primaria"];
   //lista para alinear
   const metricas = ["MiB", "GiB"];
   
@@ -278,13 +280,38 @@ function App () {
     )
   });
 
-  //llena el combo box de tipo de particion
-  let listaTipo = listaParticionTipo.map( data=> {
+
+  /**
+   * Renderiza picker con opciones de tipo de particion segun tipo de disco 
+   *
+   * @returns Picker de tipo de particion
+   */
+  function partitionPicker() {
+    
+    // Opciones para disco tipo MBR
+    let lista = listaParticionTipo.map( data=> {
+      return (
+        <Picker.Item label={data}  value={data}/>
+      )
+    });
+
+    // Valida si el tipo de disco seleccionado es GPT
+    if (funciones.discosCreados[discos] && funciones.discosCreados[discos].tipo == 'GPT') {
+      //llena el combo box de tipo de particion con opciones para GPT
+      lista = listaParticionTipoGPT.map( data=> {
+        return (
+          <Picker.Item label={data}  value={data}/>
+        )
+      });
+    }
+
     return (
-      <Picker.Item label={data}  value={data}/>
+      <Picker selectedValue={tipoP} onValueChange={(itemValue, itemIndex) => settipoP(itemValue)}>
+        {lista}
+      </Picker>
     )
-  });
-  
+  }
+
   //llena el combo box de alinear
   let listaAlinear = metricas.map( data=> {
     return (
@@ -301,7 +328,7 @@ function App () {
                 <TextInput underlineColorAndroid="transparent" onChangeText={(val) => setTamaño(val)} value={tamaño} placeholder="Tamaño del disco en MB" style={styles.input} keyboardType="numeric"/>
             )}/>
 
-            <TextInput onChangeText={(val) => setNombre(val)} placeholder="Nombre del disco" style={styles.input} keyboardType='text'/>
+            <TextInput onChangeText={(val) => setNombre(val)} value={nombre} placeholder="Nombre del disco" style={styles.input} keyboardType='text'/>
 
             <Text style={{marginLeft:20}} > Tipo de Disco</Text>
 
@@ -343,20 +370,22 @@ function App () {
             <DataTable.Row >
               <DataTable.Cell>Espacio Libre precedente (Mib)</DataTable.Cell>
               <DataTable.Cell  numeric>
-                <TextInput onChangeText={(val) => settLibre(val)} value={tLibre} placeholder="espacio libre" keyboardType='numeric' />
+                <NumberFormat value={tLibre} displayType={'text'} renderText={ (tLibre) => (
+                  <TextInput underlineColorAndroid="transparent" onChangeText={(val) => settLibre(val)} value={tLibre} placeholder="Espacio libre" keyboardType="numeric"/>
+                )}/>
               </DataTable.Cell>
               <DataTable.Cell text>Crear Como</DataTable.Cell>
               <DataTable.Cell text>
-                <Picker selectedValue={tipoP} onValueChange={(itemValue, itemIndex) => settipoP(itemValue)}>
-                  {listaTipo}
-                </Picker>
+                {partitionPicker()}
               </DataTable.Cell>
             </DataTable.Row>
 
             <DataTable.Row>
               <DataTable.Cell>Tamaño nuevo (Mib)</DataTable.Cell>
               <DataTable.Cell numeric>
-                <TextInput onChangeText={(val) => settNuevo(val)} value={tNuevo} placeholder="tamaño nuevo" keyboardType='numeric'/>
+                <NumberFormat value={tNuevo} displayType={'text'} renderText={ (tNuevo) => (
+                  <TextInput underlineColorAndroid="transparent" onChangeText={(val) => settNuevo(val)} value={tNuevo} placeholder="Tamaño nuevo" keyboardType="numeric"/>
+                )}/>
               </DataTable.Cell>
               <DataTable.Cell>Nombre de la particion</DataTable.Cell>
               <DataTable.Cell text>
@@ -367,7 +396,9 @@ function App () {
             <DataTable.Row>
               <DataTable.Cell>Espacio Libre a continuacion (Mib)</DataTable.Cell>
               <DataTable.Cell numeric>
-                <TextInput onChangeText={(val) => setlibreA(val)} value={libreA} placeholder="libre acontinuacion" keyboardType='numeric'/>
+                <NumberFormat value={libreA} displayType={'text'} renderText={ (libreA) => (
+                  <TextInput underlineColorAndroid="transparent" onChangeText={(val) => setlibreA(val)} value={libreA} placeholder="Libre acontinuación" keyboardType="numeric"/>
+                )}/>
               </DataTable.Cell>
               <DataTable.Cell>Sistema de archivos</DataTable.Cell>
               <DataTable.Cell text>
