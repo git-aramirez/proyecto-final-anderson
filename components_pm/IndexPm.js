@@ -149,7 +149,7 @@ function paginacion() {
             <View style={{left:50 ,flex: 2,alignItems: 'center',justifyContent: 'center',flexDirection: 'row'}}>
                 <NumberFormat value={paginaSolicitada} displayType={'text'} renderText={ (paginaSolicitada) => (
                         <TextInput underlineColorAndroid="transparent" onChangeText={(val) => setPaginaSolicitada(val)} value={paginaSolicitada} placeholder="índice de página" style={styles.input_indices} keyboardType="numeric"/>)}/>
-                <NumberFormat alue={posicionSolicitada} displayType={'text'} renderText={ (posicionSolicitada) => (
+                <NumberFormat value={posicionSolicitada} displayType={'text'} renderText={ (posicionSolicitada) => (
                         <TextInput underlineColorAndroid="transparent" onChangeText={(val) => setPosicionSolicitada(val)} value={posicionSolicitada} placeholder="índice de posición" style={styles.input_indices} keyboardType="numeric"/>)}/>
                 <TouchableOpacity style={{marginTop:0, width: 190, height: 40, backgroundColor: 'green',padding:10,alignItems: 'center',borderRadius: 5}} onPress={()=>solictarItem()} >
                     <Text style={{color:'white', fontSize: 17}}>Realizar Solicitud</Text>

@@ -87,6 +87,8 @@ export function crearDisco(tipoDisco, nombreDisco, tamañoDisco) {
 
     console.log("Discos");
     console.log(discosCreados);
+    console.log("Particiones");
+    console.log(particiones);
     console.log("memoria");
     console.log(memoriaDiscos);
     console.log("Especificacion");
