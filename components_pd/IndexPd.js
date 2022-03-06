@@ -4,12 +4,15 @@
  */
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { Text, TextInput, View, Picker, Button,TouchableOpacity} from 'react-native';
+import { Text, TextInput, View, Picker, Button,TouchableOpacity,ScrollView,CheckBox} from 'react-native';
 import * as funciones from '../scripts_pd/Main';
 import { DataTable } from 'react-native-paper';
 import { styles } from './styles';
 import NumberFormat from 'react-number-format';
 import Speaker from '../components_drawer/Speaker';
+
+import DiscoOutComponent from './DiscoOutComponent';
+import { memo } from 'react/cjs/react.production.min';
 
 /**
  * Metodo que Gestiona la vista principal del aplicativo
@@ -19,6 +22,11 @@ function App () {
  
   //Variable que acciona el refresco de la tabla
   const [refreshing, setRefreshing] = React.useState(false);
+
+
+  const [discosGlobales, setDiscosGlobales] = React.useState([]);
+  const [particiones, setparticiones] = React.useState([]);
+  const [posDisco, setPosDisco] = React.useState(0);
 
   /**
    * Metodo que realiza las operaciones para el refresco de la tabla
@@ -40,15 +48,18 @@ function App () {
   /**
    * Metodo que sirve para eliminar el disco seleccionado en el picker
    */
-  function EliminarDisco() {
+   function EliminarDisco() {
     //Llama a la funcion de eliminar disco
-    funciones.eliminarDisco(discos);
+    
+    let resultado =  funciones.eliminarDisco(discos);
+    setparticiones(resultado[1]);
+    setDiscosGlobales(resultado[0]);
+
 
     //Set para el selector de discos
     setitemsInPicker(    
       Object.keys(funciones.discosCreados).map(function(key, index) {
-        return (
-          <Picker.Item label={funciones.discosCreados[key]['nombre']}  value={funciones.discosCreados[key]['nombre']}/>
+        return (<Picker.Item label={funciones.discosCreados[key]['nombre']}  value={funciones.discosCreados[key]['nombre']}/>
         )
       })
     );
@@ -82,7 +93,11 @@ function App () {
     array['etiqueta'] = etiqueta;
     
     //Llamado al metodo para el ingreso de la particion.
-    await funciones.ingresarParticion(discos, array);
+  
+    let resultado =  await funciones.ingresarParticion(discos, array);
+    setparticiones(resultado[1]);
+    setDiscosGlobales(resultado[0]);
+
 
     // Limpia campos  de texto 
     settLibre("");
@@ -116,7 +131,16 @@ function App () {
     }
 
     //Llamado al metodo que almacena los discos
-    funciones.crearDisco(tipo, nombre, parseInt(tamaño, 10));
+    
+    let resultado = funciones.crearDisco(tipo, nombre, parseInt(tamaño, 10));
+    setparticiones(resultado[1]);
+    /*
+    let parti = funciones.particiones;
+    parti.push();
+    setparticiones(parti);
+    */
+    setDiscosGlobales(resultado[0]);
+  
 
     //Set para el selector de discos
     setitemsInPicker(    
@@ -140,19 +164,44 @@ function App () {
     return onRefresh();
   }
 
+
   /**
    * Elimina partcion del disco
    *
    * @param {*} nombreParticion nombre de la particion
    */
-  function EliminarParticion(nombreParticion) {
+  function EliminarParticion(index) {
     
     // Llama la funcion de eliminar particion
-    funciones.eliminarParticion(discos, nombreParticion);
+    
+    let resultado = funciones.eliminarParticion(discos, index);
+    setparticiones(resultado[1]);
+    setDiscosGlobales(resultado[0]);
+    //let par = new Array(discosGlobales.length);
+    //setparticiones(par);
+    
 
     // Refresca componentes
     return onRefresh();
   }
+
+  function inicializarParticiones(){
+
+  }
+
+
+var estados = [false,false,false,];
+
+  function modificarDisplay(nombre){
+    if(nombre===""){
+      return '';
+    }
+    return 'none';
+  }
+
+function modificarEstados(estado, index){
+  funciones.modificarEstadoParticionDisco(!estado,index,posDisco);
+}
 
   /**
    * Muestra tabla de particiones
@@ -163,8 +212,13 @@ function App () {
     let array = [];
 
     // Informacion de las particiones del disco seleccionado
-    array = funciones.particiones[discos];
 
+    if(discos!==""){
+      let posicionDisco = funciones.encontrarDisco(discos);
+      array = funciones.particiones[posicionDisco];
+    }
+    
+/*
     // Valida si no existe disco
     if (discos == "") {
       array = {};
@@ -175,27 +229,32 @@ function App () {
     } else {
       array = funciones.particiones[discos];
     }
+    */
+
+    
     
     //Retorna la tabla de particiones
     return(
-      <View style={{width: `70%` ,height: ((400)+(60*array.length)), top: 100}}>
+      <View style={{width: `70%` ,height: ((250)+(60*array.length)), top: 100}}>
         <DataTable id="tablaParticiones">
           <DataTable.Header>
             <DataTable.Title>Nombre Particion</DataTable.Title>
             <DataTable.Title>Tipo</DataTable.Title>
             <DataTable.Title>Tamaño</DataTable.Title>
             <DataTable.Title>Opciones</DataTable.Title>
+            <DataTable.Title>Editar</DataTable.Title>
           </DataTable.Header>
           {Object.values(array).map((row, index) => (
             <DataTable.Row>
-              <DataTable.Cell>{row.nombreParticion}</DataTable.Cell>
-              <DataTable.Cell>{row.tipoParticion}</DataTable.Cell>
-              <DataTable.Cell>{row.tamañoNuevo}</DataTable.Cell>
+              <DataTable.Cell> <TextInput style={{fontSize:15}} editable={row[8]} value={row[5]}/></DataTable.Cell>
+              <DataTable.Cell> {row[4]} </DataTable.Cell>
+              <DataTable.Cell> {row[1]} </DataTable.Cell>
               <DataTable.Cell>
-                <TouchableOpacity  style={{marginTop:15, width: 160, height: 40, backgroundColor: 'red',padding:10,alignItems: 'center',borderRadius: 5}}  onPress= { ()=> EliminarParticion(row.nombreParticion)}>
+                <TouchableOpacity  style={{marginTop:15, width: 160, height: 40, backgroundColor: 'red',padding:10,alignItems: 'center',borderRadius: 5}}  onPress= { ()=> EliminarParticion(index)}>
                   <Text style={{color:'white', fontSize: 17}}>Eliminar</Text>
                 </TouchableOpacity>
               </DataTable.Cell>
+              <DataTable.Cell><CheckBox value={row[8]} onValueChange={(val) => modificarEstados(row[8],index)} style={{alignSelf: "center" }}/></DataTable.Cell>
             </DataTable.Row>
             ))
           }
@@ -222,7 +281,7 @@ function App () {
     
     //Retorna la tabla de particiones
     return(
-      <View style={{top:170,width: 200,backgroundColor: '#fff',alignItems: 'center',flexDirection: 'column'}}>
+      <View style={{marginTop:10,width: 200, height:200,backgroundColor: '#fff',alignItems: 'center',flexDirection: 'column'}}>
         <TextInput style={styles.item_resultado} multiline={true} numberOfLines={8} value={array}/>
         <TouchableOpacity  style={{marginTop:15, width: 160, height: 40, backgroundColor: 'blue',padding:10,alignItems: 'center',borderRadius: 5}} onPress={()=> Speaker(array)}>
           <Text style={{color:'white', fontSize: 17}}>Reproducir</Text>
@@ -280,6 +339,21 @@ function App () {
     )
   });
 
+  function discoOutComponent(){
+    if(particiones.length === discosGlobales.length){
+      return(
+        <ScrollView stle={{paddingVertical: 5}}>
+           {discosGlobales.map((row,i) => (
+        <DiscoOutComponent top={(50+(50*discosGlobales.length))} discosGlobales={discosGlobales} particiones={particiones} posDisco={i}/>
+        ))}
+        </ScrollView>
+
+       
+      );
+    }
+    return(<></>);
+    
+  }
 
   /**
    * Renderiza picker con opciones de tipo de particion segun tipo de disco 
@@ -310,6 +384,11 @@ function App () {
         {lista}
       </Picker>
     )
+  }
+
+  function cambiarDisco(itemValue){
+    setDisco(itemValue);
+    setPosDisco(funciones.encontrarDisco());
   }
 
   //llena el combo box de alinear
@@ -347,7 +426,7 @@ function App () {
               
           <StatusBar style="auto" />
 
-          <Picker selectedValue={discos} style={{ height: 40, width: 150, marginLeft:20}} onValueChange={(itemValue) => setDisco(itemValue)}>
+          <Picker selectedValue={discos} style={{ height: 40, width: 150, marginLeft:20}} onValueChange={(itemValue) => cambiarDisco(itemValue)}>
             {itemsInPicker}
           </Picker>
 
@@ -438,6 +517,14 @@ function App () {
 
         {tablePartitions()}
         {diskLog()}
+
+        <View style={{width:'70%',height:250,borderWidth: 1}}>
+        {discoOutComponent()}
+        </View>   
+
+        <View style={{width:'70%',height:40,end:100}}>
+        </View> 
+       
       </View>
   );
 }

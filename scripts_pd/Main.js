@@ -16,7 +16,7 @@ export var discosCreados =  new Array();
 //Variable que almacena los discos creados [nombre, tamaño, tipo]
 export var memoriaDiscos =  new Array();
 //Arreglo de arreglos que almacena las particiones de los discos[[particion1, particion1][particion]...]
-export var particiones    =  new Array();
+export var particiones    =  [];
 //Arreglo de parametros de los discos = [[Particion primaria, Extendida, Logica, tamaño particion extendida] [] [] ...]
 var especificacionesDisco     =  new Array();
 //Tamaño maximo del disco MBR (MB)
@@ -34,6 +34,16 @@ var Indice = 1;
 
 //--------------------------------------Metodos----------------------------------------------------------
 
+export function encontrarDisco(nombreDisco){
+    let posicionDisco = -1;
+    for (let index = 0; index < memoriaDiscos.length; index++) {
+        if(memoriaDiscos[index][5]===nombreDisco){
+            return index;
+        }
+    }
+    return posicionDisco;
+}
+
 /**
  * Crea disco
  *
@@ -42,6 +52,13 @@ var Indice = 1;
  * @param {*} tamaño Tamaño del disco
  */
 export function crearDisco(tipoDisco, nombreDisco, tamañoDisco) {
+
+    let posicionDisco = encontrarDisco(nombreDisco);
+    if(posicionDisco===-1){
+        posicionDisco = memoriaDiscos.length;
+    }else{
+        return alert('Ya existe un disco con este nombre.');
+    }
     
     // Valida si existe el disco
     if (discosCreados[nombreDisco]) {
@@ -59,9 +76,20 @@ export function crearDisco(tipoDisco, nombreDisco, tamañoDisco) {
     };
 
     // Agrega espacio de memoria usada para el disco creado
-    memoriaDiscos[nombreDisco] = {
+    memoriaDiscos.push();
+    memoriaDiscos[posicionDisco] = new Array(7);
+    memoriaDiscos[posicionDisco][2] = tamañoDisco;
+    memoriaDiscos[posicionDisco][5] = nombreDisco;
+    memoriaDiscos[posicionDisco][6] = tipoDisco;
+   
+
+    particiones.push();
+    particiones[particiones.length] = new Array(3);
+    /*
+    memoriaDiscos[posicionDisco] = {
         'libre': tamañoDisco
     };
+    */
 
     // Array de datos
     let datos;
@@ -95,6 +123,20 @@ export function crearDisco(tipoDisco, nombreDisco, tamañoDisco) {
     console.log(especificacionesDisco);
     console.log("Log discos");
     console.log(logDiscos);
+
+    let discos = obtenerDiscosMemoria();
+     
+    return [discos,particiones];
+}
+
+function obtenerDiscosMemoria(){
+    let discos = [];
+    for (let index = 0; index < memoriaDiscos.length; index++) {
+        discos.push();
+        discos[index] = [ memoriaDiscos[index][5] ,memoriaDiscos[index][2] , memoriaDiscos[index][6] ];
+    }
+
+    return discos;
 }
 
 /**
@@ -103,16 +145,26 @@ export function crearDisco(tipoDisco, nombreDisco, tamañoDisco) {
  */
 export function eliminarDisco(disco) {
 
+
+    let posicionDisco = encontrarDisco(disco);
+
+    /*
     // Valida si no existe el disco
     if (!memoriaDiscos[disco]) {
         return alert('Debe crear un disco primero.');
     }
+    */
+
+    if(posicionDisco===-1){
+        return alert('Debe crear un disco primero.');
+    }
+    
 
     //Se agrega registro en el log del disco
     logDiscos[disco] += `Se elimina el disco. \n`;
     // Elimina la informacion del disco seleccionado
     delete discosCreados[disco];
-    delete memoriaDiscos[disco];
+    delete memoriaDiscos[posicionDisco];
     delete especificacionesDisco[disco];
 
     // console.log("Discos");
@@ -123,6 +175,24 @@ export function eliminarDisco(disco) {
     // console.log(especificacionesDisco);
     console.log("Log discos");
     console.log(logDiscos);
+
+    let discos = obtenerDiscosMemoria();
+
+    return [discos,particiones];
+}
+
+function existeParticionEnDisco(posicionDisco,nombreParticion){
+    for (let index = 0; index < particiones[posicionDisco].length; index++) {
+        if(particiones[posicionDisco][index] === nombreParticion){
+            return true;
+        }
+    }
+
+    return false;
+}
+
+export function modificarEstadoParticionDisco(estado,index,posicionDisco){
+    particiones[posicionDisco][index][8] = estado;
 }
 
 /**
@@ -156,26 +226,44 @@ export function ingresarParticion(disco, particion) {
     // Obtiene nombre de la partcion
     let nombreParticion = particion['nombreParticion'];
 
+    let posicionDisco = encontrarDisco(disco);
+    if(posicionDisco===-1){
+        return alert('Debe crear un disco primero.');
+    }
+
+    /*
     // Valida si no existe el disco
     if (!memoriaDiscos[disco]) {
         return alert('Debe crear un disco primero.');
     }
+    */
 
     // Valida si la partcion excede el espacio libre del disco
-    if (memoriaDiscos[disco].libre < sumaEspacio) {
+    if (memoriaDiscos[posicionDisco][0] < sumaEspacio) {
         //Se agrega registro en el log del disco
         logDiscos[disco] += `Se notifica error por que la partición excede el espacio disponible en el disco. \n`;
         return alert('El tamaño de la partición es superior al espacio disponible en el disco.');
     }
+    /*
     // Valida si existe el disco
     if (particiones[disco]) {
         // Valida si ya existe la particion
-        if (particiones[disco][nombreParticion]) {
-            //Se agrega registro en el log del disco
-            logDiscos[disco] += `Se notifica error por que ya existe una particion con el mismo nombre en el disco. \n`;
-            return alert('Ya existe una particion con ese nombre en el disco.');
-        }
+        
     }
+    */
+
+    let esParticionRepetida = existeParticionEnDisco(posicionDisco,nombreParticion);
+
+    if (esParticionRepetida) {
+        //Se agrega registro en el log del disco
+        logDiscos[disco] += `Se notifica error por que ya existe una particion con el mismo nombre en el disco. \n`;
+        return alert('Ya existe una particion con ese nombre en el disco.');
+    }
+
+    /*
+    particiones.push();
+    particiones[particiones.length] = new Array(3);
+    */
 
     // Valida si el disco es GPT
     if (discosCreados[disco].tipo == "GPT") {
@@ -193,16 +281,18 @@ export function ingresarParticion(disco, particion) {
         }
 
         // Valida si ya existe el espacio para las particiones del disco
+        /*
         if (!particiones[disco]) {
             // Inicializa posicion del array
             particiones[disco] = {};
         }
-
+        */
 
         if (particion['espacioLibre'] != "") {
             //Se agrega registro en el log del disco
             logDiscos[disco] += `Se crea la partición ${'LibreAntes'+Indice} en el disco. \n`;
             // Ingresa la particion
+            /*
             particiones[disco]['LibreAntes'+Indice] = {
                 'espacioLibre': "",
                 'tamañoNuevo': particion['espacioLibre'],
@@ -213,14 +303,29 @@ export function ingresarParticion(disco, particion) {
                 'tipoSistemaArchivos': "",
                 'etiqueta': ""
             };
+            */
+
+            particiones[posicionDisco][1] = [
+                "",
+                particion['espacioLibre'],
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                false
+            ];
+
             // Setea los valores de memoria en el disco
-            memoriaDiscos[disco]['LibreAntes'+Indice] = particion['espacioLibre'];
-            memoriaDiscos[disco]['libre'] = memoriaDiscos[disco]['libre'] - particion['espacioLibre'];
+            memoriaDiscos[posicionDisco][1] = particion['espacioLibre'];
+            memoriaDiscos[posicionDisco][0] = memoriaDiscos[posicionDisco][0] - particion['espacioLibre'];
         }
 
         //Se agrega registro en el log del disco
         logDiscos[disco] += `Se crea la partición en el disco. \n`;
         // Ingresa la particion
+        /*
         particiones[disco][nombreParticion] = {
             'espacioLibre': particion['espacioLibre'] ? particion['espacioLibre'] : "",
             'tamañoNuevo': particion['tamañoNuevo'] ? particion['tamañoNuevo'] : "",
@@ -231,15 +336,32 @@ export function ingresarParticion(disco, particion) {
             'tipoSistemaArchivos': particion['tipoSistemaArchivos'] ? particion['tipoSistemaArchivos'] : "",
             'etiqueta': particion['etiqueta'] ? particion['etiqueta'] : ""
         };
+        */
+
+        particiones[posicionDisco][2] = [
+            particion['espacioLibre'] ? particion['espacioLibre'] : "",
+            particion['tamañoNuevo'] ? particion['tamañoNuevo'] : "",
+            particion['espacioLibreAcontinuacion'] ? particion['espacioLibreAcontinuacion'] : "",
+            particion['alinea'] ? particion['alinea'] : "",
+            particion['tipoParticion'] ? particion['tipoParticion'] : "",
+            particion['nombreParticion'] ? particion['nombreParticion'] : "",
+            particion['tipoSistemaArchivos'] ? particion['tipoSistemaArchivos'] : "",
+            particion['etiqueta'] ? particion['etiqueta'] : "", 
+            false
+        ];
         // Setea los valores de memoria en el disco
-        memoriaDiscos[disco][nombreParticion] = particion['tamañoNuevo'];
-        memoriaDiscos[disco]['libre'] = memoriaDiscos[disco]['libre'] - particion['tamañoNuevo'];
+        memoriaDiscos[posicionDisco][4] = particion['tamañoNuevo'];
+        memoriaDiscos[posicionDisco][0] = memoriaDiscos[posicionDisco][0] - particion['tamañoNuevo'];
         especificacionesDisco[disco].gptPrimarias--;
+
+       
 
         if (particion['espacioLibreAcontinuacion'] != "") {
             //Se agrega registro en el log del disco
             logDiscos[disco] += `Se crea la partición ${'LibreDespues'+Indice} en el disco. \n`;
             // Ingresa la particion
+
+            /*
             particiones[disco]['LibreDespues'+Indice] = {
                 'espacioLibre': "",
                 'tamañoNuevo': particion['espacioLibreAcontinuacion'],
@@ -249,10 +371,23 @@ export function ingresarParticion(disco, particion) {
                 'nombreParticion': 'LibreDespues'+Indice,
                 'tipoSistemaArchivos': "",
                 'etiqueta': ""
-            };
+            };*/
+
+            particiones[posicionDisco][0] = [
+                "",
+                particion['espacioLibreAcontinuacion'],
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                false
+            ];
+
             // Setea los valores de memoria en el disco
-            memoriaDiscos[disco]['LibreDespues'+Indice] = particion['espacioLibreAcontinuacion'];
-            memoriaDiscos[disco]['libre'] = memoriaDiscos[disco]['libre'] - particion['espacioLibreAcontinuacion'];
+            memoriaDiscos[posicionDisco][3] = particion['espacioLibreAcontinuacion'];
+            memoriaDiscos[posicionDisco][0] = memoriaDiscos[posicionDisco][0] - particion['espacioLibreAcontinuacion'];
         }
 
         if (particion['espacioLibreAcontinuacion'] != "" || particion['espacioLibre'] != "") {
@@ -296,15 +431,30 @@ export function ingresarParticion(disco, particion) {
         }
 
         // Valida si ya existe el espacio para las particiones del disco
+        /*
         if (!particiones[disco]) {
             // Inicializa posicion del array
             particiones[disco] = {};
-        }
+        }*/
 
         if (particion['espacioLibre'] != "") {
             //Se agrega registro en el log del disco
             logDiscos[disco] += `Se crea la partición ${'LibreAntes'+Indice} en el disco. \n`;
             // Ingresa la particion
+
+            particiones[posicionDisco][1] = [
+                "",
+                particion['espacioLibre'],
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                false
+            ];
+
+            /*
             particiones[disco]['LibreAntes'+Indice] = {
                 'espacioLibre': "",
                 'tamañoNuevo': particion['espacioLibre'],
@@ -315,34 +465,51 @@ export function ingresarParticion(disco, particion) {
                 'tipoSistemaArchivos': "",
                 'etiqueta': ""
             };
+            */
+
             // Setea los valores de memoria en el disco
-            memoriaDiscos[disco]['LibreAntes'+Indice] = particion['espacioLibre'];
-            memoriaDiscos[disco]['libre'] = memoriaDiscos[disco]['libre'] - particion['espacioLibre'];
+            memoriaDiscos[posicionDisco][1] = particion['espacioLibre'];
+            memoriaDiscos[posicionDisco][0] = memoriaDiscos[posicionDisco][0] - particion['espacioLibre'];
         }
 
         //Se agrega registro en el log del disco
         logDiscos[disco] += `Se crea la partición en el disco. \n`;
 
+        particiones[posicionDisco][2] = [
+            particion['espacioLibre'] ? particion['espacioLibre'] : "",
+            particion['tamañoNuevo'] ? particion['tamañoNuevo'] : "",
+            particion['espacioLibreAcontinuacion'] ? particion['espacioLibreAcontinuacion'] : "",
+            particion['alinea'] ? particion['alinea'] : "",
+            particion['tipoParticion'] ? particion['tipoParticion'] : "",
+            particion['nombreParticion'] ? particion['nombreParticion'] : "",
+            particion['tipoSistemaArchivos'] ? particion['tipoSistemaArchivos'] : "",
+            particion['etiqueta'] ? particion['etiqueta'] : "",
+            false
+        ];
+
+        /*
         // Ingresa la particion
         particiones[disco][nombreParticion] = {
-            'espacioLibre': particion['espacioLibre'] ? particion['espacioLibre'] : "",
-            'tamañoNuevo': particion['tamañoNuevo'] ? particion['tamañoNuevo'] : "",
-            'espacioLibreAcontinuacion': particion['espacioLibreAcontinuacion'] ? particion['espacioLibreAcontinuacion'] : "",
-            'alinea': particion['alinea'] ? particion['alinea'] : "",
-            'tipoParticion': particion['tipoParticion'] ? particion['tipoParticion'] : "",
-            'nombreParticion': particion['nombreParticion'] ? particion['nombreParticion'] : "",
-            'tipoSistemaArchivos': particion['tipoSistemaArchivos'] ? particion['tipoSistemaArchivos'] : "",
-            'etiqueta': particion['etiqueta'] ? particion['etiqueta'] : ""
+            'espacioLibre': ,
+            'tamañoNuevo': ,
+            'espacioLibreAcontinuacion': ,
+            'alinea': 
+            'tipoParticion': 
+            'nombreParticion': 
+            'tipoSistemaArchivos': 
+            'etiqueta': 
         };
+        */
         // Setea los valores de memoria en el disco
-        memoriaDiscos[disco][nombreParticion] = particion['tamañoNuevo'];
-        memoriaDiscos[disco]['libre'] = memoriaDiscos[disco]['libre'] - particion['tamañoNuevo'];
+        memoriaDiscos[posicionDisco][4] = particion['tamañoNuevo'];
+        memoriaDiscos[posicionDisco][0] = memoriaDiscos[posicionDisco][0] - particion['tamañoNuevo'];
 
         
         if (particion['espacioLibreAcontinuacion'] != "") {
             //Se agrega registro en el log del disco
             logDiscos[disco] += `Se crea la partición ${'LibreDespues'+Indice} en el disco. \n`;
             // Ingresa la particion
+            /*
             particiones[disco]['LibreDespues'+Indice] = {
                 'espacioLibre': "",
                 'tamañoNuevo': particion['espacioLibreAcontinuacion'],
@@ -353,9 +520,23 @@ export function ingresarParticion(disco, particion) {
                 'tipoSistemaArchivos': "",
                 'etiqueta': ""
             };
+            */
+
+            particiones[posicionDisco][0] = [
+                "",
+                particion['espacioLibreAcontinuacion'],
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                false
+            ];
+
             // Setea los valores de memoria en el disco
-            memoriaDiscos[disco]['LibreDespues'+Indice] = particion['espacioLibreAcontinuacion'];
-            memoriaDiscos[disco]['libre'] = memoriaDiscos[disco]['libre'] - particion['espacioLibreAcontinuacion'];
+            memoriaDiscos[posicionDisco][3] = particion['espacioLibreAcontinuacion'];
+            memoriaDiscos[posicionDisco][0] = memoriaDiscos[posicionDisco][0] - particion['espacioLibreAcontinuacion'];
         }
         if (particion['espacioLibreAcontinuacion'] != "" || particion['espacioLibre'] != "") {
             Indice++;
@@ -372,20 +553,31 @@ export function ingresarParticion(disco, particion) {
     // console.log(particiones);
     console.log("Log discos");
     console.log(logDiscos);
+
+    let discos = obtenerDiscosMemoria();
+
+    return [discos,particiones];
 }
+
+
 
 /**
  * Elimina una particion de un disco
  * @param {*} disco nombre de disco
  * @param {*} nombreParticion nombre de la particion a eliminar
  */
-export function eliminarParticion(disco, nombreParticion) {
+export function eliminarParticion(disco, index) {
+
+    let posicionDisco = encontrarDisco(disco);
+    if(posicionDisco===-1){
+        return alert('El disco no existe !');
+    }
 
     //Se agrega registro en el log del disco
-    logDiscos[disco] += `Se solicita eliminar la partición ${nombreParticion} del disco ${disco}. \n`;
+    logDiscos[disco] += `Se solicita eliminar la partición ${index} del disco ${disco}. \n`;
 
     // Aumenta la memoria libre del disco segun el espacio liberado por la particion
-    memoriaDiscos[disco]['libre'] = memoriaDiscos[disco]['libre'] + particiones[disco][nombreParticion].tamañoNuevo;
+    memoriaDiscos[posicionDisco][0] = memoriaDiscos[posicionDisco][0] + particiones[posicionDisco][index][1];
 
     // Valida si el disco es tipo GPT
     if (discosCreados[disco].tipo == 'GPT') {
@@ -397,21 +589,21 @@ export function eliminarParticion(disco, nombreParticion) {
     // El disco es tipo MBR
     else {
         // Valida si el tipo de particion a eliminar es primaria
-        if (particiones[disco][nombreParticion].tipoParticion == 'Primaria') {
+        if (particiones[posicionDisco][index][4] == 'Primaria') {
             //Se agrega registro en el log del disco
             logDiscos[disco] += ` Se aumenta en el disco la cantidad de particiones primarias disponibles. \n`;
             // Aumenta el tipo de partcion liberada
             especificacionesDisco[disco]['mbrPrimarias']++;
         }
         // Valida si el tipo de particion a eliminar es logica
-        else if (particiones[disco][nombreParticion].tipoParticion == 'Logica') {
+        else if (particiones[posicionDisco][index][4] == 'Logica') {
             //Se agrega registro en el log del disco
             logDiscos[disco] += ` Se aumenta en el disco la cantidad de particiones lógicas disponibles. \n`;
             // Aumenta el tipo de partcion liberada
             especificacionesDisco[disco]['mbrLogicas']++;
         }
         // Valida si el tipo de particion a eliminar es extendida
-        else if (particiones[disco][nombreParticion].tipoParticion == 'Extendida'){
+        else if (particiones[posicionDisco][index][4] == 'Extendida'){
             //Se agrega registro en el log del disco
             logDiscos[disco] += ` Se aumenta en el disco la cantidad de particiones extendidas disponibles. \n`;
             // Aumenta el tipo de partcion liberada
@@ -423,9 +615,9 @@ export function eliminarParticion(disco, nombreParticion) {
     logDiscos[disco] += `Se elimina completamente la partición del disco. \n`;
     
     // Elimina la informacion del array de particiones del disco
-    delete particiones[disco][nombreParticion];
+    delete particiones[posicionDisco][index];
     // Elimina del array de memoria del disco la particion
-    delete memoriaDiscos[disco][nombreParticion];
+    delete memoriaDiscos[posicionDisco][4];
 
     console.log("Discos");
     console.log(discosCreados);
@@ -437,4 +629,8 @@ export function eliminarParticion(disco, nombreParticion) {
     console.log(particiones);
     console.log("Log discos");
     console.log(logDiscos);
+
+    let discos = obtenerDiscosMemoria();
+
+    return [discos,particiones];
 }
