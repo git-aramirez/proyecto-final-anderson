@@ -195,6 +195,10 @@ export function modificarEstadoParticionDisco(estado,index,posicionDisco){
     particiones[posicionDisco][index][8] = estado;
 }
 
+export function setParticiones(particionesNuevas){
+    particiones = particionesNuevas;
+}
+
 /**
  * Ingresa una particion al disco
  *

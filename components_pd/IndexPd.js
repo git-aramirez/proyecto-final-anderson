@@ -200,7 +200,9 @@ var estados = [false,false,false,];
   }
 
 function modificarEstados(estado, index){
-  funciones.modificarEstadoParticionDisco(!estado,index,posDisco);
+  particiones[posDisco][index][8] = estado;
+  onRefresh();
+  funciones.modificarEstadoParticionDisco(estado,index,posDisco);
 }
 
   /**
@@ -217,6 +219,24 @@ function modificarEstados(estado, index){
       let posicionDisco = funciones.encontrarDisco(discos);
       array = funciones.particiones[posicionDisco];
     }
+
+    let part = [];
+    if(particiones.length>0){
+      part = particiones[posDisco];
+    }
+
+    function updateNombreParticiones (value,index){
+      particiones[posDisco][index][5] = value;
+      onRefresh();
+      funciones.setParticiones(particiones);
+    }
+
+    function updateTipoParticiones (value,index){
+      particiones[posDisco][index][4] = value;
+      onRefresh();
+      funciones.setParticiones(particiones);
+    }
+  
     
 /*
     // Valida si no existe disco
@@ -231,8 +251,6 @@ function modificarEstados(estado, index){
     }
     */
 
-    
-    
     //Retorna la tabla de particiones
     return(
       <View style={{width: `70%` ,height: ((250)+(60*array.length)), top: 100}}>
@@ -244,17 +262,26 @@ function modificarEstados(estado, index){
             <DataTable.Title>Opciones</DataTable.Title>
             <DataTable.Title>Editar</DataTable.Title>
           </DataTable.Header>
-          {Object.values(array).map((row, index) => (
+          {Object.values(part).map((row, index) => (
             <DataTable.Row>
-              <DataTable.Cell> <TextInput style={{fontSize:15}} editable={row[8]} value={row[5]}/></DataTable.Cell>
-              <DataTable.Cell> {row[4]} </DataTable.Cell>
+              <DataTable.Cell> <TextInput style={{fontSize:15}} editable={row[8]} value={row[5]} onChangeText={(data)=>updateNombreParticiones(data,index)}/></DataTable.Cell>
+              <DataTable.Cell >  
+                
+              <Picker style={{height: 25, fontSize:15}} value={row[4]} selectedValue={row[4]} enabled={row[8]} onValueChange={(itemValue, itemIndex) => updateTipoParticiones(itemValue,index)}>
+                <Picker.Item label={""}  value={""}/>
+                <Picker.Item label={"Primaria"}  value={"Primaria"}/>
+                <Picker.Item label={"Logica"}  value={"Logica"}/>
+                <Picker.Item label={"Extendida"}  value={"Extendida"}/>
+              </Picker>
+                
+              </DataTable.Cell>
               <DataTable.Cell> {row[1]} </DataTable.Cell>
               <DataTable.Cell>
-                <TouchableOpacity  style={{marginTop:15, width: 160, height: 40, backgroundColor: 'red',padding:10,alignItems: 'center',borderRadius: 5}}  onPress= { ()=> EliminarParticion(index)}>
+                <TouchableOpacity style={{marginTop:15, width: 160, height: 40, backgroundColor: 'red',padding:10,alignItems: 'center',borderRadius: 5}}  onPress= { ()=> EliminarParticion(index)}>
                   <Text style={{color:'white', fontSize: 17}}>Eliminar</Text>
                 </TouchableOpacity>
               </DataTable.Cell>
-              <DataTable.Cell><CheckBox value={row[8]} onValueChange={(val) => modificarEstados(row[8],index)} style={{alignSelf: "center" }}/></DataTable.Cell>
+              <DataTable.Cell><CheckBox value={row[8]} onValueChange={(val) => modificarEstados(val,index)} style={{alignSelf: "center" }}/></DataTable.Cell>
             </DataTable.Row>
             ))
           }
@@ -518,7 +545,7 @@ function modificarEstados(estado, index){
         {tablePartitions()}
         {diskLog()}
 
-        <View style={{width:'70%',height:250,borderWidth: 1}}>
+        <View style={{width:'60%',height:250,borderWidth: 1}}>
         {discoOutComponent()}
         </View>   
 
