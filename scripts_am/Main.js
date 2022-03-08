@@ -198,17 +198,26 @@ export function crearMapaBits (algoritmo) {
         mapa = (mapaIndexadaCombinada);
     }
 
+    let salto = 0;
+    let texto = '';
     // Recorre mapa de bits con datos
     for (let index = 0; index < mapa.length; index++) {
         // Valida si el mapa en la posicion tiene datos
         if (mapa[index][0] != '' || mapa[index][1] != '' || mapa[index][2] != '') {
-            array[index] = '*';
+            texto += '*';
+            salto++;
         } else {
-            array[index] = ' ';
+            texto += '0';
+            salto++;
+        }
+
+        if (salto == 4) {
+            texto += '\n';
+            salto = 0;
         }
     }
 
-    return array;
+    return texto;
 }
 
     //--------------------------------Asignacion Contigua------------------------------------------------

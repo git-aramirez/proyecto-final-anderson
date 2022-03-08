@@ -110,6 +110,19 @@ export const styles = StyleSheet.create({
     justifyContent: "center",
   },
 
+  item_input: {
+    fontSize: 20,
+    height: 170,
+    width:160,
+    alignContent: "center",
+    alignItems: "center",
+    justifyContent: "center",
+    borderColor: 'black',
+    flexDirection: 'column',
+    borderWidth: .25,
+    textAlign: 'center',
+  },
+
   view: {
     flex: 1,
     flexDirection: 'row',

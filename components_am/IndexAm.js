@@ -164,8 +164,9 @@
         }
 
         return (
-            <View style={{top: 0,marginLeft:20}}> 
-                <BitsMap map = {mapaBits}/>
+            <View style={{top: 0,marginLeft:20}}>
+                <Text>Mapa de bits</Text>
+                <TextInput style={styles.item_input} multiline={true} numberOfLines={5} value={mapaBits}/>
             </View>
         )
     }
@@ -214,7 +215,7 @@
         //Refresco de la tabla del algortimo de asignacion
         onRefresh();
     }
-
+ 
     /**
      * Metodo que retorna el mapa segun el algoritmo seleccionado
      * @returns Mapa con los datos segun algortimo seleccionado
@@ -248,101 +249,12 @@
             //Se asigna el valor del mapa
             array = funciones.mapaIndexadaCombinada;
         }
- 
-        //Retorna las SectionList con los datos
-        return(
-            <View style={{top:150, marginRight:0, marginLeft: 20, width: 400 ,height: 500,flexDirection: 'row',alignContent: "center",alignItems: "center",justifyContent: "center",padding: 1}}>
-                <SectionList  style={{marginEnd: 20}}
-                    sections={[
-                        {title: 'Bloque 1', data: array[0]},
-                        {title: 'Bloque 5', data: array[4]},
-                        {title: 'Bloque 9', data: array[8]},
-                        {title: 'Bloque 13', data: array[12]},
-                        {title: 'Bloque 17', data: array[16]}
-                    ]}
-                    renderItem={({item}) => <Text style={styles.item}>{item}</Text>}
-                    renderSectionHeader={({section}) => <Text style={styles.sectionHeader}>{section.title}</Text>}
-                    keyExtractor={(item, index) => index}
-                />
-                <SectionList 
-                    sections={[
-                        {title: 'Bloque 2', data: array[1]},
-                        {title: 'Bloque 6', data: array[5]},
-                        {title: 'Bloque 10', data: array[9]},
-                        {title: 'Bloque 14', data: array[13]},
-                        {title: 'Bloque 18', data: array[17]}
-                    ]}
-                    renderItem={({item}) => <Text style={styles.item}>{item}</Text>}
-                    renderSectionHeader={({section}) => <Text style={styles.sectionHeader}>{section.title}</Text>}
-                    keyExtractor={(item, index) => index}
-                />
-                <SectionList  
-                    sections={[
-                        {title: 'Bloque 3', data: array[2]},
-                        {title: 'Bloque 7', data: array[6]},
-                        {title: 'Bloque 11', data: array[10]},
-                        {title: 'Bloque 15', data: array[14]},
-                        {title: 'Bloque 19', data: array[18]}
-                    ]}
-                    renderItem={({item}) => <Text style={styles.item}>{item}</Text>}
-                    renderSectionHeader={({section}) => <Text style={styles.sectionHeader}>{section.title}</Text>}
-                    keyExtractor={(item, index) => index}
-                />
-                <SectionList 
-                    sections={[
-                        {title: 'Bloque 4', data: array[3]},
-                        {title: 'Bloque 8', data: array[7]},
-                        {title: 'Bloque 12', data: array[11]},
-                        {title: 'Bloque 16', data: array[15]},
-                        {title: 'Bloque 20', data: array[19]}
-                    ]}
-                    renderItem={({item}) => <Text style={styles.item}>{item}</Text>}
-                    renderSectionHeader={({section}) => <Text style={styles.sectionHeader}>{section.title}</Text>}
-                    keyExtractor={(item, index) => index}
-                />
-            </View>
-        )
-    }
- 
-    /**
-     * Metodo que retorna el mapa segun el algoritmo seleccionado
-     * @returns Mapa con los datos segun algortimo seleccionado
-     */
-    const mapasT = () => {
-
-        //Arreglo que toma el valor del mapa segun el algortimo seleccionado
-        let array = [];
-        //Valida que el algortimo seleccionado sea Contigua
-        if (algoritmo == "Contigua") {
-            //Se asigna el valor del mapa
-            array = funciones.mapaContigua;
-        }
-        //Valida que el algortimo seleccionado sea Enlazada
-        if (algoritmo == "Enlazada") {
-            //Se asigna el valor del mapa
-            array = funciones.mapaEnlazada;
-        }
-        //Valida que el algortimo seleccionado sea Indexada-Enlazada
-        if (algoritmo == "Indexada-Enlazada") {
-            //Se asigna el valor del mapa
-            array = funciones.mapaIndexadaEnlazada;
-        }
-        //Valida que el algortimo seleccionado sea Indexada-Multinivel
-        if (algoritmo == "Indexada-Multinivel") {
-            //Se asigna el valor del mapa
-            array = funciones.mapaIndexadaMultinivel;
-        }
-        //Valida que el algortimo seleccionado sea Indexada Combinada
-        if (algoritmo == "Indexada-Combinada") {
-            //Se asigna el valor del mapa
-            array = funciones.mapaIndexadaCombinada;
-        }
     
         //Retorna las SectionList con los datos
         return(
             
             <View style={{top:150, marginRight:0, marginLeft: 20, width: 400 ,height: 500,flexDirection: 'column',alignContent: "center",alignItems: "center",justifyContent: "center",padding: 1}}>
- 
+
                 <DataTable id="tabla_salida" style={{flexDirection: 'column'}}>
                     <DataTable.Header >
                         <DataTable.Title><Text style={styles.item_tabla}>Bloque 1</Text></DataTable.Title>
@@ -565,8 +477,8 @@
             
             <View style={{width: '80%' ,height: 500,top: 50,flex: 1,flexDirection: 'row',alignContent: "center",alignItems: "center",justifyContent: "center"}}>
                 {processTable()}
-                {mapasT()}
                 {mapaBits()}
+                {mapas()}
             </View>
 
             {diskLog()}
