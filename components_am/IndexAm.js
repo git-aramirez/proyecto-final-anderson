@@ -11,6 +11,7 @@
  import { styles } from './styles';
  import NumberFormat from 'react-number-format';
  import Speaker from '../components_drawer/Speaker';
+ import { DataTable } from 'react-native-paper';
  
  /**
   * Metodo principal que gestiona la vista del mapa de bits y los algortimos de asignacion de espacio
@@ -303,6 +304,238 @@
         )
     }
  
+    /**
+     * Metodo que retorna el mapa segun el algoritmo seleccionado
+     * @returns Mapa con los datos segun algortimo seleccionado
+     */
+    const mapasT = () => {
+
+        //Arreglo que toma el valor del mapa segun el algortimo seleccionado
+        let array = [];
+        //Valida que el algortimo seleccionado sea Contigua
+        if (algoritmo == "Contigua") {
+            //Se asigna el valor del mapa
+            array = funciones.mapaContigua;
+        }
+        //Valida que el algortimo seleccionado sea Enlazada
+        if (algoritmo == "Enlazada") {
+            //Se asigna el valor del mapa
+            array = funciones.mapaEnlazada;
+        }
+        //Valida que el algortimo seleccionado sea Indexada-Enlazada
+        if (algoritmo == "Indexada-Enlazada") {
+            //Se asigna el valor del mapa
+            array = funciones.mapaIndexadaEnlazada;
+        }
+        //Valida que el algortimo seleccionado sea Indexada-Multinivel
+        if (algoritmo == "Indexada-Multinivel") {
+            //Se asigna el valor del mapa
+            array = funciones.mapaIndexadaMultinivel;
+        }
+        //Valida que el algortimo seleccionado sea Indexada Combinada
+        if (algoritmo == "Indexada-Combinada") {
+            //Se asigna el valor del mapa
+            array = funciones.mapaIndexadaCombinada;
+        }
+    
+        //Retorna las SectionList con los datos
+        return(
+            
+            <View style={{top:150, marginRight:0, marginLeft: 20, width: 400 ,height: 500,flexDirection: 'column',alignContent: "center",alignItems: "center",justifyContent: "center",padding: 1}}>
+ 
+                <DataTable id="tabla_salida" style={{flexDirection: 'column'}}>
+                    <DataTable.Header >
+                        <DataTable.Title><Text style={styles.item_tabla}>Bloque 1</Text></DataTable.Title>
+                        <DataTable.Title><Text style={styles.item_tabla}>Bloque 2</Text></DataTable.Title>
+                        <DataTable.Title><Text style={styles.item_tabla}>Bloque 3</Text></DataTable.Title>
+                        <DataTable.Title><Text style={styles.item_tabla}>Bloque 4</Text></DataTable.Title>
+                    </DataTable.Header>
+                    <DataTable.Row > 
+                        <DataTable.Cell style={{width:75, height: 80, borderBottomWidth: 0}}>
+                            <View style={{flexDirection: 'column', margin: 0}}>
+                                {array[0].map((row, index1) =>(
+                                    <Text style={styles.item}>{array[0][index1]}</Text>
+                                ))}
+                            </View>
+                        </DataTable.Cell>
+                        <DataTable.Cell style={{width:75,height: 80 , flexDirection: 'column'}}>
+                            <View style={{flexDirection: 'column', margin: 0}}>
+                                {array[1].map((row, index1) =>(
+                                    <Text style={styles.item}>{array[1][index1]}</Text>
+                                ))}
+                            </View>
+                        </DataTable.Cell>
+                        <DataTable.Cell style={{width:75,height: 80 , flexDirection: 'column'}}>
+                            <View style={{flexDirection: 'column', margin: 0}}>
+                                {array[2].map((row, index1) =>(
+                                    <Text style={styles.item}>{array[2][index1]}</Text>
+                                ))}
+                            </View>
+                        </DataTable.Cell>
+                        <DataTable.Cell style={{width:75,height: 80 , flexDirection: 'column'}}>
+                            <View style={{flexDirection: 'column', margin: 0}}>
+                                {array[3].map((row, index1) =>(
+                                    <Text style={styles.item}>{array[3][index1]}</Text>
+                                ))}
+                            </View>
+                        </DataTable.Cell>
+                    </DataTable.Row>
+                </DataTable >
+                <DataTable id="tabla_salida" style={{flexDirection: 'column'}}>
+                    <DataTable.Header >
+                        <DataTable.Title><Text style={styles.item_tabla}>Bloque 5</Text></DataTable.Title>
+                        <DataTable.Title><Text style={styles.item_tabla}>Bloque 6</Text></DataTable.Title>
+                        <DataTable.Title><Text style={styles.item_tabla}>Bloque 7</Text></DataTable.Title>
+                        <DataTable.Title><Text style={styles.item_tabla}>Bloque 8</Text></DataTable.Title>
+                    </DataTable.Header>
+                    <DataTable.Row > 
+                        <DataTable.Cell style={{width:75, height: 80, borderBottomWidth: 0}}>
+                            <View style={{flexDirection: 'column', margin: 0}}>
+                                {array[4].map((row, index1) =>(
+                                    <Text style={styles.item}>{array[4][index1]}</Text>
+                                ))}
+                            </View>
+                        </DataTable.Cell>
+                        <DataTable.Cell style={{width:75,height: 80 , flexDirection: 'column'}}>
+                            <View style={{flexDirection: 'column', margin: 0}}>
+                                {array[5].map((row, index1) =>(
+                                    <Text style={styles.item}>{array[5][index1]}</Text>
+                                ))}
+                            </View>
+                        </DataTable.Cell>
+                        <DataTable.Cell style={{width:75,height: 80 , flexDirection: 'column'}}>
+                            <View style={{flexDirection: 'column', margin: 0}}>
+                                {array[6].map((row, index1) =>(
+                                    <Text style={styles.item}>{array[6][index1]}</Text>
+                                ))}
+                            </View>
+                        </DataTable.Cell>
+                        <DataTable.Cell style={{width:75,height: 80 , flexDirection: 'column'}}>
+                            <View style={{flexDirection: 'column', margin: 0}}>
+                                {array[7].map((row, index1) =>(
+                                    <Text style={styles.item}>{array[7][index1]}</Text>
+                                ))}
+                            </View>
+                        </DataTable.Cell>
+                    </DataTable.Row>
+                </DataTable >
+                <DataTable id="tabla_salida" style={{flexDirection: 'column'}}>
+                    <DataTable.Header >
+                        <DataTable.Title><Text style={styles.item_tabla}>Bloque 9</Text></DataTable.Title>
+                        <DataTable.Title><Text style={styles.item_tabla}>Bloque 10</Text></DataTable.Title>
+                        <DataTable.Title><Text style={styles.item_tabla}>Bloque 11</Text></DataTable.Title>
+                        <DataTable.Title><Text style={styles.item_tabla}>Bloque 12</Text></DataTable.Title>
+                    </DataTable.Header>
+                    <DataTable.Row > 
+                        <DataTable.Cell style={{width:75, height: 80, borderBottomWidth: 0}}>
+                            <View style={{flexDirection: 'column', margin: 0}}>
+                                {array[8].map((row, index1) =>(
+                                    <Text style={styles.item}>{array[8][index1]}</Text>
+                                ))}
+                            </View>
+                        </DataTable.Cell>
+                        <DataTable.Cell style={{width:75,height: 80 , flexDirection: 'column'}}>
+                            <View style={{flexDirection: 'column', margin: 0}}>
+                                {array[9].map((row, index1) =>(
+                                    <Text style={styles.item}>{array[9][index1]}</Text>
+                                ))}
+                            </View>
+                        </DataTable.Cell>
+                        <DataTable.Cell style={{width:75,height: 80 , flexDirection: 'column'}}>
+                            <View style={{flexDirection: 'column', margin: 0}}>
+                                {array[10].map((row, index1) =>(
+                                    <Text style={styles.item}>{array[10][index1]}</Text>
+                                ))}
+                            </View>
+                        </DataTable.Cell>
+                        <DataTable.Cell style={{width:75,height: 80 , flexDirection: 'column'}}>
+                            <View style={{flexDirection: 'column', margin: 0}}>
+                                {array[11].map((row, index1) =>(
+                                    <Text style={styles.item}>{array[11][index1]}</Text>
+                                ))}
+                            </View>
+                        </DataTable.Cell>
+                    </DataTable.Row>
+                </DataTable >
+                <DataTable id="tabla_salida" style={{flexDirection: 'column'}}>
+                    <DataTable.Header >
+                        <DataTable.Title><Text style={styles.item_tabla}>Bloque 13</Text></DataTable.Title>
+                        <DataTable.Title><Text style={styles.item_tabla}>Bloque 14</Text></DataTable.Title>
+                        <DataTable.Title><Text style={styles.item_tabla}>Bloque 15</Text></DataTable.Title>
+                        <DataTable.Title><Text style={styles.item_tabla}>Bloque 16</Text></DataTable.Title>
+                    </DataTable.Header>
+                    <DataTable.Row > 
+                        <DataTable.Cell style={{width:75, height: 80, borderBottomWidth: 0}}>
+                            <View style={{flexDirection: 'column', margin: 0}}>
+                                {array[12].map((row, index1) =>(
+                                    <Text style={styles.item}>{array[12][index1]}</Text>
+                                ))}
+                            </View>
+                        </DataTable.Cell>
+                        <DataTable.Cell style={{width:75,height: 80 , flexDirection: 'column'}}>
+                            <View style={{flexDirection: 'column', margin: 0}}>
+                                {array[13].map((row, index1) =>(
+                                    <Text style={styles.item}>{array[13][index1]}</Text>
+                                ))}
+                            </View>
+                        </DataTable.Cell>
+                        <DataTable.Cell style={{width:75,height: 80 , flexDirection: 'column'}}>
+                            <View style={{flexDirection: 'column', margin: 0}}>
+                                {array[14].map((row, index1) =>(
+                                    <Text style={styles.item}>{array[14][index1]}</Text>
+                                ))}
+                            </View>
+                        </DataTable.Cell>
+                        <DataTable.Cell style={{width:75,height: 80 , flexDirection: 'column'}}>
+                            <View style={{flexDirection: 'column', margin: 0}}>
+                                {array[15].map((row, index1) =>(
+                                    <Text style={styles.item}>{array[15][index1]}</Text>
+                                ))}
+                            </View>
+                        </DataTable.Cell>
+                    </DataTable.Row>
+                </DataTable >
+                <DataTable id="tabla_salida" style={{flexDirection: 'column'}}>
+                    <DataTable.Header >
+                        <DataTable.Title><Text style={styles.item_tabla}>Bloque 17</Text></DataTable.Title>
+                        <DataTable.Title><Text style={styles.item_tabla}>Bloque 18</Text></DataTable.Title>
+                        <DataTable.Title><Text style={styles.item_tabla}>Bloque 19</Text></DataTable.Title>
+                        <DataTable.Title><Text style={styles.item_tabla}>Bloque 20</Text></DataTable.Title>
+                    </DataTable.Header>
+                    <DataTable.Row > 
+                        <DataTable.Cell style={{width:75, height: 80, borderBottomWidth: 0}}>
+                            <View style={{flexDirection: 'column', margin: 0}}>
+                                {array[16].map((row, index1) =>(
+                                    <Text style={styles.item}>{array[16][index1]}</Text>
+                                ))}
+                            </View>
+                        </DataTable.Cell>
+                        <DataTable.Cell style={{width:75,height: 80 , flexDirection: 'column'}}>
+                            <View style={{flexDirection: 'column', margin: 0}}>
+                                {array[17].map((row, index1) =>(
+                                    <Text style={styles.item}>{array[17][index1]}</Text>
+                                ))}
+                            </View>
+                        </DataTable.Cell>
+                        <DataTable.Cell style={{width:75,height: 80 , flexDirection: 'column'}}>
+                            <View style={{flexDirection: 'column', margin: 0}}>
+                                {array[18].map((row, index1) =>(
+                                    <Text style={styles.item}>{array[18][index1]}</Text>
+                                ))}
+                            </View>
+                        </DataTable.Cell>
+                        <DataTable.Cell style={{width:75,height: 80 , flexDirection: 'column'}}>
+                            <View style={{flexDirection: 'column', margin: 0}}>
+                                {array[19].map((row, index1) =>(
+                                    <Text style={styles.item}>{array[19][index1]}</Text>
+                                ))}
+                            </View>
+                        </DataTable.Cell>
+                    </DataTable.Row>
+                </DataTable >
+            </View>
+        )
+    }
     //Retorna la view de los algortimos de asignacion de espacio y mapa de bits
     return(
         <View style={{width: `100%` ,height: `100%`,backgroundColor: '#fff',alignItems: 'center',flexDirection: 'column'}}>
@@ -332,7 +565,7 @@
             
             <View style={{width: '80%' ,height: 500,top: 50,flex: 1,flexDirection: 'row',alignContent: "center",alignItems: "center",justifyContent: "center"}}>
                 {processTable()}
-                {mapas()}
+                {mapasT()}
                 {mapaBits()}
             </View>
 
