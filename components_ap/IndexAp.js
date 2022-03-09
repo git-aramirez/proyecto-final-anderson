@@ -2,7 +2,7 @@ import React , {useState} from 'react';
 import {styles} from '../styles/styles';
 import {View,ScrollView,Picker,Button,TextInput,TouchableOpacity,Text} from 'react-native';
 import TableInputComponent from './TableInputComponet';
-
+import NumberFormat from 'react-number-format';
 import * as main from '../scripts_ap/Main';
 import TableOutComponent from './TableOutComponen';
 import TableProcessComponent from './TableProcessComponent';
@@ -10,10 +10,10 @@ import TableProcessComponent from './TableProcessComponent';
 
 export default function IndexAp() {
 
-  const [numeroProcesos, setNumeroProcesos] = useState(0);
-  const [numeroCPU, setNumeroCPU] = useState(0);
-  const [numeroNucleos, setNumeroNucleos] = useState(0);
-  const [quantum, setQuantum] = useState(0);
+  const [numeroProcesos, setNumeroProcesos] = useState("");
+  const [numeroCPU, setNumeroCPU] = useState("");
+  const [numeroNucleos, setNumeroNucleos] = useState("");
+  const [quantum, setQuantum] = useState("");
   const [tablaEntrada, setTablaEntrada] = useState([]);
   const [tablaSalida, setTablaSalida] = useState([]);
   const [banderaEntrada,setBanderaEntrada] = useState(false);
@@ -181,7 +181,8 @@ function pickerAlgortimos(){
 function quantumComponent(){
   if(isQuamtum){
     return(
-      <TextInput style={styles.input} onChangeText={(val)=>setQuantum(val)} placeholder="Quantum"/>);
+      <NumberFormat value={quantum} displayType={'text'} renderText={ (quantum) => (
+        <TextInput style={styles.input} onChangeText={(val)=>setQuantum(val)} value={quantum} placeholder="Quantum" keyboardType='numeric'/>)}/>);
   }
 
   return(<></>);
@@ -192,9 +193,14 @@ function quantumComponent(){
   <View style={{width: `100%` ,height: `100%`,backgroundColor: '#fff',alignItems: 'center',flexDirection: 'column'}}>
 
     <View style={{top:15 ,alignItems: 'center',justifyContent: 'center',flexDirection: 'row'}}>
-      <TextInput style={styles.input} onChangeText={(val)=>setNumeroProcesos(val)} placeholder="número de procesos"/>
-      <TextInput style={styles.input} onChangeText={(val)=>setNumeroCPU(val)} placeholder="número de CPU´S"/>
-      <TextInput style={styles.input} onChangeText={(val)=>setNumeroNucleos(val)} placeholder="número de núcleos"/>
+    <NumberFormat value={numeroProcesos} displayType={'text'} renderText={ (numeroProcesos) => (
+          <TextInput style={styles.input} onChangeText={(val)=>setNumeroProcesos(val)} value={numeroProcesos} placeholder="número de procesos" keyboardType="numeric"/>)}/>
+
+          <NumberFormat value={numeroCPU} displayType={'text'} renderText={ (numeroCPU) => (
+          <TextInput style={styles.input} onChangeText={(val)=>setNumeroCPU(val)} value={numeroCPU} placeholder="número de CPU´S" keyboardType="numeric"/>)}/>
+         
+          <NumberFormat value={numeroNucleos} displayType={'text'} renderText={ (numeroNucleos) => (
+          <TextInput style={styles.input} onChangeText={(val)=>setNumeroNucleos(val)} value={numeroNucleos} placeholder="número de núcleos" keyboardType="numeric"/>)}/>
       {quantumComponent()}
       <TouchableOpacity style={{marginTop:0, width: 190, height: 40, backgroundColor: 'blue',padding:10,alignItems: 'center',borderRadius: 5}} onPress={()=>init()} >
         <Text style={{color:'white', fontSize: 17}}>Crear Tabla</Text>

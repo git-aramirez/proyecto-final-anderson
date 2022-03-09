@@ -369,13 +369,11 @@ function modificarEstados(estado, index){
   function discoOutComponent(){
     if(particiones.length === discosGlobales.length){
       return(
-        <ScrollView stle={{paddingVertical: 5}}>
+        <ScrollView style={{paddingVertical: 5}}>
            {discosGlobales.map((row,i) => (
         <DiscoOutComponent top={(50+(50*discosGlobales.length))} discosGlobales={discosGlobales} particiones={particiones} posDisco={i}/>
         ))}
         </ScrollView>
-
-       
       );
     }
     return(<></>);
@@ -537,7 +535,7 @@ function modificarEstados(estado, index){
            </TouchableOpacity>
 
           <TouchableOpacity style={{marginLeft:20, width: 190, height: 40, backgroundColor: 'blue',padding:10,alignItems: 'center',borderRadius: 5}} onPress={()=>llenarDatosParticion()} >
-            <Text style={{color:'white', fontSize: 17}}>Aplicar</Text>
+            <Text style={{color:'white', fontSize: 17}}>Agregar</Text>
           </TouchableOpacity>
 
           </View>
@@ -545,7 +543,7 @@ function modificarEstados(estado, index){
         {tablePartitions()}
         {diskLog()}
 
-        <View style={{width:'60%',height:250,borderWidth: 1}}>
+        <View style={{width:'50%',height:250,borderWidth: 1}}>
         {discoOutComponent()}
         </View>   
 

@@ -22,11 +22,20 @@ export const styles = StyleSheet.create({
 
     textInput_table_sp: {
       width: 150,
-      height:520,
+      height:400,
       borderWidth: 1,
       textAlign: 'center',
       color:'black',
       fontSize: 25
+    },
+
+    textInput_table_cp: {
+      width: 150,
+      height:400,
+      borderWidth: 1,
+      textAlign: 'center',
+      color:'black',
+      fontSize: 20
     },
 
     textInput_semaforos_sp: {

@@ -263,28 +263,28 @@
                         <DataTable.Title><Text style={styles.item_tabla}>Bloque 4</Text></DataTable.Title>
                     </DataTable.Header>
                     <DataTable.Row > 
-                        <DataTable.Cell style={{width:75, height: 80, borderBottomWidth: 0}}>
+                        <DataTable.Cell style={{width:75, height: 90, borderBottomWidth: 0}}>
                             <View style={{flexDirection: 'column', margin: 0}}>
                                 {array[0].map((row, index1) =>(
                                     <Text style={styles.item}>{array[0][index1]}</Text>
                                 ))}
                             </View>
                         </DataTable.Cell>
-                        <DataTable.Cell style={{width:75,height: 80 , flexDirection: 'column'}}>
+                        <DataTable.Cell style={{width:75,height: 90 , flexDirection: 'column'}}>
                             <View style={{flexDirection: 'column', margin: 0}}>
                                 {array[1].map((row, index1) =>(
                                     <Text style={styles.item}>{array[1][index1]}</Text>
                                 ))}
                             </View>
                         </DataTable.Cell>
-                        <DataTable.Cell style={{width:75,height: 80 , flexDirection: 'column'}}>
+                        <DataTable.Cell style={{width:75,height: 90 , flexDirection: 'column'}}>
                             <View style={{flexDirection: 'column', margin: 0}}>
                                 {array[2].map((row, index1) =>(
                                     <Text style={styles.item}>{array[2][index1]}</Text>
                                 ))}
                             </View>
                         </DataTable.Cell>
-                        <DataTable.Cell style={{width:75,height: 80 , flexDirection: 'column'}}>
+                        <DataTable.Cell style={{width:75,height: 90 , flexDirection: 'column'}}>
                             <View style={{flexDirection: 'column', margin: 0}}>
                                 {array[3].map((row, index1) =>(
                                     <Text style={styles.item}>{array[3][index1]}</Text>
@@ -301,28 +301,28 @@
                         <DataTable.Title><Text style={styles.item_tabla}>Bloque 8</Text></DataTable.Title>
                     </DataTable.Header>
                     <DataTable.Row > 
-                        <DataTable.Cell style={{width:75, height: 80, borderBottomWidth: 0}}>
+                        <DataTable.Cell style={{width:75, height: 90, borderBottomWidth: 0}}>
                             <View style={{flexDirection: 'column', margin: 0}}>
                                 {array[4].map((row, index1) =>(
                                     <Text style={styles.item}>{array[4][index1]}</Text>
                                 ))}
                             </View>
                         </DataTable.Cell>
-                        <DataTable.Cell style={{width:75,height: 80 , flexDirection: 'column'}}>
+                        <DataTable.Cell style={{width:75,height: 90 , flexDirection: 'column'}}>
                             <View style={{flexDirection: 'column', margin: 0}}>
                                 {array[5].map((row, index1) =>(
                                     <Text style={styles.item}>{array[5][index1]}</Text>
                                 ))}
                             </View>
                         </DataTable.Cell>
-                        <DataTable.Cell style={{width:75,height: 80 , flexDirection: 'column'}}>
+                        <DataTable.Cell style={{width:75,height: 90 , flexDirection: 'column'}}>
                             <View style={{flexDirection: 'column', margin: 0}}>
                                 {array[6].map((row, index1) =>(
                                     <Text style={styles.item}>{array[6][index1]}</Text>
                                 ))}
                             </View>
                         </DataTable.Cell>
-                        <DataTable.Cell style={{width:75,height: 80 , flexDirection: 'column'}}>
+                        <DataTable.Cell style={{width:75,height: 90 , flexDirection: 'column'}}>
                             <View style={{flexDirection: 'column', margin: 0}}>
                                 {array[7].map((row, index1) =>(
                                     <Text style={styles.item}>{array[7][index1]}</Text>
@@ -339,28 +339,28 @@
                         <DataTable.Title><Text style={styles.item_tabla}>Bloque 12</Text></DataTable.Title>
                     </DataTable.Header>
                     <DataTable.Row > 
-                        <DataTable.Cell style={{width:75, height: 80, borderBottomWidth: 0}}>
+                        <DataTable.Cell style={{width:75, height: 90, borderBottomWidth: 0}}>
                             <View style={{flexDirection: 'column', margin: 0}}>
                                 {array[8].map((row, index1) =>(
                                     <Text style={styles.item}>{array[8][index1]}</Text>
                                 ))}
                             </View>
                         </DataTable.Cell>
-                        <DataTable.Cell style={{width:75,height: 80 , flexDirection: 'column'}}>
+                        <DataTable.Cell style={{width:75,height: 90 , flexDirection: 'column'}}>
                             <View style={{flexDirection: 'column', margin: 0}}>
                                 {array[9].map((row, index1) =>(
                                     <Text style={styles.item}>{array[9][index1]}</Text>
                                 ))}
                             </View>
                         </DataTable.Cell>
-                        <DataTable.Cell style={{width:75,height: 80 , flexDirection: 'column'}}>
+                        <DataTable.Cell style={{width:75,height: 90 , flexDirection: 'column'}}>
                             <View style={{flexDirection: 'column', margin: 0}}>
                                 {array[10].map((row, index1) =>(
                                     <Text style={styles.item}>{array[10][index1]}</Text>
                                 ))}
                             </View>
                         </DataTable.Cell>
-                        <DataTable.Cell style={{width:75,height: 80 , flexDirection: 'column'}}>
+                        <DataTable.Cell style={{width:75,height: 90 , flexDirection: 'column'}}>
                             <View style={{flexDirection: 'column', margin: 0}}>
                                 {array[11].map((row, index1) =>(
                                     <Text style={styles.item}>{array[11][index1]}</Text>
@@ -377,28 +377,28 @@
                         <DataTable.Title><Text style={styles.item_tabla}>Bloque 16</Text></DataTable.Title>
                     </DataTable.Header>
                     <DataTable.Row > 
-                        <DataTable.Cell style={{width:75, height: 80, borderBottomWidth: 0}}>
+                        <DataTable.Cell style={{width:75, height: 90, borderBottomWidth: 0}}>
                             <View style={{flexDirection: 'column', margin: 0}}>
                                 {array[12].map((row, index1) =>(
                                     <Text style={styles.item}>{array[12][index1]}</Text>
                                 ))}
                             </View>
                         </DataTable.Cell>
-                        <DataTable.Cell style={{width:75,height: 80 , flexDirection: 'column'}}>
+                        <DataTable.Cell style={{width:75,height: 90 , flexDirection: 'column'}}>
                             <View style={{flexDirection: 'column', margin: 0}}>
                                 {array[13].map((row, index1) =>(
                                     <Text style={styles.item}>{array[13][index1]}</Text>
                                 ))}
                             </View>
                         </DataTable.Cell>
-                        <DataTable.Cell style={{width:75,height: 80 , flexDirection: 'column'}}>
+                        <DataTable.Cell style={{width:75,height: 90 , flexDirection: 'column'}}>
                             <View style={{flexDirection: 'column', margin: 0}}>
                                 {array[14].map((row, index1) =>(
                                     <Text style={styles.item}>{array[14][index1]}</Text>
                                 ))}
                             </View>
                         </DataTable.Cell>
-                        <DataTable.Cell style={{width:75,height: 80 , flexDirection: 'column'}}>
+                        <DataTable.Cell style={{width:75,height: 90 , flexDirection: 'column'}}>
                             <View style={{flexDirection: 'column', margin: 0}}>
                                 {array[15].map((row, index1) =>(
                                     <Text style={styles.item}>{array[15][index1]}</Text>
@@ -415,28 +415,28 @@
                         <DataTable.Title><Text style={styles.item_tabla}>Bloque 20</Text></DataTable.Title>
                     </DataTable.Header>
                     <DataTable.Row > 
-                        <DataTable.Cell style={{width:75, height: 80, borderBottomWidth: 0}}>
+                        <DataTable.Cell style={{width:75, height: 90, borderBottomWidth: 0}}>
                             <View style={{flexDirection: 'column', margin: 0}}>
                                 {array[16].map((row, index1) =>(
                                     <Text style={styles.item}>{array[16][index1]}</Text>
                                 ))}
                             </View>
                         </DataTable.Cell>
-                        <DataTable.Cell style={{width:75,height: 80 , flexDirection: 'column'}}>
+                        <DataTable.Cell style={{width:75,height: 90 , flexDirection: 'column'}}>
                             <View style={{flexDirection: 'column', margin: 0}}>
                                 {array[17].map((row, index1) =>(
                                     <Text style={styles.item}>{array[17][index1]}</Text>
                                 ))}
                             </View>
                         </DataTable.Cell>
-                        <DataTable.Cell style={{width:75,height: 80 , flexDirection: 'column'}}>
+                        <DataTable.Cell style={{width:75,height: 90 , flexDirection: 'column'}}>
                             <View style={{flexDirection: 'column', margin: 0}}>
                                 {array[18].map((row, index1) =>(
                                     <Text style={styles.item}>{array[18][index1]}</Text>
                                 ))}
                             </View>
                         </DataTable.Cell>
-                        <DataTable.Cell style={{width:75,height: 80 , flexDirection: 'column'}}>
+                        <DataTable.Cell style={{width:75,height: 90 , flexDirection: 'column'}}>
                             <View style={{flexDirection: 'column', margin: 0}}>
                                 {array[19].map((row, index1) =>(
                                     <Text style={styles.item}>{array[19][index1]}</Text>

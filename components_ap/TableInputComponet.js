@@ -12,9 +12,11 @@ const TableInputComponent = (props) => {
   }
 
   function updateLista (index,property,value){
+    if (/^\d+$/.test(value) || value==="") {
     let nuevaLista = [...tablaEntrada];
     nuevaLista[index][property]=value;
     props.setTablaEntrada(nuevaLista);
+    }
   }
 
       return(
@@ -31,10 +33,10 @@ const TableInputComponent = (props) => {
            {tablaEntrada.map((row,index) => (
             <DataTable.Row>
               <DataTable.Cell ><Text style={{fontSize: 20}}>{row.pid}</Text></DataTable.Cell>
-              <DataTable.Cell ><TextInput value={row.t_llegada} onChangeText={(data)=>updateLista(index,"t_llegada",data)} style={styles.inputTable}/></DataTable.Cell>
-              <DataTable.Cell ><TextInput value={row.t_ejecucion} onChangeText={(data)=>updateLista(index,"t_ejecucion",data)} style={styles.inputTable}/></DataTable.Cell>
-              <DataTable.Cell style={{display: props.isPrioridad}} ><TextInput value={row.prioridad} onChangeText={(data)=>updateLista(index,"prioridad",data)} style={styles.inputTable}/></DataTable.Cell>
-              <DataTable.Cell ><TextInput value={row.rafaga_es} onChangeText={(data)=>updateLista(index,"rafaga_es",data)} style={styles.inputTable}/></DataTable.Cell>
+              <DataTable.Cell ><TextInput value={row.t_llegada} onChangeText={(data)=>updateLista(index,"t_llegada",data)} style={styles.inputTable} keyboardType="numeric"/></DataTable.Cell>
+              <DataTable.Cell ><TextInput value={row.t_ejecucion} onChangeText={(data)=>updateLista(index,"t_ejecucion",data)} style={styles.inputTable} keyboardType="numeric"/></DataTable.Cell>
+              <DataTable.Cell style={{display: props.isPrioridad}} ><TextInput value={row.prioridad} onChangeText={(data)=>updateLista(index,"prioridad",data)} style={styles.inputTable} keyboardType="numeric"/></DataTable.Cell>
+              <DataTable.Cell ><TextInput value={row.rafaga_es} onChangeText={(data)=>updateLista(index,"rafaga_es",data)} style={styles.inputTable} keyboardType="numeric"/></DataTable.Cell>
             </DataTable.Row>
             ))}
           </DataTable > 

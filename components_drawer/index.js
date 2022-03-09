@@ -12,6 +12,7 @@ import IndexPm from '../components_pm/IndexPm';
 import IndexSm from '../components_sm/IndexSm';
 import IndexAm from '../components_am/IndexAm';
 import IndexPd from '../components_pd/IndexPd';
+import IndexCp from '../components_cp/IndexCp';
 
 function HomeScreen(props) {
 
@@ -39,6 +40,10 @@ function HomeScreen(props) {
 
     </View>
   );
+}
+
+function ComunicacionProcesos(){
+  return (<IndexCp/>);
 }
 
 function AlgoritmosPlanificacionScreen() {
@@ -81,6 +86,7 @@ function MyDrawer() {
             <Drawer.Screen name="Algoritmos de planificación" component={AlgoritmosPlanificacionScreen} />
             <Drawer.Screen name="Estrategias De Ajuste" component={EstrategiaDeAjusteScreen} />
             <Drawer.Screen name="Sincronización de Procesos" component={SincronizacionDeProcesosScreen} />
+            <Drawer.Screen name="Comunicación entre procesos" component={ComunicacionProcesos} />
             <Drawer.Screen name="Paginación de Memoria" component={PaginacionDeMemoria} />
             <Drawer.Screen name="Segmentación de Memoria" component={SegmentacionMemoria} />
             <Drawer.Screen name="Asignación de Memoria" component={AsignacionMemoria} />
