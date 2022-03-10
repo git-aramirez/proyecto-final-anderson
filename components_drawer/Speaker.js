@@ -6,7 +6,7 @@ import React from 'react';
  * Metodo que permite pasar de texto a voz
  * @param {} texto Parametro en texto que se quiere reproducir
  */
-const Speaker = (texto) =>{
+export const Speaker = (texto) =>{
 
     Speech.speak(texto, {
         voice: 'Microsoft Salome Online (Natural) - Spanish (Colombia)',
@@ -14,6 +14,10 @@ const Speaker = (texto) =>{
         _voiceIndex: 81
     });
 
+}
+
+export const Pause = () => {
+    Speech.stop();
 }
 export default Speaker;
 
