@@ -118,7 +118,7 @@ function segmentation() {
         }
 
         // Valida si el segmento existe
-        if (!funciones.TablaProcesos[eliminarItem-1]) {
+        if (!funciones.TablaProcesos[eliminarItem]) {
             return alert("No existe el segmento índicado.");
         }
 

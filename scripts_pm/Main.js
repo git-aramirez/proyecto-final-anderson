@@ -243,6 +243,7 @@ export function solicitarItem (numPagina, numPos) {
                 paginationLog += 'Se obtiene el item solicitado: '+ MemoriaFisica[TablaPaginas[index].memoria][numPos] +'\n';
                 // Imprime el dato desde la memoria fisica
                 console.log("En memoria Fisica "+ MemoriaFisica[TablaPaginas[index].memoria][numPos]);
+                alert('Se obtiene el item solicitado: '+ MemoriaFisica[TablaPaginas[index].memoria][numPos]);
             }
             break;
         }
@@ -250,18 +251,18 @@ export function solicitarItem (numPagina, numPos) {
     }
 
         ///** Visualizacion de datos
-        console.log("Tabla Procesos");
-        console.log(TablaProcesos);
-        console.log("Memoria Fisica");
-        console.log(MemoriaFisica);
-        console.log("Memoria Virtual");
-        console.log(MemoriaVirtual);
-        console.log("Tabla Usuario");
-        console.log(TablaUsuario);
-        console.log("Tabla Paginas");
-        console.log(TablaPaginas);
-        console.log("Log");
-        console.log(paginationLog);
+        // console.log("Tabla Procesos");
+        // console.log(TablaProcesos);
+        // console.log("Memoria Fisica");
+        // console.log(MemoriaFisica);
+        // console.log("Memoria Virtual");
+        // console.log(MemoriaVirtual);
+        // console.log("Tabla Usuario");
+        // console.log(TablaUsuario);
+        // console.log("Tabla Paginas");
+        // console.log(TablaPaginas);
+        // console.log("Log");
+        // console.log(paginationLog);
         //*/ 
     
 }
@@ -330,6 +331,8 @@ function solicitarItemMemoriaVirtual (indiceMV, numPos) {
     // Ingresa registro al log
     paginationLog += 'Se obtiene el item solicitado: '+ MemoriaFisica[numero][numPos] +'\n';
 
+    alert('Se obtiene el item solicitado: '+ MemoriaFisica[numero][numPos]);
+
     return numero;
 }
 
@@ -360,18 +363,18 @@ export function crearProceso(palabra) {
         TablaProcesos.push(palabra);
         
         ///** Visualizacion de datos
-        console.log("Tabla Procesos");
-        console.log(TablaProcesos);
-        console.log("Memoria Fisica");
-        console.log(MemoriaFisica);
-        console.log("Memoria Virtual");
-        console.log(MemoriaVirtual);
-        console.log("Tabla Usuario");
-        console.log(TablaUsuario);
-        console.log("Tabla Paginas");
-        console.log(TablaPaginas);
-        console.log("Log");
-        console.log(paginationLog);
+        // console.log("Tabla Procesos");
+        // console.log(TablaProcesos);
+        // console.log("Memoria Fisica");
+        // console.log(MemoriaFisica);
+        // console.log("Memoria Virtual");
+        // console.log(MemoriaVirtual);
+        // console.log("Tabla Usuario");
+        // console.log(TablaUsuario);
+        // console.log("Tabla Paginas");
+        // console.log(TablaPaginas);
+        // console.log("Log");
+        // console.log(paginationLog);
         //*/  
 
     }
