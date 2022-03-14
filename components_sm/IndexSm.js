@@ -91,6 +91,11 @@ function segmentation() {
         if (!funciones.TablaProcesos[segmentoSolicitado]) {
             return alert("No existe el segmento");
         }
+
+        if(posicionSolicitada <= 0) {
+            return alert("La posición debe ser mayor a 0.");
+        }
+
         // Valida si el indice solicitado esta en el rango del segmento
         else if (funciones.TablaDatos[segmentoSolicitado].tamaño >= posicionSolicitada) {
             // Invoca el metodo que trae el item solicitado

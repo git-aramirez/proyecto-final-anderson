@@ -22,7 +22,7 @@ function ProcessList(props) {
  
           <DataTable id="tabla_salida" style={{flexDirection: 'column'}}>
             <DataTable.Header style={{width:200}}>
-              <DataTable.Title><Text style={styles.item_tabla}>Pagina</Text></DataTable.Title>
+              <DataTable.Title><Text style={styles.item_tabla}>Bloque</Text></DataTable.Title>
               <DataTable.Title><Text style={styles.item_tabla}>Memoria</Text></DataTable.Title>
             </DataTable.Header>
         
