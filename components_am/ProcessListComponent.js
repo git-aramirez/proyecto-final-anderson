@@ -15,6 +15,7 @@ function ProcessList(props) {
 
   // Array de datos a mostrar en la tabla
     let array = props.procesos;
+    let indices = props.indices;
         
     return(
 
@@ -25,13 +26,12 @@ function ProcessList(props) {
               <DataTable.Title><Text style={styles.item_tabla}>Bloque</Text></DataTable.Title>
               <DataTable.Title><Text style={styles.item_tabla}>Memoria</Text></DataTable.Title>
             </DataTable.Header>
-        
             {array.map((row, index) => (
             <DataTable.Row style={{width:150, height: array[index]*20, minHeight: '40%'}}> 
-              <DataTable.Cell style={{width:75, height: 50, borderBottomWidth: 0}}>{index+1}</DataTable.Cell>
+              <DataTable.Cell style={{width:75, height: 50, borderBottomWidth: 0}}>{parseInt(indices[index]+1)}</DataTable.Cell>
               <DataTable.Cell style={{width:75,height: array[index]*20 , flexDirection: 'column'}}>
               <View style={{flexDirection: 'column', margin: 0}}>
-                <Text style={styles.item}>{array[index]}</Text>
+                <Text style={styles.item,{ height: array[index]*20}  }>{array[index]}</Text>
               </View>
               </DataTable.Cell>
             </DataTable.Row>

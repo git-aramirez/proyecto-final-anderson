@@ -92,8 +92,9 @@ function segmentation() {
             return alert("No existe el segmento");
         }
 
+        // Valida que la posicion sea mayor a 0
         if(posicionSolicitada <= 0) {
-            return alert("La posición debe ser mayor a 0.");
+            return alert("Las posiciones inician en 1.");
         }
 
         // Valida si el indice solicitado esta en el rango del segmento

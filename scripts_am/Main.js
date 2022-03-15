@@ -17,7 +17,7 @@ export let mapaBits = inicializarMapa();
         //Arreglo que almacena el tamaño de caracteres de los archivos creados
         var tamañoCaracteresContigua = [];
         //Arreglo con los indices de inicio de cada archivo
-        var inicioContigua = [];
+        export var inicioContigua = [];
         //Arreglo que funciona como mapa de bits
         export var mapaContigua = crearMapa();
         // Log para disco de memoria Contigua
@@ -28,7 +28,7 @@ export let mapaBits = inicializarMapa();
         //Arreglo que almacena el tamaño de caracteres de los archivos creados
         var tamañoCaracteresEnlazada = [];
         //Arreglo con los indices de inicio de cada archivo
-        var inicioEnlazada = [];
+        export var inicioEnlazada = [];
         //Arreglo que funciona como mapa de bits
         export var mapaEnlazada = crearMapa();
         // Log para disco de memoria Enlazada
@@ -39,7 +39,7 @@ export let mapaBits = inicializarMapa();
         //Arreglo que almacena el tamaño de caracteres de los archivos creados
         var tamañoCaracteresIndexadaEnlazada = [];
         //Arreglo con los indices de inicio de cada archivo
-        var inicioIndexadaEnlazada = [];
+        export var inicioIndexadaEnlazada = [];
         //Arreglo con las posiciones ocupadas por cada archivo
         var posicionesIndexadaEnlazada = [];
         //Arreglo que funciona como mapa de bits
@@ -52,7 +52,7 @@ export let mapaBits = inicializarMapa();
         //Arreglo que almacena el tamaño de caracteres de los archivos creados
         var tamañoCaracteresIndexadaMultinivel = [];
         //Arreglo con los indices de inicio de cada archivo
-        var inicioIndexadaMultinivel = [];
+        export var inicioIndexadaMultinivel = [];
         //Arreglo con las posiciones ocupadas por cada archivo
         var posicionesIndexadaMultinivel = [];
         //Arreglo que funciona como mapa de bits
@@ -65,7 +65,7 @@ export let mapaBits = inicializarMapa();
         //Arreglo que almacena el tamaño de caracteres de los archivos creados
         var tamañoCaracteresIndexadaCombinada  = [];
         //Arreglo con los indices de inicio de cada archivo
-        var inicioIndexadaCombinada  = [];
+        export var inicioIndexadaCombinada  = [];
         //Arreglo con las posiciones ocupadas por cada archivo
         var posicionesIndexadaCombinada  = [];
         //Arreglo que funciona como mapa de bits
@@ -366,7 +366,7 @@ export function crearArchivoContigua(nombre, tamaño) {
     // console.log("tamaño (Contigua)");
     // console.log(tamañoCaracteresContigua);
     // console.log("inicio (Contigua)");
-    // console.log(inicioContigua);
+    console.log(inicioContigua);
     // console.log('log');
     // console.log(logContigua);
     

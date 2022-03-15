@@ -180,31 +180,38 @@
     function processTable() {
         // Tabla de procesos a mostrar
         let tablaProcesos = [];
+        //
+        let indiceBloque = [];
 
         // Valida si el algortimo seleccionado es contigua
         if (algoritmo == "Contigua") {
             tablaProcesos = (funciones.archivosCreadosContigua);
+            indiceBloque = (funciones.inicioContigua);
         }
         //Valida que el algortimo seleccionado sea Enlazada
         if (algoritmo == "Enlazada") {
             tablaProcesos = (funciones.archivosCreadosEnlazada);
+            indiceBloque = (funciones.inicioEnlazada);
         }
         //Valida que el algortimo seleccionado sea Indexada-Enlazada
         if (algoritmo == "Indexada-Enlazada") {
             tablaProcesos = (funciones.archivosCreadosIndexadaEnlazada);
+            indiceBloque = (funciones.inicioIndexadaEnlazada);
         }
         //Valida que el algortimo seleccionado sea Indexada-Multinivel
         if (algoritmo == "Indexada-Multinivel") {
             tablaProcesos = (funciones.archivosCreadosIndexadaMultinivel);
+            indiceBloque = (funciones.inicioIndexadaMultinivel);
         }
         //Valida que el algortimo seleccionado sea Indexada Combinada
         if (algoritmo == "Indexada-Combinada") {
             tablaProcesos = (funciones.archivosCreadosIndexadaCombinada);
+            indiceBloque = (funciones.inicioIndexadaCombinada);
         }
 
         return (
             <ScrollView vertical={true} style={{ top: 100 ,width: 100 ,height: 600}}> 
-                <ProcessList procesos = {tablaProcesos}/>
+                <ProcessList procesos = {tablaProcesos} indices = {indiceBloque}/>
             </ScrollView>
         )
     }
