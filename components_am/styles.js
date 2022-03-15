@@ -67,7 +67,7 @@ export const styles = StyleSheet.create({
   item: {
     fontSize: 15,
     height: 30,
-    width:70,
+    width:50,
     alignContent: "center",
     alignItems: "center",
     justifyContent: "center",
