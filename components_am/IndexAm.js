@@ -7,10 +7,8 @@
  import { Text, View, SectionList, Picker, TextInput, Button,TouchableOpacity,ScrollView} from 'react-native';
  import * as funciones from '../scripts_am/Main';
  import ProcessList from './ProcessListComponent';
- import BitsMap from './BitsMap';
  import { styles } from './styles';
- import NumberFormat from 'react-number-format';
- import {Speaker, Pause} from '../components_drawer/Speaker';
+ import { Speaker, Pause } from '../components_drawer/Speaker';
  import { DataTable } from 'react-native-paper';
  
  /**
@@ -180,7 +178,7 @@
     function processTable() {
         // Tabla de procesos a mostrar
         let tablaProcesos = [];
-        //
+        // bloque de inicio de los procesos
         let indiceBloque = [];
 
         // Valida si el algortimo seleccionado es contigua

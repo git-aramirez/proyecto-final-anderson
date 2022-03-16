@@ -17,7 +17,6 @@ function ProcessList(props) {
   return(
 
     <View style={{top: 40, flexDirection: 'row',alignContent: "center",justifyContent: "center",padding: 1, right: 40 }}>
-
         <DataTable id="tabla_salida" style={{flexDirection: 'column'}}>
           <DataTable.Header style={{width:150}}>
             <DataTable.Title >Pagina</DataTable.Title>
@@ -26,7 +25,7 @@ function ProcessList(props) {
           {Object.values(array).map((row, index) => (
             <DataTable.Row > 
               <DataTable.Cell style={{width:75, height: 100}}>{index}</DataTable.Cell>
-              <DataTable.Cell style={{width:100,height: 100 , flexDirection: 'column'}}>
+              <DataTable.Cell style={{width:100,height: array[index]*20 , flexDirection: 'column'}}>
                 <View style={{flexDirection: 'column', margin: 0}}>
                   {Object.values(array[index].data).map((row, index1) => (
                     <Text style={styles.item}>{array[index].data[index1]}</Text>

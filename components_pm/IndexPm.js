@@ -11,7 +11,7 @@ import TableData from './TableDataComponent';
 import TableUser from './TableUserComponent';
 import { styles } from './styles';
 import NumberFormat from 'react-number-format';
-import Speaker from '../components_drawer/Speaker';
+import { Speaker, Pause } from '../components_drawer/Speaker';
 
 /**
  * Genera la vista para los algoritmos de paginación de memoria
@@ -165,20 +165,22 @@ function paginacion() {
                 </TouchableOpacity>
         </View>
 
-        <View style={{top:400,flexDirection: 'row'}}>
+        <View style={{top:150,flexDirection: 'row'}}>
             <TableUser procesos = {funciones.TablaUsuario}/>
             <TableData procesos = {funciones.TablaPaginas}/>
-            <View style={{ flexDirection: 'column', marginTop: 50, alignItems: "center"}}>
+            <View style={{ flexDirection: 'column', marginTop: 45, alignItems: "center"}}>
                 <ProcessList procesos = {funciones.MemoriaFisica}/>
                 <ProcessList procesos = {funciones.MemoriaVirtual}/>
             </View>
         </View>
 
-
-        <View style={{top: 600,flex: 2,alignItems: 'center',justifyContent: 'center',flexDirection: 'row'}}>
-            <TextInput multiline={true} numberOfLines={8} value={funciones.paginationLog}/>
-            <TouchableOpacity style={{marginTop:0, width: 190, height: 40, backgroundColor: 'blue',padding:10,alignItems: 'center',borderRadius: 5}} onPress={ ()=> Speaker(funciones.paginationLog)} >
+        <View style={{top: 250, width: `100%`,alignItems: 'center',justifyContent: 'center',flexDirection: 'column'}}>
+            <TextInput style={styles.item_resultado} multiline={true} numberOfLines={8} value={funciones.paginationLog}/>
+            <TouchableOpacity style={{marginTop:15, width: 190, height: 40, backgroundColor: 'blue',padding:10,alignItems: 'center',borderRadius: 5}} onPress={ ()=> Speaker(funciones.paginationLog)} >
                 <Text style={{color:'white', fontSize: 17}}>Reproducir</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={{marginTop:15, width: 160, height: 40, backgroundColor: 'red',padding:10,alignItems: 'center',borderRadius: 5}} onPress= { ()=> Pause()}>
+                <Text style={{color:'white', fontSize: 17}}>Parar</Text>
             </TouchableOpacity>
         </View>
 
