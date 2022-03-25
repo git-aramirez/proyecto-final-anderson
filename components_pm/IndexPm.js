@@ -92,6 +92,10 @@ function paginacion() {
         if (palabraClone == "") {          
             return alert("Ingrese índice de la posición a solicitar.");
         }
+        // Valida que la palabra no este vacia
+        if (palabraClone > 2) {          
+            return alert("El bloque de memoria solo tiene de la posición 0 a la 2.");
+        }
 
         // Invoca el metodo que trae el item solicitado
         funciones.solicitarItem(paginaSolicitada, posicionSolicitada);

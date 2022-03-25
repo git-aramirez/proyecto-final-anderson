@@ -237,6 +237,7 @@ function modificarEstados(estado, index){
       funciones.setParticiones(particiones);
     }
   
+    console.log("Disco: "+discos, "Part: "+part);
     
 /*
     // Valida si no existe disco
@@ -262,7 +263,7 @@ function modificarEstados(estado, index){
             <DataTable.Title>Opciones</DataTable.Title>
             <DataTable.Title>Editar</DataTable.Title>
           </DataTable.Header>
-          {Object.values(part).map((row, index) => (
+          {Object.values(array).map((row, index) => (
             <DataTable.Row>
               <DataTable.Cell> <TextInput style={{fontSize:15}} editable={row[8]} value={row[5]} onChangeText={(data)=>updateNombreParticiones(data,index)}/></DataTable.Cell>
               <DataTable.Cell >  
