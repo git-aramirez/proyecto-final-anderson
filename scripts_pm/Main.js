@@ -387,7 +387,7 @@ export function crearProceso(palabra) {
     else{
         // Ingresa registro al log
         paginationLog += 'No hay memoria suficiente para almacenar el proceso, por lo cual se reporta un fallo en la operación. \n';
-        alert("Memoria Insuficiente para almacenar el proceso");
+        return alert("Memoria Insuficiente para almacenar el proceso");
     }
 }
 

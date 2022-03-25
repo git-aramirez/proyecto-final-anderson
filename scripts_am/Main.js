@@ -108,15 +108,15 @@ export function crearArchivo(nombre, tamaño) {
 export function eliminarArchivo(nombre, tamaño) {
 
     // Ingresa registro al log
-    logContigua += `Se solicta eliminar la palabra ${nombre}. \n`;
+    logContigua += `Se solicta eliminar del disco la palabra ${nombre}. \n`;
     // Ingresa registro al log
-    logEnlazada += `Se solicta eliminar la palabra ${nombre}. \n`;
+    logEnlazada += `Se solicta eliminar del disco la palabra ${nombre}. \n`;
     // Ingresa registro al log
-    logIndexadaEnlazada += `Se solicta eliminar la palabra ${nombre}. \n`;
+    logIndexadaEnlazada += `Se solicta eliminar del disco la palabra ${nombre}. \n`;
     // Ingresa registro al log
-    logIndexadaMultinivel += `Se solicta eliminar la palabra ${nombre}. \n`;
+    logIndexadaMultinivel += `Se solicta eliminar del disco la palabra ${nombre}. \n`;
     // Ingresa registro al log
-    logIndexadaCombinada += `Se solicta eliminar la palabra ${nombre}. \n`;
+    logIndexadaCombinada += `Se solicta eliminar del disco la palabra ${nombre}. \n`;
     //Llama a los metodos de eliminacion de archivos de los diferentes algortimos
     eliminarArchivoContigua(nombre, tamaño);
     eliminarArchivoEnlazada(nombre, tamaño);
@@ -228,8 +228,8 @@ export function crearMapaBits (algoritmo) {
  */
 function eliminarArchivoContigua(nombre, tamaño) {
 
-    // Ingresa registro al log
-    logContigua += 'Se solicita eliminar del disco la palabra: '+ nombre +'\n';
+    // // Ingresa registro al log
+    // logContigua += 'Se solicita eliminar del disco la palabra: '+ nombre +'\n';
 
     //Variable que almacena el resultado de la validacion
     let validarArchivo = validarArchivoContigua(nombre);
