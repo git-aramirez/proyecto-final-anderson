@@ -15,7 +15,7 @@ export let mapaBits = inicializarMapa();
         //Arreglo que almacena los archivos creados
         export let archivosCreadosContigua  = [];
         //Arreglo que almacena el tamaño de caracteres de los archivos creados
-        var tamañoCaracteresContigua = [];
+        export var tamañoCaracteresContigua = [];
         //Arreglo con los indices de inicio de cada archivo
         export var inicioContigua = [];
         //Arreglo que funciona como mapa de bits
@@ -26,7 +26,7 @@ export let mapaBits = inicializarMapa();
         //Arreglo que almacena los archivos creados
         export var archivosCreadosEnlazada  = [];
         //Arreglo que almacena el tamaño de caracteres de los archivos creados
-        var tamañoCaracteresEnlazada = [];
+        export var tamañoCaracteresEnlazada = [];
         //Arreglo con los indices de inicio de cada archivo
         export var inicioEnlazada = [];
         //Arreglo que funciona como mapa de bits
@@ -37,7 +37,7 @@ export let mapaBits = inicializarMapa();
         //Arreglo que almacena los archivos creados
         export var archivosCreadosIndexadaEnlazada  = [];
         //Arreglo que almacena el tamaño de caracteres de los archivos creados
-        var tamañoCaracteresIndexadaEnlazada = [];
+        export var tamañoCaracteresIndexadaEnlazada = [];
         //Arreglo con los indices de inicio de cada archivo
         export var inicioIndexadaEnlazada = [];
         //Arreglo con las posiciones ocupadas por cada archivo
@@ -50,7 +50,7 @@ export let mapaBits = inicializarMapa();
         //Arreglo que almacena los archivos creados
         export var archivosCreadosIndexadaMultinivel  = [];
         //Arreglo que almacena el tamaño de caracteres de los archivos creados
-        var tamañoCaracteresIndexadaMultinivel = [];
+        export var tamañoCaracteresIndexadaMultinivel = [];
         //Arreglo con los indices de inicio de cada archivo
         export var inicioIndexadaMultinivel = [];
         //Arreglo con las posiciones ocupadas por cada archivo
@@ -63,7 +63,7 @@ export let mapaBits = inicializarMapa();
         //Arreglo que almacena los archivos creados
         export var archivosCreadosIndexadaCombinada  = [];
         //Arreglo que almacena el tamaño de caracteres de los archivos creados
-        var tamañoCaracteresIndexadaCombinada  = [];
+        export var tamañoCaracteresIndexadaCombinada  = [];
         //Arreglo con los indices de inicio de cada archivo
         export var inicioIndexadaCombinada  = [];
         //Arreglo con las posiciones ocupadas por cada archivo
@@ -363,11 +363,11 @@ export function crearArchivoContigua(nombre, tamaño) {
     // console.log("mapa (Contigua)");
     // console.log(mapaContigua);
     // console.log("creados (Contigua)");
-    console.log(archivosCreadosContigua);
+    // console.log(archivosCreadosContigua);
     // console.log("tamaño (Contigua)");
     // console.log(tamañoCaracteresContigua);
     // console.log("inicio (Contigua)");
-    console.log(inicioContigua);
+    // console.log(inicioContigua);
     // console.log('log');
     // console.log(logContigua);
     

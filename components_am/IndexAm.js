@@ -180,36 +180,43 @@
         let tablaProcesos = [];
         // bloque de inicio de los procesos
         let indiceBloque = [];
+        // bloque de tamaño de los procesos
+        let tamaños = [];
 
         // Valida si el algortimo seleccionado es contigua
         if (algoritmo == "Contigua") {
             tablaProcesos = (funciones.archivosCreadosContigua);
             indiceBloque = (funciones.inicioContigua);
+            tamaños = (funciones.tamañoCaracteresContigua);
         }
         //Valida que el algortimo seleccionado sea Enlazada
         if (algoritmo == "Enlazada") {
             tablaProcesos = (funciones.archivosCreadosEnlazada);
             indiceBloque = (funciones.inicioEnlazada);
+            tamaños = (funciones.tamañoCaracteresEnlazada);
         }
         //Valida que el algortimo seleccionado sea Indexada-Enlazada
         if (algoritmo == "Indexada-Enlazada") {
             tablaProcesos = (funciones.archivosCreadosIndexadaEnlazada);
             indiceBloque = (funciones.inicioIndexadaEnlazada);
+            tamaños = (funciones.tamañoCaracteresIndexadaEnlazada);
         }
         //Valida que el algortimo seleccionado sea Indexada-Multinivel
         if (algoritmo == "Indexada-Multinivel") {
             tablaProcesos = (funciones.archivosCreadosIndexadaMultinivel);
             indiceBloque = (funciones.inicioIndexadaMultinivel);
+            tamaños = (funciones.tamañoCaracteresIndexadaMultinivel);
         }
         //Valida que el algortimo seleccionado sea Indexada Combinada
         if (algoritmo == "Indexada-Combinada") {
             tablaProcesos = (funciones.archivosCreadosIndexadaCombinada);
             indiceBloque = (funciones.inicioIndexadaCombinada);
+            tamaños = (funciones.tamañoCaracteresIndexadaCombinada);
         }
 
         return (
             <ScrollView vertical={true} style={{ top: 100 ,width: 100 ,height: 600}}> 
-                <ProcessList procesos = {tablaProcesos} indices = {indiceBloque}/>
+                <ProcessList procesos = {tablaProcesos} indices = {indiceBloque} tamaños = {tamaños}/>
             </ScrollView>
         )
     }
