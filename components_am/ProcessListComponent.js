@@ -35,7 +35,7 @@ function ProcessList(props) {
                 <Text style={styles.item,{height: array[index]}}>{array[index]}</Text>
               </View>
               </DataTable.Cell>
-              <DataTable.Cell style={{height: 50, borderBottomWidth: 0, flexDirection: 'column', alignContent: "center", alignItems: "center", justifyContent: "center"}}>{parseInt(indices[index]+1)}</DataTable.Cell>
+              <DataTable.Cell style={{height: 50, borderBottomWidth: 0, flexDirection: 'column', alignContent: "center", alignItems: "center", justifyContent: "center"}}>{parseInt(indices[index])}</DataTable.Cell>
               <DataTable.Cell style={{height: 50, borderBottomWidth: 0, flexDirection: 'column', alignContent: "center", alignItems: "center", justifyContent: "center"}}>{parseInt(tamaños[index])}</DataTable.Cell>
             </DataTable.Row>
             ))}

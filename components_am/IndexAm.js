@@ -272,10 +272,10 @@
 
                 <DataTable id="tabla_salida" style={{flexDirection: 'column'}}>
                     <DataTable.Header >
+                        <DataTable.Title><Text style={styles.item_tabla}>Bloque 0</Text></DataTable.Title>
                         <DataTable.Title><Text style={styles.item_tabla}>Bloque 1</Text></DataTable.Title>
                         <DataTable.Title><Text style={styles.item_tabla}>Bloque 2</Text></DataTable.Title>
                         <DataTable.Title><Text style={styles.item_tabla}>Bloque 3</Text></DataTable.Title>
-                        <DataTable.Title><Text style={styles.item_tabla}>Bloque 4</Text></DataTable.Title>
                     </DataTable.Header>
                     <DataTable.Row > 
                         <DataTable.Cell style={{width:75, height: 90, borderBottomWidth: 0}}>
@@ -310,10 +310,10 @@
                 </DataTable >
                 <DataTable id="tabla_salida" style={{flexDirection: 'column'}}>
                     <DataTable.Header >
+                        <DataTable.Title><Text style={styles.item_tabla}>Bloque 4</Text></DataTable.Title>
                         <DataTable.Title><Text style={styles.item_tabla}>Bloque 5</Text></DataTable.Title>
                         <DataTable.Title><Text style={styles.item_tabla}>Bloque 6</Text></DataTable.Title>
                         <DataTable.Title><Text style={styles.item_tabla}>Bloque 7</Text></DataTable.Title>
-                        <DataTable.Title><Text style={styles.item_tabla}>Bloque 8</Text></DataTable.Title>
                     </DataTable.Header>
                     <DataTable.Row > 
                         <DataTable.Cell style={{width:75, height: 90, borderBottomWidth: 0}}>
@@ -348,10 +348,10 @@
                 </DataTable >
                 <DataTable id="tabla_salida" style={{flexDirection: 'column'}}>
                     <DataTable.Header >
+                        <DataTable.Title><Text style={styles.item_tabla}>Bloque 8</Text></DataTable.Title>
                         <DataTable.Title><Text style={styles.item_tabla}>Bloque 9</Text></DataTable.Title>
                         <DataTable.Title><Text style={styles.item_tabla}>Bloque 10</Text></DataTable.Title>
                         <DataTable.Title><Text style={styles.item_tabla}>Bloque 11</Text></DataTable.Title>
-                        <DataTable.Title><Text style={styles.item_tabla}>Bloque 12</Text></DataTable.Title>
                     </DataTable.Header>
                     <DataTable.Row > 
                         <DataTable.Cell style={{width:75, height: 90, borderBottomWidth: 0}}>
@@ -386,10 +386,10 @@
                 </DataTable >
                 <DataTable id="tabla_salida" style={{flexDirection: 'column'}}>
                     <DataTable.Header >
+                        <DataTable.Title><Text style={styles.item_tabla}>Bloque 12</Text></DataTable.Title>
                         <DataTable.Title><Text style={styles.item_tabla}>Bloque 13</Text></DataTable.Title>
                         <DataTable.Title><Text style={styles.item_tabla}>Bloque 14</Text></DataTable.Title>
                         <DataTable.Title><Text style={styles.item_tabla}>Bloque 15</Text></DataTable.Title>
-                        <DataTable.Title><Text style={styles.item_tabla}>Bloque 16</Text></DataTable.Title>
                     </DataTable.Header>
                     <DataTable.Row > 
                         <DataTable.Cell style={{width:75, height: 90, borderBottomWidth: 0}}>
@@ -424,10 +424,10 @@
                 </DataTable >
                 <DataTable id="tabla_salida" style={{flexDirection: 'column'}}>
                     <DataTable.Header >
+                        <DataTable.Title><Text style={styles.item_tabla}>Bloque 16</Text></DataTable.Title>
                         <DataTable.Title><Text style={styles.item_tabla}>Bloque 17</Text></DataTable.Title>
                         <DataTable.Title><Text style={styles.item_tabla}>Bloque 18</Text></DataTable.Title>
                         <DataTable.Title><Text style={styles.item_tabla}>Bloque 19</Text></DataTable.Title>
-                        <DataTable.Title><Text style={styles.item_tabla}>Bloque 20</Text></DataTable.Title>
                     </DataTable.Header>
                     <DataTable.Row > 
                         <DataTable.Cell style={{width:75, height: 90, borderBottomWidth: 0}}>
