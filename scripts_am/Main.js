@@ -15,9 +15,9 @@ export let mapaBits = inicializarMapa();
         //Arreglo que almacena los archivos creados
         export let archivosCreadosContigua  = [];
         //Arreglo que almacena el tamaño de caracteres de los archivos creados
-        var tamañoCaracteresContigua = [];
+        export var tamañoCaracteresContigua = [];
         //Arreglo con los indices de inicio de cada archivo
-        var inicioContigua = [];
+        export var inicioContigua = [];
         //Arreglo que funciona como mapa de bits
         export var mapaContigua = crearMapa();
         // Log para disco de memoria Contigua
@@ -26,9 +26,9 @@ export let mapaBits = inicializarMapa();
         //Arreglo que almacena los archivos creados
         export var archivosCreadosEnlazada  = [];
         //Arreglo que almacena el tamaño de caracteres de los archivos creados
-        var tamañoCaracteresEnlazada = [];
+        export var tamañoCaracteresEnlazada = [];
         //Arreglo con los indices de inicio de cada archivo
-        var inicioEnlazada = [];
+        export var inicioEnlazada = [];
         //Arreglo que funciona como mapa de bits
         export var mapaEnlazada = crearMapa();
         // Log para disco de memoria Enlazada
@@ -37,9 +37,9 @@ export let mapaBits = inicializarMapa();
         //Arreglo que almacena los archivos creados
         export var archivosCreadosIndexadaEnlazada  = [];
         //Arreglo que almacena el tamaño de caracteres de los archivos creados
-        var tamañoCaracteresIndexadaEnlazada = [];
+        export var tamañoCaracteresIndexadaEnlazada = [];
         //Arreglo con los indices de inicio de cada archivo
-        var inicioIndexadaEnlazada = [];
+        export var inicioIndexadaEnlazada = [];
         //Arreglo con las posiciones ocupadas por cada archivo
         var posicionesIndexadaEnlazada = [];
         //Arreglo que funciona como mapa de bits
@@ -50,9 +50,9 @@ export let mapaBits = inicializarMapa();
         //Arreglo que almacena los archivos creados
         export var archivosCreadosIndexadaMultinivel  = [];
         //Arreglo que almacena el tamaño de caracteres de los archivos creados
-        var tamañoCaracteresIndexadaMultinivel = [];
+        export var tamañoCaracteresIndexadaMultinivel = [];
         //Arreglo con los indices de inicio de cada archivo
-        var inicioIndexadaMultinivel = [];
+        export var inicioIndexadaMultinivel = [];
         //Arreglo con las posiciones ocupadas por cada archivo
         var posicionesIndexadaMultinivel = [];
         //Arreglo que funciona como mapa de bits
@@ -63,9 +63,9 @@ export let mapaBits = inicializarMapa();
         //Arreglo que almacena los archivos creados
         export var archivosCreadosIndexadaCombinada  = [];
         //Arreglo que almacena el tamaño de caracteres de los archivos creados
-        var tamañoCaracteresIndexadaCombinada  = [];
+        export var tamañoCaracteresIndexadaCombinada  = [];
         //Arreglo con los indices de inicio de cada archivo
-        var inicioIndexadaCombinada  = [];
+        export var inicioIndexadaCombinada  = [];
         //Arreglo con las posiciones ocupadas por cada archivo
         var posicionesIndexadaCombinada  = [];
         //Arreglo que funciona como mapa de bits
@@ -108,15 +108,15 @@ export function crearArchivo(nombre, tamaño) {
 export function eliminarArchivo(nombre, tamaño) {
 
     // Ingresa registro al log
-    logContigua += `Se solicta eliminar la palabra ${nombre}. \n`;
+    logContigua += `Se solicta eliminar del disco la palabra ${nombre}. \n`;
     // Ingresa registro al log
-    logEnlazada += `Se solicta eliminar la palabra ${nombre}. \n`;
+    logEnlazada += `Se solicta eliminar del disco la palabra ${nombre}. \n`;
     // Ingresa registro al log
-    logIndexadaEnlazada += `Se solicta eliminar la palabra ${nombre}. \n`;
+    logIndexadaEnlazada += `Se solicta eliminar del disco la palabra ${nombre}. \n`;
     // Ingresa registro al log
-    logIndexadaMultinivel += `Se solicta eliminar la palabra ${nombre}. \n`;
+    logIndexadaMultinivel += `Se solicta eliminar del disco la palabra ${nombre}. \n`;
     // Ingresa registro al log
-    logIndexadaCombinada += `Se solicta eliminar la palabra ${nombre}. \n`;
+    logIndexadaCombinada += `Se solicta eliminar del disco la palabra ${nombre}. \n`;
     //Llama a los metodos de eliminacion de archivos de los diferentes algortimos
     eliminarArchivoContigua(nombre, tamaño);
     eliminarArchivoEnlazada(nombre, tamaño);
@@ -228,8 +228,8 @@ export function crearMapaBits (algoritmo) {
  */
 function eliminarArchivoContigua(nombre, tamaño) {
 
-    // Ingresa registro al log
-    logContigua += 'Se solicita eliminar del disco la palabra: '+ nombre +'\n';
+    // // Ingresa registro al log
+    // logContigua += 'Se solicita eliminar del disco la palabra: '+ nombre +'\n';
 
     //Variable que almacena el resultado de la validacion
     let validarArchivo = validarArchivoContigua(nombre);
@@ -239,7 +239,7 @@ function eliminarArchivoContigua(nombre, tamaño) {
     let tope = Math.ceil(tamañoCaracteresContigua[validarArchivo]/3);
 
     // Ingresa registro al log
-    logContigua += ' Se obtiene posición de memoria de inicio de la palabra. \n';
+    // logContigua += ' Se obtiene posición de memoria de inicio de la palabra. \n';
 
     //Valida que el archivo si exista
     if (validarArchivo != -1) {
@@ -262,7 +262,8 @@ function eliminarArchivoContigua(nombre, tamaño) {
     }else{
         // Ingresa registro al log
         logContigua += ' No se encontró la palabra en disco. \n';
-        console.log("No existe el archivo que quiere eliminar");
+        // return alert('No se encontró la palabra en disco.');
+        // console.log("No existe el archivo que quiere eliminar");
     }
 
     // console.log("mapa (Contigua)");
@@ -362,7 +363,7 @@ export function crearArchivoContigua(nombre, tamaño) {
     // console.log("mapa (Contigua)");
     // console.log(mapaContigua);
     // console.log("creados (Contigua)");
-    console.log(archivosCreadosContigua);
+    // console.log(archivosCreadosContigua);
     // console.log("tamaño (Contigua)");
     // console.log(tamañoCaracteresContigua);
     // console.log("inicio (Contigua)");
@@ -450,7 +451,7 @@ function validarEspacioContigua(tamaño, bloquesNecesarios) {
             //Valida si el bloque esta vacio y existan caracteres por asignar
             if (mapaEnlazada[index][0] == "" && cantidad != 0) {
                 // Ingresa registro al log
-                logEnlazada += ` Asigna datos de la palabra en el bloque ${index+1}. \n`;
+                logEnlazada += ` Asigna datos de la palabra en el bloque ${index}. \n`;
                 //Bucle que recorre el bloque para asignar los datos 
                 for (let index1 = 0; index1 < (mapaEnlazada[0].length-1); index1++) {
                     //Valida que el tamaño no sea 0
@@ -468,7 +469,7 @@ function validarEspacioContigua(tamaño, bloquesNecesarios) {
                 //Valida si el enlace no tiene valor positivo
                 if (siguiente != -1) {
                     //Asigna el valor del enlace al siguiente bloque de datos
-                    mapaEnlazada[siguiente][2] = index+1;
+                    mapaEnlazada[siguiente][2] = index;
                     // Ingresa registro al log
                     logEnlazada += ` Asigna al bloque anterior en la última posición, el enlace al bloque actual. \n`;
                     //Guarda el dato del bloque anterior para poder asignar el dato de enlace
@@ -575,15 +576,15 @@ function validarEspacioEnlazada(tamaño, bloquesNecesarios) {
             //Valida que exista un enlace a otro bloque para guardar ese dato
             if (mapaEnlazada[indice][2] != "") {
                 // Ingresa registro al log
-                logEnlazada += ` En mapa de bits se pone disponible el bloque ${indice+1}. \n`;
+                logEnlazada += ` En mapa de bits se pone disponible el bloque ${indice}. \n`;
                 //Se guarda del valor del siguiente bloque con datos del archivo
-                siguiente = mapaEnlazada[indice][2]-1;
+                siguiente = mapaEnlazada[indice][2];
                 //Se setea en vacio para eliminar los datos
                 mapaEnlazada[indice] = ["","",""];
                 //Se asigna el indice del bloque siguiente con datos del archivo
                 indice = siguiente;
                 // Ingresa registro al log
-                logEnlazada += ` Se obtiene el enlace al bloque ${indice + 1}, que es el siguiente. \n`;
+                logEnlazada += ` Se obtiene el enlace al bloque ${indice}, que es el siguiente. \n`;
             }
             //Valida si es el ultimo bloque con datos del archivo
             if (mapaEnlazada[indice][2] == "" && mapaEnlazada[indice][0] != "") {
@@ -593,7 +594,7 @@ function validarEspacioEnlazada(tamaño, bloquesNecesarios) {
 
         }
         // Ingresa registro al log
-        logEnlazada += ` En mapa de bits se pone disponible el bloque ${indice+1}. \n`;
+        logEnlazada += ` En mapa de bits se pone disponible el bloque ${indice}. \n`;
 
         //Elimina los datos del archivo a eliminar del arreglo de archivos creados
         archivosCreadosEnlazada.splice(validarArchivo,1);
@@ -616,7 +617,8 @@ function validarEspacioEnlazada(tamaño, bloquesNecesarios) {
     }else{
         // Ingresa registro al log
         logEnlazada += ` Se notifica que la palabra no existe en disco. \n`;
-        console.log("No existe el archivo que quiere eliminar");
+        // console.log("No existe el archivo que quiere eliminar");
+        // return alert('No se encontró la palabra en disco.');
     }
 
     //console.log(mapaEnlazada);
@@ -666,62 +668,41 @@ export function crearArchivoIndexadaEnlazada(nombre, tamaño) {
     let indicador         = 0;
 
     //Revisa que la validacion sea positiva
+    //Revisa que la validacion sea positiva
     if (validacion != -1) {
         //Devuelve las posiciones de los bloques vacios
         let posicionesDisponible = posicionesDisponiblesEnlazada(bloquesTotales);
         //Valida que el arreglo tenga posiciones. Que no tenga valor negativo
         if (posicionesDisponible != -1) {
             //Bucle que recorre los bloques para almacenar datos
-            for (let index = bloquesIndices; index < posicionesDisponible.length ; index++) {
-                //Bucle que recorre cada posicion del bloque para guardar datos
+            for (let index = 0; index < posicionesDisponible.length ; index++) {
+                // Ingresa registro al log
+                logIndexadaEnlazada += ` Bloque actual: ${index} \n`;
+                // Indice del bloque actual
+                let consecutivo = index;
+                //Bucle que recorre cada posicion del bloque de datos
                 for (let index1 = 0; index1 < mapaIndexadaEnlazada[0].length; index1++) {
-                    //Valida que todavia existan caracteres por asignar
-                    if (cantidad != 0) {
-                        //Asigna el caracter en la posicion
-                        mapaIndexadaEnlazada[posicionesDisponible[index]][index1] = nombre.charAt(indicador);
-                        cantidad--;
-                        indicador++;
-
-                    }else{
+                    //Valida si esta en la ultima posicion del bloque de datos
+                    if (index1 == 2 && cantidad != 0){
+                        // Ingresa registro al log
+                        logIndexadaEnlazada += ` En el bloque actual, se relaciona que el siguente bloque de indices es el bloque: ${posicionesDisponible[index+1]} \n`;
+                        mapaIndexadaEnlazada[posicionesDisponible[consecutivo]][index1] = posicionesDisponible[index+1];
+                    }
+                    // Valida que no este en la ultima posicion del bloque de datos
+                    else if (cantidad != 0 && index1 != 2) {
+                        // Ingresa registro al log
+                        logIndexadaEnlazada += ` En el bloque actual, se relaciona que el siguente bloque de datos es el bloque: ${posicionesDisponible[index+1]}  \n`;
+                        // Pone indice del bloque siguiente
+                        mapaIndexadaEnlazada[posicionesDisponible[consecutivo]][index1] = posicionesDisponible[index+1];
+                        // Llama al metodo para asignar datos
+                        indicador = asignarCaracter(mapaIndexadaEnlazada[posicionesDisponible[index+1]], indicador, nombre);
+                        cantidad = tamaño-indicador;
+                        index++;
+                    } else {
                         break;
                     }
-
                 }
                 
-            }
-
-            // Indica bloques consumidos
-            let aux = bloquesIndices;
-            // Indica tope de bloques para asignar
-            let tope = 1;
-
-            // Recorre los bloques destinados para los indices
-            for (let index = 0; index < bloquesIndices; index++){
-                //Bucle que recorre cada posicion de los bloques
-                for (let index2 = 0; index2 < mapaIndexadaEnlazada[0].length; index2++) {
-                    // Valida si es la ultima posicion del bloque de memoria
-                    if (index2 == mapaIndexadaEnlazada[0].length-1) {
-                        // Valida que no se pase de los bloques asignados para los indices
-                        if (tope < bloquesIndices) {
-                            // Ingresa registro al log
-                            logIndexadaEnlazada += ` Enlaza al bloque de indices ${posicionesDisponible[tope]+1}. \n`;
-                            // Realiza la asignacion de los datos
-                            mapaIndexadaEnlazada[posicionesDisponible[index]][index2] = posicionesDisponible[tope]+1;
-                            tope++;
-                        }     
-                    }
-                    // Valida que no sea la ultima posicion del bloque de memoria
-                    if (index2 != mapaIndexadaEnlazada[0].length-1) {
-                        // Valida si es el ultimo bloque de memoria
-                        if (aux < posicionesDisponible.length) {
-                            // Ingresa registro al log
-                            logIndexadaEnlazada += ` En el bloque de memoria ${posicionesDisponible[index]+1} asigna en el espacio ${index2+1} que se consumió el bloque ${posicionesDisponible[aux]+1}. \n`;
-                            // Realiza la asignacion de los datos
-                            mapaIndexadaEnlazada[posicionesDisponible[index]][index2] = posicionesDisponible[aux]+1;
-                            aux++;
-                        }
-                    }
-                }
             }
 
             //Ingresa el archivo en el arreglo de archivos creados
@@ -757,6 +738,29 @@ export function crearArchivoIndexadaEnlazada(nombre, tamaño) {
     // console.log(posicionesIndexadaEnlazada);
     // console.log("Log");
     // console.log(logIndexadaEnlazada);
+}
+
+/**
+ * Asigna caracteres en un bloque de memoria
+ *
+ * @param {*} mapa bloque de memoria
+ * @param {*} indicador indicador del caracter a asignar
+ * @param {*} nombre nombre del archivo a ingresar en disco
+ *
+ * @returns indicador actual
+ */
+function asignarCaracter(mapa, indicador, nombre) {
+    // Recorre el bloque de memoria
+    for (let index = 0; index < mapa.length; index++) {
+        // Valida si se ingreso completamente la palabra
+        if (indicador != nombre.length) {
+            // Ingresa el caracter en un espacio del bloque de memoria
+            mapa[index] = nombre.charAt(indicador);
+            indicador++;
+        }
+    }
+
+    return indicador;
 }
 
 /**
@@ -869,7 +873,8 @@ function validarEspacioIndexadaEnlazada(tamaño, bloquesNecesarios) {
     }else{
         // Ingresa registro al log
         logIndexadaEnlazada += ` Se notifica que la palabra a eliminar no existe. \n`;
-        console.log("No se existe el archivo que quiere eliminar.");
+        // console.log("No se existe el archivo que quiere eliminar.");
+        // return alert('No se encontró la palabra en disco.');
     }
 
     // console.log("mapa (IndexadaEnlazada)");
@@ -934,15 +939,15 @@ export function crearArchivoIndexadaMultinivel(nombre, tamaño) {
         //Bucle que recorre las posiciones del arreglo con posiciones disponibles
         for (let index = 0; index < validacion.length; index++) {
             // Ingresa registro al log
-            logIndexadaMultinivel += ` Se toma como primer super i nodo el bloque ${validacion[index]+1}. \n`;
+            logIndexadaMultinivel += ` Se toma como primer super i nodo el bloque ${validacion[index]}. \n`;
             //Verifica si es la primera posicion
             if (index == 0) {
                 //Asigna el puntero al nodo o bloque siguiente
-                mapaIndexadaMultinivel[validacion[index]][0] = validacion[index+1]+1;
+                mapaIndexadaMultinivel[validacion[index]][0] = validacion[index+1];
                 // Ingresa registro al log
-                logIndexadaMultinivel += ` En la posición ${index+1} se ingresa enlace al bloque de datos ${validacion[index+1]+1}. \n`;
+                logIndexadaMultinivel += ` En la posición ${index+1} se ingresa enlace al bloque de datos ${validacion[index+1]}. \n`;
                 // Ingresa registro al log
-                logIndexadaMultinivel += ` Se ingresan datos en el bloque ${validacion[index+1]+1} \n`;
+                logIndexadaMultinivel += ` Se ingresan datos en el bloque ${validacion[index+1]} \n`;
                 //Bucle que recorre las tres posiciones del bloque para asignar los indices de los bloques con datos
                 for (let index1 = 0; index1 < mapaIndexadaMultinivel[0].length; index1++) {
                     //Verifica que no se requiera asignar mas datos
@@ -965,14 +970,14 @@ export function crearArchivoIndexadaMultinivel(nombre, tamaño) {
             //Verifica que este en la posicion 2
             if (index == 2) {
                 // Ingresa registro al log
-                logIndexadaMultinivel += ` En el super i nodo ${validacion[0]+1} se ingresa enlace al i nodo ${validacion[index]+1}. \n`;
+                logIndexadaMultinivel += ` En el super i nodo ${validacion[0]} se ingresa enlace al i nodo ${validacion[index]}. \n`;
                 //Asigna le puntero al bloque de indices siguiente
-                mapaIndexadaMultinivel[validacion[0]][1] = validacion[index]+1;
+                mapaIndexadaMultinivel[validacion[0]][1] = validacion[index];
                 //Variable que controla la cantidad de ciclos necesarios
                 let tope = 0;
 
                 // Ingresa registro al log
-                logIndexadaMultinivel += ` Se ingresan datos en el bloque de datos ${validacion[index+1]+1}. \n`;
+                logIndexadaMultinivel += ` Se ingresan datos en el bloque de datos ${validacion[index+1]}. \n`;
                 //Valida que se cumplan los ciclos que se requieren
                 while (tope != 3) {
                     //Bucle que recorre cada posicion del bloque de datos
@@ -991,7 +996,7 @@ export function crearArchivoIndexadaMultinivel(nombre, tamaño) {
                         }
                     }
                     //Se asigna el puntero al indice siguiente
-                    mapaIndexadaMultinivel[validacion[2]][tope] = validacion[index+1]+1;
+                    mapaIndexadaMultinivel[validacion[2]][tope] = validacion[index+1];
                     //Aumenta la variable de los ciclos necesarios
                     tope++;
                     //Valida si ya se cumplio la asignacion total de datos
@@ -1007,9 +1012,9 @@ export function crearArchivoIndexadaMultinivel(nombre, tamaño) {
             //Valida que este en la posicion 6
             if (index == 6) {
                 // Ingresa registro al log
-                logIndexadaMultinivel += ` En el super i nodo ${validacion[0]+1} se enlaza la posición del siguiente super i nodo ${validacion[index]+1}. \n`;
+                logIndexadaMultinivel += ` En el super i nodo ${validacion[0]} se enlaza la posición del siguiente super i nodo ${validacion[index]}. \n`;
                 //Asigna el puntero al nodo de indices siguiente
-                mapaIndexadaMultinivel[validacion[0]][2] = validacion[index]+1;
+                mapaIndexadaMultinivel[validacion[0]][2] = validacion[index];
                 //Posicion siguiente
                 index++
                 //Variable que controla la cantidad de ciclos necesarios
@@ -1017,19 +1022,19 @@ export function crearArchivoIndexadaMultinivel(nombre, tamaño) {
                 //Valida que se cumplan los ciclos que se requieren
                 while (tope != 3) {
                     // Ingresa registro al log
-                    logIndexadaMultinivel += ` Se enlaza en el super i nodo el bloque de indices ${validacion[index]+1}. \n`;
+                    logIndexadaMultinivel += ` Se enlaza en el super i nodo el bloque de indices ${validacion[index]}. \n`;
                     //Asigna al nodo de indice el indice actual
-                    mapaIndexadaMultinivel[validacion[6]][tope] = validacion[index]+1;
+                    mapaIndexadaMultinivel[validacion[6]][tope] = validacion[index];
                     //Mantiene el inidice del nodo de indices
                     let bloque = validacion[index];
                     //Bucle que recorre la cantidad de ciclos para nodos de datos necesarios
                     for (let index1 = 0; index1 < mapaIndexadaMultinivel[0].length; index1++) {
                         // Ingresa registro al log
-                        logIndexadaMultinivel += ` Se enlaza en el i nodo ${bloque+1} el bloque de datos ${validacion[index+1]+1}. \n`;
+                        logIndexadaMultinivel += ` Se enlaza en el i nodo ${bloque+1} el bloque de datos ${validacion[index+1]}. \n`;
                         //Asigna la posicion del nodo de datos en el nodo de indices
-                        mapaIndexadaMultinivel[bloque][index1] = validacion[index+1]+1;
+                        mapaIndexadaMultinivel[bloque][index1] = validacion[index+1];
                         // Ingresa registro al log
-                        logIndexadaMultinivel += ` Se ingresan datos en el bloque: ${validacion[index+1]+1}. \n`;
+                        logIndexadaMultinivel += ` Se ingresan datos en el bloque: ${validacion[index+1]}. \n`;
                         //Bucle que recorre el bloque de datos para asignarlos
                         for (let index2 = 0; index2 < mapaIndexadaMultinivel[0].length; index2++) {
                             //Valida si ya se cumplio la cantidad total de asignaciones
@@ -1195,7 +1200,8 @@ function eliminarArchivoIndexadaMultinivel (nombre, tamaño) {
     }else{
         // Ingresa registro al log
         logIndexadaMultinivel += ` Se notifica que el mensaje a eliminar no existe en memoria. \n`;
-        console.log("No se existe el archivo que quiere eliminar (indexada-multinivel)");
+        // console.log("No se existe el archivo que quiere eliminar (indexada-multinivel)");
+        // return alert('No se encontró la palabra en disco.');
     }
 
     // console.log("mapa (Indexada-Multinivel)");
@@ -1295,11 +1301,11 @@ export function crearArchivoIndexadaCombinada(nombre, tamaño) {
 function tipo1(nombre, indice, array, faltantes, indicador) {
 
     // Ingresa registro al log
-    logIndexadaCombinada += ` Se toma el bloque ${array[indice]+1} como super i nodo. \n`;
+    logIndexadaCombinada += ` Se toma el bloque ${array[indice]} como super i nodo. \n`;
     // Nodo de indices
     let inodo = array[indice];
     // Asignacion al puntero siguiente
-    mapaIndexadaCombinada[array[indice]][0] = array[indice+1]+1;
+    mapaIndexadaCombinada[array[indice]][0] = array[indice+1];
     // Aumento del indice
     indice++;
 
@@ -1333,9 +1339,9 @@ function tipo1(nombre, indice, array, faltantes, indicador) {
 function tipo2(nombre, indice, array, faltantes, inodo, indicador) {
 
     // Ingresa registro al log
-    logIndexadaCombinada += ` Se enlaza en el super i nodo el bloque de indices ${array[indice]+1}. \n`;
+    logIndexadaCombinada += ` Se enlaza en el super i nodo el bloque de indices ${array[indice]}. \n`;
     // Incializa inodo
-    mapaIndexadaCombinada[inodo][1] = array[indice]+1;
+    mapaIndexadaCombinada[inodo][1] = array[indice];
     // Iniciliza el tope
     let tope = 0;
     // Guarda el nodo indice
@@ -1344,12 +1350,12 @@ function tipo2(nombre, indice, array, faltantes, inodo, indicador) {
     // Recorre los bloques de memoria
     while (tope != 3) {
         // Ingresa registro al log
-        logIndexadaCombinada += ` Se enlaza en el bloque de indices el bloque de datos ${array[indice]+1}. \n`;
+        logIndexadaCombinada += ` Se enlaza en el bloque de indices el bloque de datos ${array[indice]}. \n`;
         // Se asigna en bloque de indice el indice que se va a consumir
-        mapaIndexadaCombinada[nodoIndice][tope] = array[indice]+1;
+        mapaIndexadaCombinada[nodoIndice][tope] = array[indice];
 
         // Ingresa registro al log
-        logIndexadaCombinada += ` Se asignan datos en el bloque de datos ${array[indice]+1}. \n`;
+        logIndexadaCombinada += ` Se asignan datos en el bloque de datos ${array[indice]}. \n`;
         // Recorre el bloque de datos para asignar
         for (let index = 0; index < mapaIndexadaCombinada[0].length; index++) {
             // Valida si se completo la insercion del mensaje
@@ -1383,9 +1389,9 @@ function tipo2(nombre, indice, array, faltantes, inodo, indicador) {
  */
 function tipo3(nombre, indice, array, faltantes, inodo, indicador) {
     // Ingresa registro al log
-    logIndexadaCombinada += ` Se enlaza en el super inodo ${inodo+1} el siguiente super inodo ${array[indice]+1}. \n`;
+    logIndexadaCombinada += ` Se enlaza en el super inodo ${inodo} el siguiente super inodo ${array[indice]}. \n`;
     // Asigna dato
-    mapaIndexadaCombinada[inodo][2] = array[indice]+1;
+    mapaIndexadaCombinada[inodo][2] = array[indice];
     //indice++;
     // Pasa al recorrido 1
     tipo1(nombre, indice, array, faltantes, indicador);
@@ -1478,11 +1484,11 @@ function eliminarArchivoIndexadaCombinada (nombre, tamaño) {
     //Arreglo con posiciones ocupadas por el archivo
     let eliminar = posicionesIndexadaCombinada[validarArchivo];
 
-    // Ingresa registro al log
-    logIndexadaCombinada += ` Se recorren los indices utilizados para almacenar el mensaje, y se ponen en mapa de bits como disponibles. \n`;
-
+    
     //Valida que si exista un archivo creado con ese nombre
     if (validarArchivo != -1) {
+        // Ingresa registro al log
+        logIndexadaCombinada += ` Se recorren los indices utilizados para almacenar el mensaje, y se ponen en mapa de bits como disponibles. \n`;
         //Bucle que recorre las posiciones con los bloques ocupados por el archivo
         for (let index = 0; index < eliminar.length; index++) {
             //Setea en vacio el bloque
@@ -1500,9 +1506,10 @@ function eliminarArchivoIndexadaCombinada (nombre, tamaño) {
         posicionesIndexadaCombinada.splice(validarArchivo,1)
     }else{
         // Ingresa registro al log
-        logIndexadaCombinada += ` Se nortifica que no existe el mensaje a eliminar en disco. \n`;
+        logIndexadaCombinada += ` Se notifica que no existe el mensaje a eliminar en disco. \n`;
 
-        console.log("No se existe el archivo que quiere eliminar (indexada-Combinada)");
+        // console.log("No se existe el archivo que quiere eliminar (indexada-Combinada)");
+        
     }
 
     // console.log("mapa (Indexada-Combinada)");
@@ -1515,8 +1522,8 @@ function eliminarArchivoIndexadaCombinada (nombre, tamaño) {
     // console.log(inicioIndexadaCombinada);
     // console.log("Posiciones (Indexada-Combinada)");
     // console.log(posicionesIndexadaCombinada);
-    console.log("Log");
-    console.log(logIndexadaCombinada);
+    // console.log("Log");
+    // console.log(logIndexadaCombinada);
  
 }
 

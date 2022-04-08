@@ -4,7 +4,7 @@ import {View, ScrollView,Picker,Button,TextInput,TouchableOpacity,Text} from 're
 import TableInputProccessesComponent from './TableInputProccessesComponent';
 import MemoryCellsComponent from './MemoryCellsComponent';
 import * as main from '../scripts_ea/main';
-import Speaker from '../components_drawer/Speaker';
+import { Speaker, Pause }from '../components_drawer/Speaker';
 
 export default function IndexEa(props) {
 
@@ -112,9 +112,10 @@ const onRefresh = React.useCallback(() => {
     function bottonReproducirComponent(){
       if(bottonReproducirActivo){
         return(
-        <TouchableOpacity  style={{marginTop:15, width: 160, height: 40, backgroundColor: 'blue',padding:10,alignItems: 'center',borderRadius: 5}} onPress={()=> Speaker(array)}>
+        <TouchableOpacity  style={{marginTop:15, width: 160, height: 40, backgroundColor: 'blue',padding:10,alignItems: 'center',borderRadius: 5}} onPress={()=> Speaker(parrafoResultado)}>
           <Text style={{color:'white', fontSize: 17}}>Reproducir</Text>
-        </TouchableOpacity>);
+        </TouchableOpacity>
+        );
       }   
 
     return(<></>);
@@ -126,6 +127,9 @@ const onRefresh = React.useCallback(() => {
           <View style={{top:270,width: '70%',height:200,alignItems: 'center',flexDirection: 'column'}}>
             {parrafoResultadoComponent()}
             {bottonReproducirComponent()}
+            <TouchableOpacity style={{marginTop:15, width: 160, height: 40, backgroundColor: 'red',padding:10,alignItems: 'center',borderRadius: 5}} onPress= { ()=> Pause()}>
+              <Text style={{color:'white', fontSize: 17}}>Parar</Text>
+            </TouchableOpacity>
           </View>
         );
       }

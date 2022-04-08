@@ -11,7 +11,7 @@ import PhysicalMemory from './PhysicalMemoryComponent';
 import SegmentList from './SegmentListComponent';
 import { styles } from './styles';
 import NumberFormat from 'react-number-format';
-import Speaker from '../components_drawer/Speaker';
+import { Speaker, Pause } from '../components_drawer/Speaker';
 
 function segmentation() {
 
@@ -91,6 +91,12 @@ function segmentation() {
         if (!funciones.TablaProcesos[segmentoSolicitado]) {
             return alert("No existe el segmento");
         }
+
+        // Valida que la posicion sea mayor a 0
+        if(posicionSolicitada <= 0) {
+            return alert("Las posiciones inician en 1.");
+        }
+
         // Valida si el indice solicitado esta en el rango del segmento
         else if (funciones.TablaDatos[segmentoSolicitado].tamaño >= posicionSolicitada) {
             // Invoca el metodo que trae el item solicitado
@@ -118,7 +124,7 @@ function segmentation() {
         }
 
         // Valida si el segmento existe
-        if (!funciones.TablaProcesos[eliminarItem-1]) {
+        if (!funciones.TablaProcesos[eliminarItem]) {
             return alert("No existe el segmento índicado.");
         }
 
@@ -179,6 +185,9 @@ function segmentation() {
                 <TextInput style={styles.item_resultado} multiline={true} numberOfLines={8} value={funciones.logSegmentacion}/>
                 <TouchableOpacity style={{marginTop:20,width: 160, height: 40, backgroundColor: 'blue',padding:10,alignItems: 'center',borderRadius: 5}} onPress= { ()=> Speaker(funciones.logSegmentacion)}>
                     <Text style={{color:'white', fontSize: 17}}>Reproducir</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={{marginTop:15, width: 160, height: 40, backgroundColor: 'red',padding:10,alignItems: 'center',borderRadius: 5}} onPress= { ()=> Pause()}>
+                    <Text style={{color:'white', fontSize: 17}}>Parar</Text>
                 </TouchableOpacity>
             </View>
         </View>

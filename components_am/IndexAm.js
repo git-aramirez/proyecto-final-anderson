@@ -7,10 +7,8 @@
  import { Text, View, SectionList, Picker, TextInput, Button,TouchableOpacity,ScrollView} from 'react-native';
  import * as funciones from '../scripts_am/Main';
  import ProcessList from './ProcessListComponent';
- import BitsMap from './BitsMap';
  import { styles } from './styles';
- import NumberFormat from 'react-number-format';
- import {Speaker, Pause} from '../components_drawer/Speaker';
+ import { Speaker, Pause } from '../components_drawer/Speaker';
  import { DataTable } from 'react-native-paper';
  
  /**
@@ -180,31 +178,45 @@
     function processTable() {
         // Tabla de procesos a mostrar
         let tablaProcesos = [];
+        // bloque de inicio de los procesos
+        let indiceBloque = [];
+        // bloque de tamaño de los procesos
+        let tamaños = [];
 
         // Valida si el algortimo seleccionado es contigua
         if (algoritmo == "Contigua") {
             tablaProcesos = (funciones.archivosCreadosContigua);
+            indiceBloque = (funciones.inicioContigua);
+            tamaños = (funciones.tamañoCaracteresContigua);
         }
         //Valida que el algortimo seleccionado sea Enlazada
         if (algoritmo == "Enlazada") {
             tablaProcesos = (funciones.archivosCreadosEnlazada);
+            indiceBloque = (funciones.inicioEnlazada);
+            tamaños = (funciones.tamañoCaracteresEnlazada);
         }
         //Valida que el algortimo seleccionado sea Indexada-Enlazada
         if (algoritmo == "Indexada-Enlazada") {
             tablaProcesos = (funciones.archivosCreadosIndexadaEnlazada);
+            indiceBloque = (funciones.inicioIndexadaEnlazada);
+            tamaños = (funciones.tamañoCaracteresIndexadaEnlazada);
         }
         //Valida que el algortimo seleccionado sea Indexada-Multinivel
         if (algoritmo == "Indexada-Multinivel") {
             tablaProcesos = (funciones.archivosCreadosIndexadaMultinivel);
+            indiceBloque = (funciones.inicioIndexadaMultinivel);
+            tamaños = (funciones.tamañoCaracteresIndexadaMultinivel);
         }
         //Valida que el algortimo seleccionado sea Indexada Combinada
         if (algoritmo == "Indexada-Combinada") {
             tablaProcesos = (funciones.archivosCreadosIndexadaCombinada);
+            indiceBloque = (funciones.inicioIndexadaCombinada);
+            tamaños = (funciones.tamañoCaracteresIndexadaCombinada);
         }
 
         return (
             <ScrollView vertical={true} style={{ top: 100 ,width: 100 ,height: 600}}> 
-                <ProcessList procesos = {tablaProcesos}/>
+                <ProcessList procesos = {tablaProcesos} indices = {indiceBloque} tamaños = {tamaños}/>
             </ScrollView>
         )
     }
@@ -260,10 +272,10 @@
 
                 <DataTable id="tabla_salida" style={{flexDirection: 'column'}}>
                     <DataTable.Header >
+                        <DataTable.Title><Text style={styles.item_tabla}>Bloque 0</Text></DataTable.Title>
                         <DataTable.Title><Text style={styles.item_tabla}>Bloque 1</Text></DataTable.Title>
                         <DataTable.Title><Text style={styles.item_tabla}>Bloque 2</Text></DataTable.Title>
                         <DataTable.Title><Text style={styles.item_tabla}>Bloque 3</Text></DataTable.Title>
-                        <DataTable.Title><Text style={styles.item_tabla}>Bloque 4</Text></DataTable.Title>
                     </DataTable.Header>
                     <DataTable.Row > 
                         <DataTable.Cell style={{width:75, height: 90, borderBottomWidth: 0}}>
@@ -298,10 +310,10 @@
                 </DataTable >
                 <DataTable id="tabla_salida" style={{flexDirection: 'column'}}>
                     <DataTable.Header >
+                        <DataTable.Title><Text style={styles.item_tabla}>Bloque 4</Text></DataTable.Title>
                         <DataTable.Title><Text style={styles.item_tabla}>Bloque 5</Text></DataTable.Title>
                         <DataTable.Title><Text style={styles.item_tabla}>Bloque 6</Text></DataTable.Title>
                         <DataTable.Title><Text style={styles.item_tabla}>Bloque 7</Text></DataTable.Title>
-                        <DataTable.Title><Text style={styles.item_tabla}>Bloque 8</Text></DataTable.Title>
                     </DataTable.Header>
                     <DataTable.Row > 
                         <DataTable.Cell style={{width:75, height: 90, borderBottomWidth: 0}}>
@@ -336,10 +348,10 @@
                 </DataTable >
                 <DataTable id="tabla_salida" style={{flexDirection: 'column'}}>
                     <DataTable.Header >
+                        <DataTable.Title><Text style={styles.item_tabla}>Bloque 8</Text></DataTable.Title>
                         <DataTable.Title><Text style={styles.item_tabla}>Bloque 9</Text></DataTable.Title>
                         <DataTable.Title><Text style={styles.item_tabla}>Bloque 10</Text></DataTable.Title>
                         <DataTable.Title><Text style={styles.item_tabla}>Bloque 11</Text></DataTable.Title>
-                        <DataTable.Title><Text style={styles.item_tabla}>Bloque 12</Text></DataTable.Title>
                     </DataTable.Header>
                     <DataTable.Row > 
                         <DataTable.Cell style={{width:75, height: 90, borderBottomWidth: 0}}>
@@ -374,10 +386,10 @@
                 </DataTable >
                 <DataTable id="tabla_salida" style={{flexDirection: 'column'}}>
                     <DataTable.Header >
+                        <DataTable.Title><Text style={styles.item_tabla}>Bloque 12</Text></DataTable.Title>
                         <DataTable.Title><Text style={styles.item_tabla}>Bloque 13</Text></DataTable.Title>
                         <DataTable.Title><Text style={styles.item_tabla}>Bloque 14</Text></DataTable.Title>
                         <DataTable.Title><Text style={styles.item_tabla}>Bloque 15</Text></DataTable.Title>
-                        <DataTable.Title><Text style={styles.item_tabla}>Bloque 16</Text></DataTable.Title>
                     </DataTable.Header>
                     <DataTable.Row > 
                         <DataTable.Cell style={{width:75, height: 90, borderBottomWidth: 0}}>
@@ -412,10 +424,10 @@
                 </DataTable >
                 <DataTable id="tabla_salida" style={{flexDirection: 'column'}}>
                     <DataTable.Header >
+                        <DataTable.Title><Text style={styles.item_tabla}>Bloque 16</Text></DataTable.Title>
                         <DataTable.Title><Text style={styles.item_tabla}>Bloque 17</Text></DataTable.Title>
                         <DataTable.Title><Text style={styles.item_tabla}>Bloque 18</Text></DataTable.Title>
                         <DataTable.Title><Text style={styles.item_tabla}>Bloque 19</Text></DataTable.Title>
-                        <DataTable.Title><Text style={styles.item_tabla}>Bloque 20</Text></DataTable.Title>
                     </DataTable.Header>
                     <DataTable.Row > 
                         <DataTable.Cell style={{width:75, height: 90, borderBottomWidth: 0}}>
@@ -458,7 +470,7 @@
             <View style={{top:0 ,flex: 0.5,alignItems: 'center',justifyContent: 'center',flexDirection: 'row'}}>
                 
                 <TextInput onChangeText={(val) => setnombreArchivo(val)} value={nombreArchivo} placeholder="Nombre del Archivo" style={styles.input} keyboardType='default' clearButtonMode="always"/>
-                <TextInput onChangeText={(val) => settamañoCaracteres(val)} value={tamañoCaracteres} placeholder="Tamaño de caracteres del Archivo" style={styles.input_tamanio_archivo} keyboardType='numeric' />
+                {/* <TextInput onChangeText={(val) => settamañoCaracteres(val)} value={tamañoCaracteres} placeholder="Tamaño de caracteres del Archivo" style={styles.input_tamanio_archivo} keyboardType='numeric' /> */}
                 
                 <TouchableOpacity style={{marginLeft:15, width: 130, height: 40, backgroundColor: 'green',padding:10,alignItems: 'center',borderRadius: 5}} onPress= { ()=>limpiarDisco()}>
                     <Text style={{color:'white', fontSize: 17}}>Limpiar Discos</Text>

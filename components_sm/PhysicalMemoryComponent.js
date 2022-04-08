@@ -27,7 +27,7 @@ function PhysicalMemory(props) {
         </DataTable.Header>
         {array.map((row, index) => (
           <DataTable.Row > 
-            <DataTable.Cell>{index+1}</DataTable.Cell>
+            <DataTable.Cell>{index}</DataTable.Cell>
             <DataTable.Cell style={{width:100, flexDirection: 'column'}}>
               <View style={{flexDirection: 'column', margin: 0, backgroundColor: array[index][1]}}>
                 <Text style={styles.item}>{array[index][0]}</Text>

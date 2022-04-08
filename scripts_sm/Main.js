@@ -1,7 +1,7 @@
 /**
  * Funcionalidades y variables de los algortimos de Segmentacion
- * 
  * @author Kevin David Sanchez Solis
+ * @author Anderson Ramirez Vasquez
  */
 
 //--------------------------------------Importaciones----------------------------------------------------
@@ -13,7 +13,7 @@ import React from 'react';
 // Cantidad de memoria fisica
 let CantidadMemoria = 20;
 // Indice del segmento creado
-let segmentoIndex = 1;
+export let segmentoIndex = 0;
 
 // Cantidad de marcos disponibles en memoria fisica
 export let EspaciosDisponibles     = CantidadMemoria;
@@ -229,6 +229,9 @@ export function eliminarSegmento(segmento) {
  */
 export function solicitarItem(segmento, indice) {
 
+    // Parsea indice como entero
+    indice = parseInt(indice);
+
     // Ingresa registro al log
     logSegmentacion += `Se solicita el item del segmento ${segmento} en la posición ${indice}. \n`;
 
@@ -239,11 +242,12 @@ export function solicitarItem(segmento, indice) {
     logSegmentacion += ` Se valida que la posición solictada no exceda el tamaño del proceso. \n`;
 
     // Valida que la posicion solictada no exceda el tamaño del proceso
-    if (indice <= TablaDatos[segmento].tamaño) {        
+    if (indice < TablaDatos[segmento].tamaño) {        
         // Calcula la posicion en la que se encuentra el item en memoria fisica
-        let item = TablaDatos[segmento].inicio + (indice-1);
+        let item = TablaDatos[segmento].inicio;
         // Obtiene el item solicitado
-        item = MemoriaFisica[item][0];
+        item = MemoriaFisica[parseInt(item+indice)][0];
+
         // Ingresa registro al log
         logSegmentacion += ` Se obtiene el item: ${item}. \n`;
 
@@ -256,23 +260,31 @@ export function solicitarItem(segmento, indice) {
     }
 }
 
+var indiceColores = 0;
+
 /**
  * Genera color hexadecimal aleatorio
  *
  * @returns Color aleatorio
  */
-function generarColor() {
-    // Array de opciones 
-    let hexadecimal = new Array("0","1","2","3","4","5","6","7","8","9","A","B","C","D","E","F");
-    // Inicializa el string con el color
-    let color = "#";
+export function generarColor() {
 
+    indiceColores++;
+    if(indiceColores % 2 ===0){
+        return '#FFEC00';
+      }
+    return '#E07FFF';
+    
+    // Array de opciones 
+    let hexadecimal = new Array("#FFEC00","#C100FF");
+    // Inicializa el string con el color
+    let color = "";
     // Recorre 6 posiciones que conforman el numero en hexadecimal
-    for (let i = 0; i < 6; i++) {
+    for (let i = 0; i < 2; i++) {
         // Genera un indice aleatorio
        let posarray = aleatorio(0,hexadecimal.length);
         // obtiene la opcion seleccionada
-        color += hexadecimal[posarray];
+        color = hexadecimal[posarray];
     }
     return color;
 }
@@ -285,7 +297,7 @@ function generarColor() {
  *
  * @returns numero aleatorio generado
  */
-function aleatorio(inferior, superior) {
+export function aleatorio(inferior, superior) {
     // Cantidad de posibilidades
     let numPosibilidades = superior - inferior;
     // Genera un numero aleatorio

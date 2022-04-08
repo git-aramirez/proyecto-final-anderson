@@ -97,7 +97,7 @@ function MyDrawer() {
             <Drawer.Screen name="Comunicación entre procesos" component={ComunicacionProcesos} />
             <Drawer.Screen name="Paginación de Memoria" component={PaginacionDeMemoria} />
             <Drawer.Screen name="Segmentación de Memoria" component={SegmentacionMemoria} />
-            <Drawer.Screen name="Asignación de Memoria" component={AsignacionMemoria} />
+            <Drawer.Screen name="Asignación de Disco" component={AsignacionMemoria} />
             <Drawer.Screen name="Particiones de Disco" component={ParticionesDisco} />
         </Drawer.Navigator>
       </NavigationContainer>      

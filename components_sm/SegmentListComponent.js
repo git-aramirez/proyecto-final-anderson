@@ -32,7 +32,7 @@ function ProcessList(props) {
               <DataTable.Cell style={{width:100, height: 50, borderBottomWidth: 0}}>{row.indice}</DataTable.Cell>
               <DataTable.Cell style={{width:100, height: array[index]*20 , flexDirection: 'column'}}>
               <View style={{flexDirection: 'column', margin: 0}}>
-                <Text style={styles.item}>{'Inicio: '+ parseInt(row.inicio+1)}</Text>
+                <Text style={styles.item}>{'Inicio: '+ parseInt(row.inicio)}</Text>
                 <Text style={styles.item}>{'Tamaño: '+row.tamaño}</Text>
               </View>
               </DataTable.Cell>
