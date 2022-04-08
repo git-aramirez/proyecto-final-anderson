@@ -191,7 +191,7 @@ function esComparacionValida(comparacion,hiloAleatorio,cuerpo){
     }
 
     if(valoresVariables[posicion]!=valor){
-        let salida = encontrarSalidaCondicional(cuerpo);
+        let salida = encontrarSalidaCondicional(cuerpo,posiciones[hiloAleatorio]);
         posiciones[hiloAleatorio]=salida+1;
 
         return true;
@@ -276,9 +276,9 @@ function encontrarHilosBloqueados(){
     return textHilosBloqueados;
 }
 
-function encontrarSalidaCondicional(cuerpo){
+function encontrarSalidaCondicional(cuerpo,indiceDesde){
    let lista = cuerpo.split('\n');
-   let posicionSalida = lista.indexOf("}");
+   let posicionSalida = lista.indexOf("}",indiceDesde);
    if(posicionSalida!=-1){
        return posicionSalida;
    }else{

@@ -51,6 +51,7 @@ export const styles = StyleSheet.create({
     borderColor: 'black',
     borderWidth: .25,
     textAlign: 'justify',
+    padding: 10
   },
   container: {
       flex: 1,

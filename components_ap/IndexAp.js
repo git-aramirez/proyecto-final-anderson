@@ -49,10 +49,17 @@ export default function IndexAp() {
     return(<></>);
   }
 
-function init(){
-  crearTablaEntrada();
-  setBanderaEntrada(true);
-}
+  function init(){
+    setBanderaSalida(false);
+    if(parseInt(numeroProcesos)>10 ){
+      return alert("Por favor NO ingresa más de 10 procesos");
+    }else if (parseInt(numeroProcesos)<=0){
+      return alert("Por favor ingrese una cantida válida de procesos");
+    }
+    crearTablaEntrada();
+    setBanderaEntrada(true);
+    onRefresh();
+  }
 
 function crearTablaEntrada(){
   let tablaEntrada = [];
@@ -103,23 +110,9 @@ const onRefresh = React.useCallback(() => {
 }
 
 const [tablaStyles, setTablaStyles] = useState(new Array());
-function crearStyles(){
-  //setTablaStyles();
-
-
- //for (let index = 0; index < 10; index++) {
- // tablaStyles.push(new Array('red','#4B53BC','#4B53BC'));
- // tablaStyles[index]=new Array(3);
-  //tablaStyles[index][0] ='red';
- // tablaStyles[index][1] ='#4B53BC';
-  //tablaStyles[index][2] ='#4B53BC';
- //}
- //tablaStyles.push(new Array('#4B53BC','#4B53BC'));
-
-}
 
 function inicializarTablaEntradaNumerosAleatorios(){
-  main.inicializarTablaEntradaNumerosAleatorios(tablaEntrada);
+  main.inicializarTablaEntradaNumerosAleatorios(tablaEntrada,item_algoritmo);
   return onRefresh();
  //setTablaEntrada(tabla);
 }
@@ -138,9 +131,7 @@ function bottonInicializarTablaeEntrada(){
 function tableProcessComponent (){
   if(banderaSalida){
     return(
-      //<View style={{top:300+(10*numeroProcesos), width: 1000, height:1000}}>
           <TableProcessComponent top = {300+(10*numeroProcesos)} width={1000} tablaStyles={tablaStyles} />
-      //</View>
     );
   }
   return(<></>);

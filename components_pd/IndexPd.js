@@ -236,20 +236,6 @@ function modificarEstados(estado, index){
       onRefresh();
       funciones.setParticiones(particiones);
     }
-  
-    
-/*
-    // Valida si no existe disco
-    if (discos == "") {
-      array = {};
-    }
-    // Valida si no existen particiones en el disco
-    else if (discos && !funciones.particiones[discos]) {
-      array = {};
-    } else {
-      array = funciones.particiones[discos];
-    }
-    */
 
     //Retorna la tabla de particiones
     return(

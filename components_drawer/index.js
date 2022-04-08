@@ -13,6 +13,7 @@ import IndexSm from '../components_sm/IndexSm';
 import IndexAm from '../components_am/IndexAm';
 import IndexPd from '../components_pd/IndexPd';
 import IndexCp from '../components_cp/IndexCp';
+import * as Speech from 'expo-speech';
 
 function HomeScreen(props) {
 
@@ -43,35 +44,42 @@ function HomeScreen(props) {
 }
 
 function ComunicacionProcesos(){
+  Speech.stop();
   return (<IndexCp/>);
 }
 
 function AlgoritmosPlanificacionScreen() {
+    Speech.stop();
     return (<IndexAp/>);
 }
 
 function EstrategiaDeAjusteScreen() {
+   Speech.stop();
    return (<IndexEa/>);
   }
 
 function SincronizacionDeProcesosScreen() {
- // IndexSp.crearTablaEntrada();
+  Speech.stop();
   return (<IndexSp/>);
 }
 
 function PaginacionDeMemoria() {
+  Speech.stop();
   return (<IndexPm/>);
 }
 
 function SegmentacionMemoria() {
+  Speech.stop();
   return (<IndexSm/>);
 }
 
 function AsignacionMemoria() {
+  Speech.stop();
   return (<IndexAm/>);
 }
 
 function ParticionesDisco() {
+  Speech.stop();
   return (<IndexPd/>);
 }
 

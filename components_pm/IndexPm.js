@@ -176,7 +176,7 @@ function paginacion() {
 
 
         <View style={{top: 600,flex: 2,alignItems: 'center',justifyContent: 'center',flexDirection: 'row'}}>
-            <TextInput multiline={true} numberOfLines={8} value={funciones.paginationLog}/>
+            <TextInput style ={{padding: 10}} multiline={true} numberOfLines={8} value={funciones.paginationLog}/>
             <TouchableOpacity style={{marginTop:0, width: 190, height: 40, backgroundColor: 'blue',padding:10,alignItems: 'center',borderRadius: 5}} onPress={ ()=> Speaker(funciones.paginationLog)} >
                 <Text style={{color:'white', fontSize: 17}}>Reproducir</Text>
             </TouchableOpacity>

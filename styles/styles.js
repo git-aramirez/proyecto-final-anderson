@@ -65,7 +65,8 @@ export const styles = StyleSheet.create({
       textAlign: 'center',
       marginLeft: 20,
       color:'black',
-      fontSize: 17
+      fontSize: 17,
+      padding: 10
     },
 
     textInput_hilos_bloqueados_sp: {
@@ -105,6 +106,7 @@ export const styles = StyleSheet.create({
         borderColor: 'black',
         borderWidth: .25,
         textAlign: 'justify',
+        padding: 10
       },
       checkbox: {
         alignSelf: "center",

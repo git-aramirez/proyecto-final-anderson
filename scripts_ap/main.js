@@ -27,24 +27,33 @@ export function ejecutarAlgoritmo(item_algoritmo,tablaEntrada,nucleos,quantum){
       }
 }
 
-export function inicializarTablaEntradaNumerosAleatorios(tablaEntrada){
+export function inicializarTablaEntradaNumerosAleatorios(tablaEntrada,item_algoritmo){
     let min_llegada =0;
     let min_ejecucion_prioridad =1;
-    const max =5;
-    const max_rafaga_es = 3;
+    const max =3;
+    const max_t_llegada = 2;
+    const max_rafaga_es = 2;
    
     for (let index_i = 0; index_i < tablaEntrada.length; index_i++) {
 
-        if(index_i>0){
-            tablaEntrada[index_i].t_llegada = tablaEntrada[index_i-1].t_llegada+1;
+        if(index_i===0){
+            tablaEntrada[index_i].t_llegada = parseInt(Math.random() * (max_t_llegada - min_llegada) + min_llegada);
         }else{
-            tablaEntrada[index_i].t_llegada = parseInt(Math.random() * (max - min_llegada) + min_llegada);
+            tablaEntrada[index_i].t_llegada = tablaEntrada[index_i-1].t_llegada+1;
         }
+        
         tablaEntrada[index_i].t_ejecucion = parseInt(Math.random() * (max - min_ejecucion_prioridad) + min_ejecucion_prioridad);
-        tablaEntrada[index_i].prioridad = parseInt(Math.random() * (max - min_ejecucion_prioridad) + min_ejecucion_prioridad);
+        if(item_algoritmo==="Prioridad interna expulsiva (HRN_PRIMA)" || item_algoritmo==="Prioridad interna no expulsiva (HRN)"){
+            tablaEntrada[index_i].prioridad = parseInt(1);
+        }else{
+            var exp = Math.pow(10, 2);
+            tablaEntrada[index_i].prioridad = parseInt( (Math.random() * (max - min_ejecucion_prioridad) + min_ejecucion_prioridad) * exp, 10)/ exp;
+        }
+        
         tablaEntrada[index_i].rafaga_es = parseInt(Math.random() * (max_rafaga_es - min_ejecucion_prioridad) + min_ejecucion_prioridad);
     }
     //return tablaEntrada;
+
 }
 
 var cantidadColumnas;

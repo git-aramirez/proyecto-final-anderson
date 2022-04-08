@@ -21,7 +21,8 @@ const TableInputComponent = (props) => {
 
       return(
         <View style={{width:600,height:props.height, top:90}}>
-          <DataTable id="tabla">
+          <Text style={{fontSize: 15, justifyContent:'center',margin:10 ,fontWeight:'bold',fontStyle: 'italic'}}>Tabla de entrada</Text>
+          <DataTable  id="tabla">
             <DataTable.Header>
               <DataTable.Title ><Text style={{fontSize: 20}}>pid</Text></DataTable.Title>
               <DataTable.Title ><Text style={{fontSize: 20}}>T-Llegada</Text></DataTable.Title>

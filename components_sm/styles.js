@@ -40,6 +40,7 @@ export const styles = StyleSheet.create({
     flexDirection: 'column',
     borderWidth: .25,
     textAlign: 'center',
+    padding: 10
   },
   item_tabla: {
     fontSize: 20,
