@@ -9,8 +9,13 @@ export default function IndexCp() {
 
   //Variable que acciona el refresco de la tabla
   const [refreshing, setRefreshing] = React.useState(false);
-  const [textSalida, setTextSalida] = useState("");
-  const [textHilosBloqueados, setTextHilosBloqueados] = useState("");
+
+  const [textSalidaConst, setTextSalidaConst] = useState("");
+  var textSalida = "";
+
+ const [textHilosBloqueadosConst, setTextHilosBloqueadosConst] = useState("");
+ var textHilosBloqueados = "";
+
   const [tablaEntrada, setTablaEntrada] = useState([]);
   const [textoFinal,setTextoFinal] = useState("");
 
@@ -45,22 +50,27 @@ function  crearTablaEntrada (){
    setTablaEntrada({Hilo_1:matrizEntrada[0], Hilo_2:matrizEntrada[1], Hilo_3:matrizEntrada[2], Hilo_4:matrizEntrada[3] ,Hilo_5: matrizEntrada[4]});
   }
 
-  function ejecutarAlgoritmo(){
+  async function  ejecutarAlgoritmo(){
     let tablaEntradaValida = main.validarTablaEntrada(tablaEntrada);
     if(!tablaEntradaValida){
       return alert("Ingrese al menos un valor en la tabla de entrada !")
     }
 
     let resultado =  main.ejecutar(tablaEntrada);
-    setTextSalida(resultado[0]);
-    setTextHilosBloqueados(resultado[1]);
-    let salida = main.editarTextoSalida(textSalida,textHilosBloqueados);
+    textSalida = resultado[0];
+    setTextSalidaConst(resultado[0]);
+    textHilosBloqueados = resultado[1];
+    setTextHilosBloqueadosConst(resultado[1]);
+    let salida = await main.editarTextoSalida(textSalida,textHilosBloqueados);
     setTextoFinal(salida);
+    onRefresh();
    }
 
    function limpiarCampos(){
-    setTextHilosBloqueados("");
-    setTextSalida("");
+    textHilosBloqueados = "";
+    textSalida = "";
+    setTextHilosBloqueadosConst("");
+    setTextSalidaConst("");
     crearTablaEntrada();
    }
 
@@ -90,14 +100,14 @@ function  crearTablaEntrada (){
   function textAreaSalidaComponent(){
       return (
         <TextInput style={styles.textInput_salida_cp} 
-        onChangeText={(text) => setTextSalida(text)} placeholder="Salida" value={textSalida}/>
+        onChangeText={(text) => textSalida=text} placeholder="Salida" value={textSalidaConst}/>
       );
   }
 
   function textAreaHilosBloqueadosComponent(){
       return (
         <TextInput style={styles.textInput_hilos_bloqueados_sp} 
-        onChangeText={(text) => setTextHilosBloqueados(text)} placeholder="Hilos Bloqueados" value={textHilosBloqueados}/>
+        onChangeText={(text) => textHilosBloqueados=text} placeholder="Hilos Bloqueados" value={textHilosBloqueadosConst}/>
       );
   }
 
