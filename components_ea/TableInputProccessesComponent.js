@@ -22,20 +22,21 @@ const TableInputProccessesComponent = (props) => {
   }
 
       return(
-        <View style={{ width:380 ,height:600}}>
+        <View style={{ width:250 ,height:600}}>
+          <Text style={{fontSize: 15, justifyContent:'center',marginLeft:40,marginBottom:20 ,fontWeight:'bold',fontStyle: 'italic'}}>Celdas de requeriemientos</Text>
           <DataTable id="tabla">
             <DataTable.Header>
-              <DataTable.Title style={{justifyContent: 'center'}}><Text style={{fontSize: 20}}>Proceso</Text></DataTable.Title>
-              <DataTable.Title style={{justifyContent: 'center'}}><Text style={{fontSize: 20}}>Requerimiento</Text></DataTable.Title>
+              <DataTable.Title style={{justifyContent: 'center'}}><Text style={{fontSize: 15}}>Proceso</Text></DataTable.Title>
+              <DataTable.Title style={{justifyContent: 'center'}}><Text style={{fontSize: 15}}>Requerimiento</Text></DataTable.Title>
             </DataTable.Header>
         
             <DataTable.Row>
-              <DataTable.Cell ><TextInput multiline={true} numberOfLines={13} value={listaProcesos} onChangeText={(data)=>updateListaProcesos(data)} style={styles.textInput_table_sp}/></DataTable.Cell>
+              <DataTable.Cell ><TextInput multiline={true} numberOfLines={13} value={listaProcesos} onChangeText={(data)=>updateListaProcesos(data)} style={styles.textInput_table_eas}/></DataTable.Cell>
               
-              <DataTable.Cell style={{flexDirection: 'column',borderWidth: 1}}> 
+              <DataTable.Cell style={{flexDirection: 'column'}}> 
                 <View style={{flexDirection: 'column'}}>
                   {listaRequerimientos.map((row,index) => (
-                      <Picker style={{marginLeft:20 , height: 33, fontSize:20}} value={row} onValueChange={(data)=>updateListaRequerimientos(index,data)}>
+                      <Picker style={{marginLeft:20 , height: 33, fontSize:13}} value={row} onValueChange={(data)=>updateListaRequerimientos(index,data)}>
                         <Picker.Item label={"Liberar"}  value={"Liberar"}/>
                         <Picker.Item label={"Solicitar 1"}  value={"Solicitar 1"}/>
                         <Picker.Item label={"Solicitar 2"}  value={"Solicitar 2"}/>

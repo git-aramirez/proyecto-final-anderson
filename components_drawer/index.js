@@ -17,28 +17,17 @@ import * as Speech from 'expo-speech';
 
 function HomeScreen(props) {
 
-  const [estaParrafo, setEstaParrafo] = useState(false);
-  const [estaReproducir, setEstaReproducir] = useState(false);
-
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' ,  backgroundColor: '#fff'}}>
-      <Text style={{fontSize:60}}>Infraestructura Computacional</Text>
-      <Text style={{fontSize:40, marginTop: 40}}>Presentado Por :</Text>
-      <Text style={{fontSize:30,marginTop: 30}}>Kevin David Sanchez Solís</Text>
-      <Text style={{fontSize:20}}>kdsanchezs@uqvirtual.edu.co</Text>
-      <Text style={{fontSize:30}}>Anderson Ramirez Vasquez</Text>
-      <Text style={{fontSize:20}}>aramirezv_1@uqvirtual.edu.co</Text>
-
-      <View style={{ flexDirection: "row", marginBottom: 20, marginTop: 30}}>
-        <CheckBox value={estaParrafo} onValueChange={setEstaParrafo} style={styles.checkbox}/>
-        <Text style={{margin: 8}}>¿Parrafo Final Activo?</Text>
-      </View>
-
-      <View style={{ flexDirection: "row", marginBottom: 20, marginTop: 10}}>
-        <CheckBox value={estaReproducir} onValueChange={setEstaReproducir} style={styles.checkbox}/>
-        <Text style={{margin: 8}}>¿Botón de Reproducir Activo?</Text>
-      </View>
-
+      <Text style={{fontSize:35,textAlign: 'center'}}>Universidad del Quindío</Text>
+      <Text style={{fontSize:20,marginTop:20}}>Armenia Quindío 09/03/2022</Text>
+      <Text style={{fontSize:23, marginTop: 20}}>Infraestructura Computacional</Text>
+      <Text style={{fontSize:22, marginTop: 40}}>Desarrolladores:</Text>
+      <Text style={{fontSize:20,marginTop: 30}}>Kevin David Sanchez Solís</Text>
+      <Text style={{fontSize:15}}>kdsanchezs@uqvirtual.edu.co</Text>
+      <Text style={{fontSize:20}}>Anderson Ramírez Vásquez</Text>
+      <Text style={{fontSize:15}}>aramirezv_1@uqvirtual.edu.co</Text>
+      <Text style={{fontSize:15,marginTop: 20}}>Licencia: GNU GPL v3</Text>
     </View>
   );
 }

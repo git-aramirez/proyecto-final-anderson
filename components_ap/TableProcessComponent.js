@@ -47,7 +47,8 @@ const TableProcessComponent = (props) => {
   }
 
   return(
-    <View style={{width:props.width,height:200, top: props.top}}>
+    <View style={{width:props.width,height: props.height, top: props.top}}>
+       <Text style={{fontSize: 15, justifyContent:'center',marginBottom:30,marginTop:10,fontWeight:'bold',fontStyle: 'italic'}}>Tabla de Procesos</Text>
         <DataTable>
         {tablaStyles.map((row,i) => (
           <DataTable.Row >

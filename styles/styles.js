@@ -11,13 +11,20 @@ export const styles = StyleSheet.create({
   },
   inputTable:{
     textAlign: 'center',
-    fontSize: 25,
-    width: 60,
-    height:40,
-    borderWidth: 1,
+    fontSize: 15,
+    width: 30,
+    height:20
   },
   button_style: {
     marginBottom: 10
+  },
+
+  textInput_table_ea: {
+    width: 100,
+    height:330,
+    textAlign: 'center',
+    color:'black',
+    fontSize: 25
   },
 
     textInput_table_sp: {
@@ -26,16 +33,25 @@ export const styles = StyleSheet.create({
       borderWidth: 1,
       textAlign: 'center',
       color:'black',
-      fontSize: 25
+      fontSize: 15
+    },
+
+    item_resultado_cola: {
+      fontSize: 15,
+      height: 200,
+      width:'100%',
+      justifyContent: "center",
+      borderColor: 'black',
+      borderWidth: .25,
+      textAlign: 'justify',
     },
 
     textInput_table_cp: {
       width: 150,
-      height:400,
-      borderWidth: 1,
+      height:280,
       textAlign: 'center',
       color:'black',
-      fontSize: 20
+      fontSize: 15
     },
 
     textInput_semaforos_sp: {
@@ -65,7 +81,18 @@ export const styles = StyleSheet.create({
       textAlign: 'center',
       marginLeft: 20,
       color:'black',
-      fontSize: 17,
+      fontSize: 15,
+      padding: 10
+    },
+
+    textInput_salida_cp: {
+      width: 400,
+      height: 30,
+      borderWidth: 1,
+      textAlign: 'center',
+      marginLeft: 20,
+      color:'black',
+      fontSize: 13,
       padding: 10
     },
 
@@ -100,7 +127,17 @@ export const styles = StyleSheet.create({
       }, 
       item_resultado: {
         fontSize: 15,
-        height: 200,
+        height: 400,
+        width:900,
+        justifyContent: "justify",
+        borderColor: 'black',
+        borderWidth: .25,
+        textAlign: 'justify',
+        padding: 10
+      },
+      item_resultado_cp: {
+        fontSize: 13,
+        height: 400,
         width:900,
         justifyContent: "justify",
         borderColor: 'black',

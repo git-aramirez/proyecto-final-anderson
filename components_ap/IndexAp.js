@@ -6,7 +6,7 @@ import NumberFormat from 'react-number-format';
 import * as main from '../scripts_ap/Main';
 import TableOutComponent from './TableOutComponen';
 import TableProcessComponent from './TableProcessComponent';
-
+import { Speaker, Pause } from '../components_drawer/Speaker';
 
 export default function IndexAp() {
 
@@ -20,8 +20,9 @@ export default function IndexAp() {
   const [banderaSalida,setBanderaSalida] = useState(false);
   const [isQuamtum,setIsQuantum] = useState(false);
   const [item_algoritmo,setItem_algoritmo] = useState("FCFS");
-
   const [isPrioridad,setIsPrioridad] = useState('none');
+  const [textoFinal,setTextoFinal] = useState("");
+  const [textoCola,setTextoCola] = useState("");
   
   function tableInputComponent (){
     if(banderaEntrada){
@@ -79,14 +80,64 @@ function inicializarTablaSalida(matrizSalida){
   onRefresh();
 }
 
+function validaciones(){
+  let aprobadosTiemposLlegada = main.validosTimeposLLegada(tablaEntrada);
+  if(!aprobadosTiemposLlegada){
+     alert("La tabla de entrada tiene tiempos de llegada erroneos !");
+     return true;
+  }
+  let valoresTablaEntrada = main.validarTablaEntrada(tablaEntrada, item_algoritmo);
+  if(!valoresTablaEntrada){
+    alert("La tabla de entrada no es válida !");
+    return true;
+ }
+
+  if(numeroProcesos==="" || parseInt(numeroProcesos)<=0){
+    alert("Ingrese mínimo número de procesos válido");
+    return true;
+  }
+
+  if(numeroCPU==="" || parseInt(numeroCPU)<=0){
+     alert("El número de CPU´s no puede ser 0");
+     return true;
+  }
+
+  if(numeroNucleos==="" || parseInt(numeroNucleos)<=0){
+     alert("El número de núcleos no puede ser 0");
+     return true;
+  }
+
+  if(item_algoritmo==="RR" && quantum==="" || parseInt(quantum)<=0){
+     alert("Por favor ingrese un Quantum válido");
+     return true;
+  }
+  return false;
+}
+
 const [tiempoMasLejano, setTiempoMasLejano] = useState(0);
 
 function iniciarAlgoritmo (){
+  if(validaciones()){
+    return;
+  }
+
   let nucleosTotal = parseInt(numeroNucleos)*parseInt(numeroCPU);
   let resultado = main.ejecutarAlgoritmo(item_algoritmo,tablaEntrada,nucleosTotal,parseInt(quantum));
    setTiempoMasLejano(resultado[1]);
    setTablaStyles(main.crearTablaDeEstilos());
-   inicializarTablaSalida(resultado[0]);
+  let texto="";
+   if(item_algoritmo=="RR"){
+    setTextoCola(resultado[0][1]);
+    inicializarTablaSalida(resultado[0][0]);
+    texto = main.crearTextoSalida(item_algoritmo,resultado[0][0]);
+   }else{
+    setTextoCola(resultado[0]);
+    inicializarTablaSalida(resultado[0]);
+    texto = main.crearTextoSalida(item_algoritmo,resultado[0]);
+   }
+  
+
+  setTextoFinal(texto);
 }
 
 //Variable que acciona el refresco de la tabla
@@ -114,7 +165,6 @@ const [tablaStyles, setTablaStyles] = useState(new Array());
 function inicializarTablaEntradaNumerosAleatorios(){
   main.inicializarTablaEntradaNumerosAleatorios(tablaEntrada,item_algoritmo);
   return onRefresh();
- //setTablaEntrada(tabla);
 }
 
 function bottonInicializarTablaeEntrada(){
@@ -131,7 +181,7 @@ function bottonInicializarTablaeEntrada(){
 function tableProcessComponent (){
   if(banderaSalida){
     return(
-          <TableProcessComponent top = {300+(10*numeroProcesos)} width={1000} tablaStyles={tablaStyles} />
+          <TableProcessComponent top = {350+(15*numeroProcesos)} width={1000} height={60*numeroProcesos} tablaStyles={tablaStyles} />
     );
   }
   return(<></>);
@@ -139,33 +189,45 @@ function tableProcessComponent (){
 
 function cambiarValorPickerAlgoritmos(itemValue){
   setItem_algoritmo(itemValue);
+
+  if(itemValue==="Prioridad interna expulsiva (HRN_PRIMA)" || itemValue==="Prioridad interna no expulsiva (HRN)"){
+    setTablaEntrada(main.cambiarPrioridad(tablaEntrada));
+  }
+
   if(itemValue==="RR"){
     setIsQuantum(true);
   }else{
     setIsQuantum(false);
   }
 
-  if(itemValue==="externo Expulsivo" || itemValue==="externo No Expulsivo"){
-    setIsPrioridad('');
+  let isItemValido = itemValue==="Prioridad externa expulsiva" 
+  || itemValue==="Prioridad externa no expulsiva" ||  itemValue==="Prioridad interna no expulsiva (HRN)"
+  || itemValue === "Prioridad interna expulsiva (HRN_PRIMA)";
+
+  if(isItemValido){
+    setIsPrioridad('flex');
   }else{
     setIsPrioridad('none');
   }
  
 }
 
+
 function pickerAlgortimos(){
   if(banderaEntrada){
-  return (
-  <Picker selectedValue={item_algoritmo} onValueChange={(itemValue, itemIndex) => cambiarValorPickerAlgoritmos(itemValue)}>
-  <Picker.Item label={"FCFS"}  value={"FCFS"}/>
-  <Picker.Item label={"SJF"}  value={"SJF"}/>
-  <Picker.Item label={"SRTF"}  value={"SRTF"}/>
-  <Picker.Item label={"externo Expulsivo"}  value={"externo Expulsivo"}/>
-  <Picker.Item label={"externo No Expulsivo"}  value={"externo No Expulsivo"}/>
-  <Picker.Item label={"HRN"}  value={"HRN"}/>
-  <Picker.Item label={"HRN_PRIMA"}  value={"HRN_PRIMA"}/>
-  <Picker.Item label={"RR"}  value={"RR"}/>
-</Picker>);}
+    return (
+      <Picker style={{width: '90%',fontSize:15,height: 40 }} selectedValue={item_algoritmo} onValueChange={(itemValue, itemIndex) => cambiarValorPickerAlgoritmos(itemValue)}>
+        <Picker.Item label={"FCFS"}  value={"FCFS"}/>
+        <Picker.Item label={"SJF"}  value={"SJF"}/>
+        <Picker.Item label={"SRTF"}  value={"SRTF"}/>
+        <Picker.Item label={"Prioridad externa expulsiva"}  value={"Prioridad externa expulsiva"}/>
+        <Picker.Item label={"Prioridad externa no expulsiva"}  value={"Prioridad externa no expulsiva"}/>
+        <Picker.Item label={"Prioridad interna no expulsiva (HRN)"}  value={"Prioridad interna no expulsiva (HRN)"}/>
+        <Picker.Item label={"Prioridad interna expulsiva (HRN')"}  value={"Prioridad interna expulsiva (HRN_PRIMA)"}/>
+        <Picker.Item label={"RR"}  value={"RR"}/>
+      </Picker>
+    );
+  }
   return(<></>);
 }
 
@@ -179,6 +241,37 @@ function quantumComponent(){
   return(<></>);
 }
 
+function resultado(){
+  if(banderaSalida){
+    return(
+      <View style={{marginBottom:20,marginTop:560,width: '90%', height:400,backgroundColor: '#fff',alignItems: 'center',flexDirection: 'column'}}>
+        <Text style={{fontSize: 15, justifyContent:'center',marginBottom:30,marginTop:30,fontWeight:'bold',fontStyle: 'italic'}}>Texto de Salida</Text>
+        <TextInput style={styles.item_resultado} multiline={true} numberOfLines={8} value={textoFinal}/>
+        <TouchableOpacity  style={{marginTop:15, width: '20%', height: 45, backgroundColor: 'blue',padding:10,alignItems: 'center',borderRadius: 5}} onPress={()=> Speaker(textoFinal)}>
+          <Text style={{color:'white', fontSize: 17}}>Reproducir</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={{marginBottom:30,marginTop:15, width: '20%', height: 45, backgroundColor: 'red',padding:10,alignItems: 'center',borderRadius: 5}} onPress= { ()=> Pause()}>
+          <Text style={{color:'white', fontSize: 17}}>Parar</Text>
+        </TouchableOpacity>
+      </View>
+      );
+  }
+
+  return(<></>);
+}
+
+function resultadoCola(){
+  if(banderaSalida && item_algoritmo==="RR"){
+    return(
+      <View style={{width:'10%',height: 200,top:500}}>
+          <Text style={{fontSize: 15, justifyContent:'center',marginBottom:30,marginTop:30,fontWeight:'bold',fontStyle: 'italic'}}>Cola de procesos</Text>
+          <TextInput style={styles.item_resultado_cola} multiline={true} numberOfLines={8} value={textoCola}/>
+      </View>
+      );
+  }
+
+  return(<></>);
+}
 
  return (
   <View style={{width: `100%` ,height: `100%`,backgroundColor: '#fff',alignItems: 'center',flexDirection: 'column'}}>
@@ -206,6 +299,10 @@ function quantumComponent(){
       {tableInputComponent()} 
       {tableOutComponent()}
       {tableProcessComponent()} 
+
+      {resultadoCola()}
+
+      {resultado()}
   </View>
   );
 }

@@ -5,6 +5,7 @@ import TableInputProccessesComponent from './TableInputProccessesComponent';
 import MemoryCellsComponent from './MemoryCellsComponent';
 import * as main from '../scripts_ea/main';
 import { Speaker, Pause }from '../components_drawer/Speaker';
+import NumberFormat from 'react-number-format';
 
 export default function IndexEa(props) {
 
@@ -17,6 +18,8 @@ export default function IndexEa(props) {
   const [celdasMemoria, setCeldasMemoria] = useState([]);
   const [itemAjustes,setItemAjustes] = useState("Primer Ajuste");
   const [itemAlgoritmoAjuste,setItemAlgoritmoAjuste] = useState("Ajuste Sobre Huecos");
+  const [cantidadCeldasMemoria, setCantidadCeldasMemoria] = useState("");
+  const [isVisible,setIsVisible] = useState('none');
 
   const [listaProcesos, setListaProcesos] = useState("");
   const [listaRequerimientos, setListaRequerimientos] = useState([]);
@@ -46,7 +49,7 @@ const onRefresh = React.useCallback(() => {
     function tableInputProcessesComponent (){
         if(banderaEntrada){
           return(
-          <ScrollView style={{paddingVertical: 5,top: 100,marginRight: 50}}>
+          <ScrollView style={{paddingVertical: 5,top: 190,marginRight: 50}}>
             <TableInputProccessesComponent  listaProcesos={listaProcesos}  listaRequerimientos={listaRequerimientos} setListaProcesos={setListaProcesos} setListaRequerimientos={setListaRequerimientos}/>
           </ScrollView>
           );
@@ -91,7 +94,7 @@ const onRefresh = React.useCallback(() => {
     function memoryCellsComponent (){
       if(banderaSalida){
         return( 
-        <ScrollView style={{paddingVertical: 20, marginLeft: 100, top: 70}}>
+        <ScrollView style={{paddingVertical: 20, marginLeft: 100, top: 170}}>
           <MemoryCellsComponent celdasMemoria={celdasMemoria}/>
         </ScrollView>
         
@@ -124,7 +127,7 @@ const onRefresh = React.useCallback(() => {
     function resultadoComponent(){
         if(resultadoComponentActivo && banderaSalida){
           return( 
-          <View style={{top:270,width: '70%',height:200,alignItems: 'center',flexDirection: 'column'}}>
+          <View style={{top:500,width: '70%',height:300,alignItems: 'center',flexDirection: 'column'}}>
             {parrafoResultadoComponent()}
             {bottonReproducirComponent()}
             <TouchableOpacity style={{marginTop:15, width: 160, height: 40, backgroundColor: 'red',padding:10,alignItems: 'center',borderRadius: 5}} onPress= { ()=> Pause()}>
@@ -141,7 +144,7 @@ const onRefresh = React.useCallback(() => {
     function pickerAjustes(){
       if(banderaEntrada){
       return (
-      <Picker style={{marginLeft:20, height: 40, fontSize:20}} selectedValue={itemAjustes} onValueChange={(itemValue, itemIndex) => setItemAjustes(itemValue)}>
+      <Picker style={{marginLeft:20, height: 40, fontSize:15}} selectedValue={itemAjustes} onValueChange={(itemValue, itemIndex) => setItemAjustes(itemValue)}>
       <Picker.Item label={"Primer Ajuste"}  value={"Primer Ajuste"}/>
       <Picker.Item label={"Mejor Ajuste"}  value={"Mejor Ajuste"}/>
       <Picker.Item label={"Peor Ajuste"}  value={"Peor Ajuste"}/>
@@ -158,7 +161,7 @@ const onRefresh = React.useCallback(() => {
     function pickerAlgoritmoAjuste(){
       if(banderaEntrada){
       return (
-      <Picker style={{marginLeft:20 , height: 40, fontSize:20}} selectedValue={itemAlgoritmoAjuste} onValueChange={(itemValue, itemIndex) => cambiarItemAlgoritmosAjustes(itemValue)}>
+      <Picker style={{marginLeft:20 , height: 40, fontSize:15}} selectedValue={itemAlgoritmoAjuste} onValueChange={(itemValue, itemIndex) => cambiarItemAlgoritmosAjustes(itemValue)}>
         <Picker.Item label={"Ajuste Sobre Huecos"}  value={"Ajuste Sobre Huecos"}/>
         <Picker.Item label={"Ajuste Sobre Solicitudes"}  value={"Ajuste Sobre Solicitudes"}/>
       </Picker>);}
@@ -166,20 +169,50 @@ const onRefresh = React.useCallback(() => {
     }
 
     function inicializarTablaEntradaNumerosAleatorios(){
-      let procesos = "";
-      main.inicializarTablaEntradaNumerosAleatorios(tablaEntrada);
-      procesos = main.inicializarListasAleatorias(listaProcesos,listaRequerimientos,tablaEntrada);
-      setListaProcesos(procesos);
+      main.inicializarTablaEntradaNumerosAleatorios(itemAlgoritmoAjuste,tablaEntrada);
+      let resultado = main.inicializarListasAleatorias(listaProcesos,listaRequerimientos,tablaEntrada);
+      setListaProcesos(resultado[0]);
+      setListaRequerimientos(resultado[1]);
       onRefresh();
     }
 
-      function inicializarTabla(){
-        if(cantidadCeldas>15){
-          alert("Por favor NO ingreses más de 15 solicitudes")
-        }else{
-          crearTablaEntrada();
-          setBanderaEntrada(true);
+
+    function realizarValidaciones(){
+      let textCantidadCeldasValido = main.validarCantidadCeldas(cantidadCeldas);
+        if(!textCantidadCeldasValido){
+           alert("Por favor ingrese un valor de celdas válido");
+           return true;
         }
+
+        if(parseInt(cantidadCeldasMemoria)>20){
+          alert("Por favor NO ingreses más de 20 celdas de memoria");
+          return true;
+        }
+
+        if(parseInt(cantidadCeldasMemoria)<1){
+           alert("Por favor ingrese una cantidad de celdas válida");
+           return true;
+        }
+
+        if(parseInt(cantidadCeldas)>15){
+           alert("Por favor NO ingreses más de 15 solicitudes");
+           return true;
+        }
+
+        if(parseInt(cantidadCeldas)<3){
+           alert("Por favor ingrese mínimo 3 solicitudes !");
+           return true;
+        }
+    }
+
+      function inicializarTabla(){
+        if(realizarValidaciones()){
+          return;
+        }
+
+        setIsVisible('flex');
+        crearTablaEntrada();
+        setBanderaEntrada(true);
         
       }
       
@@ -212,14 +245,26 @@ const onRefresh = React.useCallback(() => {
       }
 
       function iniciarAlgoritmo (isPasoAPaso){
+        if(realizarValidaciones()){
+          return;
+        }
         let listaSalida;
         main.inicializarTablaEntrada(listaProcesos,listaRequerimientos,tablaEntrada);
 
         if(itemAlgoritmoAjuste === "Ajuste Sobre Solicitudes"){
-           listaSalida = main.ejecutarAlgoritmoAjusteSolicitudes(itemAjustes,tablaEntrada,isPasoAPaso);
+
+          let contieneLiberar = main.contieneLiberarTablaEntrada(tablaEntrada);
+          if(contieneLiberar){
+            return alert("Solo ingrese solicitudes !");
+          }
+
+           main.asignarCantidadCeldasMemoria(cantidadCeldasMemoria);
+           listaSalida = main.ejecutarAlgoritmoAjusteSolicitudes(itemAjustes,tablaEntrada,isPasoAPaso,cantidadCeldasMemoria);
+           
            setparrafoResultado(listaSalida[1]);
         }else{
-           listaSalida = main.ejecutarAlgoritmoAjusteHuecos(itemAjustes,tablaEntrada,isPasoAPaso);
+           main.asignarCantidadCeldasMemoria(cantidadCeldasMemoria);
+           listaSalida = main.ejecutarAlgoritmoAjusteHuecos(itemAjustes,tablaEntrada,isPasoAPaso,cantidadCeldasMemoria);
            setparrafoResultado(listaSalida[1]);
         }
 
@@ -236,13 +281,18 @@ const onRefresh = React.useCallback(() => {
     <View style={{width: `100%` ,height: `100%`,backgroundColor: '#fff',alignItems: 'center',justifyContent: 'center',flexDirection: 'column'}}>
 
           <View style={{top:10, alignItems: 'center',justifyContent: 'center',flexDirection: 'row'}}>
-            <TextInput style={styles.input} onChangeText={(val)=>setCantidadCeldas(val)} placeholder="Cantidad de Celdas"/>
+          <NumberFormat value={cantidadCeldas} displayType={'text'} renderText={(cantidadCeldas) =>(
+            <TextInput style={styles.input} onChangeText={(val)=>setCantidadCeldas(val)} placeholder="Cantidad de Celdas" keyboardType='numeric'/>)}/>
+              
+            <NumberFormat value={cantidadCeldasMemoria} displayType={'text'} renderText={ (cantidadCeldasMemoria) => (
+                     <TextInput style={styles.input} onChangeText={(val)=>setCantidadCeldasMemoria(val)} value={cantidadCeldasMemoria} placeholder="Celdas de Memoria" keyboardType='numeric'/>)}/>
+
               <TouchableOpacity style={{marginLeft:20, width: 200, height: 40, backgroundColor: 'blue',padding:10,alignItems: 'center',borderRadius: 5}} onPress={()=>inicializarTabla()} >
                 <Text style={{color:'white', fontSize: 17}}>Crear Solicitudes</Text>
               </TouchableOpacity>
           </View>
 
-         <View style={{top:20 ,alignItems: 'center',justifyContent: 'center',flexDirection: 'row'}}>
+          <View style={{top:20 ,alignItems: 'center',justifyContent: 'center',flexDirection: 'row'}}>
               {pickerAjustes()}
               {pickerAlgoritmoAjuste()}
               {buttonGenerarAleatorios()}
@@ -250,7 +300,7 @@ const onRefresh = React.useCallback(() => {
               {buttonEjecutarAlgoritmoPasoAPaso()}
           </View>
 
-          <View  style={{top:50 ,flex:1, alignItems: 'center',justifyContent: 'center',flexDirection: 'row'}}>
+          <View  style={{top:80 ,flex:2, alignItems: 'center',justifyContent: 'center',flexDirection: 'row'}}>
              {tableInputProcessesComponent()}
              {memoryCellsComponent()}
           </View>

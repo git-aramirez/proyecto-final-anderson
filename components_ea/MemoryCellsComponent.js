@@ -10,16 +10,17 @@ const MemoryCellsComponent = (props) => {
 
   return(
     <View style={styles.container_table}>
+       <Text style={{fontSize: 15, justifyContent:'center',marginLeft:40,marginBottom:20 ,fontWeight:'bold',fontStyle: 'italic'}}>Celdas de memoria</Text>
       <DataTable id="celdas_memoria">
         <DataTable.Header>
-          <DataTable.Title style={{justifyContent: 'center'}}><Text style={{fontSize: 20}}>index</Text></DataTable.Title>
-          <DataTable.Title style={{justifyContent: 'center'}}><Text style={{fontSize: 20}}>celdas</Text></DataTable.Title>
+          <DataTable.Title style={{justifyContent: 'center'}}><Text style={{fontSize: 13}}>index</Text></DataTable.Title>
+          <DataTable.Title style={{justifyContent: 'center'}}><Text style={{fontSize: 13}}>celdas</Text></DataTable.Title>
         </DataTable.Header>
     
        {celdasMemoria.map((row,index) => (
         <DataTable.Row>
-          <DataTable.Cell style={{justifyContent: 'center'}}><Text style={{fontSize: 20}}>{index}</Text></DataTable.Cell>
-          <DataTable.Cell style={{justifyContent: 'center'}}><Text style={{fontSize: 20}}>{row.celdas}</Text></DataTable.Cell>
+          <DataTable.Cell style={{justifyContent: 'center'}}><Text style={{fontSize: 13}}>{index}</Text></DataTable.Cell>
+          <DataTable.Cell style={{justifyContent: 'center'}}><Text style={{fontSize: 13}}>{row.celdas}</Text></DataTable.Cell>
         </DataTable.Row>
         ))}
       </DataTable > 

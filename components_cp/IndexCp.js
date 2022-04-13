@@ -3,6 +3,7 @@ import {styles} from '../styles/styles';
 import {View, ScrollView,Picker,TextInput, Button,TouchableOpacity,Text} from 'react-native';
 import TableInputThreadsComponent from './TableInputThreadsComponent';
 import * as main from '../scripts_cp/Main';
+import {Speaker,Pause} from '../components_drawer/Speaker';
 
 export default function IndexCp() {
 
@@ -11,6 +12,7 @@ export default function IndexCp() {
   const [textSalida, setTextSalida] = useState("");
   const [textHilosBloqueados, setTextHilosBloqueados] = useState("");
   const [tablaEntrada, setTablaEntrada] = useState([]);
+  const [textoFinal,setTextoFinal] = useState("");
 
   /**
       * Metodo que realiza la espera mientras se ejecuta una accion
@@ -31,7 +33,7 @@ const onRefresh = React.useCallback(() => {
 
 
 function tableInputThreadsComponent (){
-    return(<TableInputThreadsComponent  height={300} tablaEntrada={tablaEntrada} setTablaEntrada={setTablaEntrada} />);
+    return(<TableInputThreadsComponent  height={220} tablaEntrada={tablaEntrada} setTablaEntrada={setTablaEntrada} />);
 }
 
 function  crearTablaEntrada (){
@@ -44,9 +46,16 @@ function  crearTablaEntrada (){
   }
 
   function ejecutarAlgoritmo(){
+    let tablaEntradaValida = main.validarTablaEntrada(tablaEntrada);
+    if(!tablaEntradaValida){
+      return alert("Ingrese al menos un valor en la tabla de entrada !")
+    }
+
     let resultado =  main.ejecutar(tablaEntrada);
     setTextSalida(resultado[0]);
     setTextHilosBloqueados(resultado[1]);
+    let salida = main.editarTextoSalida(textSalida,textHilosBloqueados);
+    setTextoFinal(salida);
    }
 
    function limpiarCampos(){
@@ -80,7 +89,7 @@ function  crearTablaEntrada (){
 
   function textAreaSalidaComponent(){
       return (
-        <TextInput style={styles.textInput_salida_sp} 
+        <TextInput style={styles.textInput_salida_cp} 
         onChangeText={(text) => setTextSalida(text)} placeholder="Salida" value={textSalida}/>
       );
   }
@@ -89,6 +98,20 @@ function  crearTablaEntrada (){
       return (
         <TextInput style={styles.textInput_hilos_bloqueados_sp} 
         onChangeText={(text) => setTextHilosBloqueados(text)} placeholder="Hilos Bloqueados" value={textHilosBloqueados}/>
+      );
+  }
+
+  function resultado(){
+    return(
+      <View style={{marginTop:30,width: '90%', height:350,backgroundColor: '#fff',alignItems: 'center',flexDirection: 'column'}}>
+        <TextInput style={styles.item_resultado_cp} multiline={true} numberOfLines={8} value={textoFinal}/>
+        <TouchableOpacity  style={{marginTop:15, width: '20%', height: 45, backgroundColor: 'blue',padding:10,alignItems: 'center',borderRadius: 5}} onPress={()=> Speaker(textoFinal)}>
+          <Text style={{color:'white', fontSize: 17}}>Reproducir</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={{marginTop:15, width: '20%', height: 45, backgroundColor: 'red',padding:10,alignItems: 'center',borderRadius: 5}} onPress= { ()=> Pause()}>
+          <Text style={{color:'white', fontSize: 17}}>Parar</Text>
+        </TouchableOpacity>
+      </View>
       );
   }
 
@@ -107,6 +130,8 @@ function  crearTablaEntrada (){
           {textAreaSalidaComponent()}
           {textAreaHilosBloqueadosComponent()}
         </View>
+
+        {resultado()}
     </View>
     );
 }
