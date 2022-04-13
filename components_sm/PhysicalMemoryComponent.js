@@ -22,15 +22,15 @@ function PhysicalMemory(props) {
     style={{top: 40,flexDirection: 'row',alignContent: "center",alignItems: "center",justifyContent: "center",padding: 1, right: 5 }}>
       <DataTable id="tabla_salida" style={{flexDirection: 'column'}}>
         <DataTable.Header style={{width:200}}>
-          <DataTable.Title adjustsFontSizeToFit ><Text style={styles.item_tabla}>Índice</Text></DataTable.Title>
-          <DataTable.Title adjustsFontSizeToFit ><Text style={styles.item_tabla}>Memoria</Text></DataTable.Title>
+          <DataTable.Title adjustsFontSizeToFit style={{justifyContent: 'center'}}><Text style={styles.item_tabla}>Índice</Text></DataTable.Title>
+          <DataTable.Title adjustsFontSizeToFit style={{justifyContent: 'center'}} ><Text style={styles.item_tabla}>Memoria</Text></DataTable.Title>
         </DataTable.Header>
         {array.map((row, index) => (
           <DataTable.Row > 
-            <DataTable.Cell>{index}</DataTable.Cell>
-            <DataTable.Cell style={{width:100, flexDirection: 'column'}}>
+            <DataTable.Cell style={{justifyContent: 'center'}} >{index}</DataTable.Cell>
+            <DataTable.Cell style={{width:100, flexDirection: 'column',justifyContent: 'center'}}>
               <View style={{flexDirection: 'column', margin: 0, backgroundColor: array[index][1]}}>
-                <Text style={styles.item}>{array[index][0]}</Text>
+                <Text style={styles.item_1}>{array[index][0]}</Text>
               </View>
           </DataTable.Cell>
           </DataTable.Row>

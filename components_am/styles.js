@@ -79,15 +79,13 @@ export const styles = StyleSheet.create({
 
   item_resultado: {
     fontSize: 15,
-    height: 100,
+    height: 200,
     width:900,
     alignContent: "center",
     alignItems: "center",
     justifyContent: "center",
     borderColor: 'black',
-    flexDirection: 'column',
     borderWidth: .25,
-    textAlign: 'center',
     padding: 10
   },
 
@@ -112,7 +110,8 @@ export const styles = StyleSheet.create({
   },
 
   item_input: {
-    fontSize: 20,
+    marginRight:100,
+    fontSize: 15,
     height: 170,
     width:160,
     alignContent: "center",
@@ -122,6 +121,7 @@ export const styles = StyleSheet.create({
     flexDirection: 'column',
     borderWidth: .25,
     textAlign: 'center',
+    marginTop:20
   },
 
   view: {

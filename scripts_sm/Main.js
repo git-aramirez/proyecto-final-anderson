@@ -59,7 +59,7 @@ export function crearProceso(palabra) {
     logSegmentacion += `Se solicita crear el proceso: ${palabra}. \n`;
 
     // Ingresa registro al log
-    logSegmentacion += ` Se valida que exista el espacio en memoria física. \n`;
+    logSegmentacion += `Se valida que exista el espacio en memoria física. \n`;
     // Valida si existe el espacio para almacenar la palabra
     let validacion = parseInt(validarEspacioMemoriaFisica(palabra.length));
 
@@ -68,18 +68,18 @@ export function crearProceso(palabra) {
     // Valida si no existe el espacio
     if (validacion == -1) {
         // Ingresa registro al log
-        logSegmentacion += ` Se notifica que no se encontro el espacio para almacenar el proceso en memoria fisica. \n`;
+        logSegmentacion += `Se notifica que no se encontro el espacio para almacenar el proceso en memoria fisica. \n`;
         return alert('No se encontro el espacio para almacenar la palabra en memoria fisica');
     }
 
     // Ingresa registro al log
-    logSegmentacion += ` Si se encontró el espacio para almacenar el proceso. \n`;
+    logSegmentacion += `Si se encontró el espacio para almacenar el proceso. \n`;
 
     // Color diferenciador del proceso
     let color = generarColor();
 
     // Ingresa registro al log
-    logSegmentacion += ` Se inicia a agregar el proceso en el bloque: ${validacion+1}. \n`;
+    logSegmentacion += `Se inicia a agregar el proceso en el bloque: ${validacion+1}. \n`;
 
     // Bucle para asignar las letras de la palabra en memoria fisica
     for (let index = 0; index < palabra.length; index++) {
@@ -91,7 +91,7 @@ export function crearProceso(palabra) {
     }
 
     // Ingresa registro al log
-    logSegmentacion += ` Se termina de agregar el proceso en el bloque: ${validacion}. \n`;
+    logSegmentacion += `Se termina de agregar el proceso en el bloque: ${validacion}. \n`;
 
     // Arreglo que almacena la palabra
     let array = [];
@@ -105,9 +105,9 @@ export function crearProceso(palabra) {
     }
 
     // Ingresa registro al log
-    logSegmentacion += ` agrega el proceso en tabla de procesos. \n`;
+    logSegmentacion += `Agrega el proceso en tabla de procesos. \n`;
     // Ingresa registro al log
-    logSegmentacion += ` Se asigna en la tabla de segmentos que el proceso inicia en el bloque ${inicio+1} y tiene un tamaño de ${palabra.length}. \n`;
+    logSegmentacion += `Se asigna en la tabla de segmentos que el proceso inicia en el bloque ${inicio+1} y tiene un tamaño de ${palabra.length}. \n`;
 
     // Agrega los datos del segmento a la tabla de procesos
     TablaDatos[segmentoIndex] = {
@@ -120,16 +120,6 @@ export function crearProceso(palabra) {
 
     // Aumenta el indice de segmentos
     segmentoIndex++;
-
-    // Visualizacion de datos
-    // console.log("Tabla de procesos");
-    // console.log(TablaProcesos);
-    // console.log("Tabla de datos");
-    // console.log(TablaDatos);
-    // console.log("Memoria fisica");
-    // console.log(MemoriaFisica);
-    // console.log("log");
-    // console.log(logSegmentacion);
 }
 
 /**
@@ -207,16 +197,6 @@ export function eliminarSegmento(segmento) {
     // Limpia los datos del segmento eliminado en la tabla de procesos
     delete TablaProcesos[segmento];
     delete TablaDatos[segmento];
-
-    // Visualizacion de datos
-    // console.log("Tabla de procesos");
-    // console.log(TablaProcesos);
-    // console.log("Tabla de datos");
-    // console.log(TablaDatos);
-    // console.log("Memoria fisica");
-    // console.log(MemoriaFisica);
-    // console.log("Log");
-    // console.log(logSegmentacion);
 }
 
 /**
@@ -272,21 +252,9 @@ export function generarColor() {
     indiceColores++;
     if(indiceColores % 2 ===0){
         return '#FFEC00';
-      }
-    return '#E07FFF';
-    
-    // Array de opciones 
-    let hexadecimal = new Array("#FFEC00","#C100FF");
-    // Inicializa el string con el color
-    let color = "";
-    // Recorre 6 posiciones que conforman el numero en hexadecimal
-    for (let i = 0; i < 2; i++) {
-        // Genera un indice aleatorio
-       let posarray = aleatorio(0,hexadecimal.length);
-        // obtiene la opcion seleccionada
-        color = hexadecimal[posarray];
     }
-    return color;
+
+    return '#E07FFF';
 }
 
 /**

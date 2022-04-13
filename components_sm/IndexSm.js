@@ -182,13 +182,16 @@ function segmentation() {
             </View>
 
             <View style={{top: 230, backgroundColor: '#fff',alignItems: 'center',flexDirection: 'column'}}>
-                <TextInput style={styles.item_resultado} multiline={true} numberOfLines={8} value={funciones.logSegmentacion}/>
-                <TouchableOpacity style={{marginTop:20,width: 160, height: 40, backgroundColor: 'blue',padding:10,alignItems: 'center',borderRadius: 5}} onPress= { ()=> Speaker(funciones.logSegmentacion)}>
-                    <Text style={{color:'white', fontSize: 17}}>Reproducir</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={{marginTop:15, width: 160, height: 40, backgroundColor: 'red',padding:10,alignItems: 'center',borderRadius: 5}} onPress= { ()=> Pause()}>
-                    <Text style={{color:'white', fontSize: 17}}>Parar</Text>
-                </TouchableOpacity>
+                <TextInput style={styles.item_resultado_sm} multiline={true} numberOfLines={8} value={funciones.logSegmentacion}/>
+                
+                <View style={{height:100,width:'90%',marginTop: 20,alignItems: 'center',justifyContent: 'center',flexDirection: 'row'}}>
+                    <TouchableOpacity style={{width: 160, height: 40, backgroundColor: 'blue',padding:10,alignItems: 'center',borderRadius: 5}} onPress= { ()=> Speaker(funciones.logSegmentacion)}>
+                        <Text style={{color:'white', fontSize: 17}}>Reproducir</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={{marginLeft:10, width: 160, height: 40, backgroundColor: 'red',padding:10,alignItems: 'center',borderRadius: 5}} onPress= { ()=> Pause()}>
+                        <Text style={{color:'white', fontSize: 17}}>Parar</Text>
+                    </TouchableOpacity>
+                </View>
             </View>
         </View>
     )

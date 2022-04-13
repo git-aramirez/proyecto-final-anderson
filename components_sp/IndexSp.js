@@ -140,7 +140,7 @@ function  crearTablaEntrada (){
   function buttonGenerarSemaforosAleatoriosComponent(){
     if(verTablaEntrada){
       return(
-        <TouchableOpacity style={{marginTop:0, width: 250, height: 40, backgroundColor: '#EDAF0A',padding:10,alignItems: 'center',borderRadius: 5}} onPress={()=>generarSemaforosAleatorios()} >
+        <TouchableOpacity style={{margin:0, width: 250, height: 40, backgroundColor: '#EDAF0A',padding:10,alignItems: 'center',borderRadius: 5}} onPress={()=>generarSemaforosAleatorios()} >
           <Text style={{color:'white', fontSize: 17}}>Generar Semaforos Aleatorios</Text>
         </TouchableOpacity>
       );
@@ -196,14 +196,16 @@ function  crearTablaEntrada (){
   function resultado(){
     if(banderaSalida){
       return(
-        <View style={{marginBottom:50,marginTop:240,width: '90%', height:320,backgroundColor: '#fff',alignItems: 'center',flexDirection: 'column'}}>
+        <View style={{marginBottom:20,marginTop:50,width: '90%', height:320,backgroundColor: '#fff',alignItems: 'center',flexDirection: 'column'}}>
           <TextInput style={styles.item_resultado} multiline={true} numberOfLines={8} value={textoFinal}/>
-                <TouchableOpacity  style={{marginTop:15, width: '20%', height: 45, backgroundColor: 'blue',padding:10,alignItems: 'center',borderRadius: 5}} onPress={()=> Speaker(textoFinal)}>
-                  <Text style={{color:'white', fontSize: 17}}>Reproducir</Text>
+            <View style={{height:100,width:'90%',marginTop: 20,alignItems: 'center',justifyContent: 'center',flexDirection: 'row'}}>
+                <TouchableOpacity  style={{width: '20%', height: 45, backgroundColor: 'blue',padding:10,alignItems: 'center',borderRadius: 5}} onPress={()=> Speaker(textoFinal)}>
+                   <Text style={{color:'white', fontSize: 17}}>Reproducir</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={{marginTop:15, width: '20%', height: 45, backgroundColor: 'red',padding:10,alignItems: 'center',borderRadius: 5}} onPress= { ()=> Pause()}>
-                            <Text style={{color:'white', fontSize: 17}}>Parar</Text>
+                <TouchableOpacity style={{marginLeft:20, width: '20%', height: 45, backgroundColor: 'red',padding:10,alignItems: 'center',borderRadius: 5}} onPress= { ()=> Pause()}>
+                    <Text style={{color:'white', fontSize: 17}}>Parar</Text>
                 </TouchableOpacity>
+            </View>
           </View>
         );
     }
@@ -212,9 +214,9 @@ function  crearTablaEntrada (){
   }
 
  return (
-    <View style={{width: `100%` ,height: `100%`,backgroundColor: '#fff',alignItems: 'center'}}>
+    <View style={{width: `100%` ,height: `100%`,backgroundColor: '#fff',alignItems: 'center',flexDirection: 'column'}}>
 
-        <View style={{top:50 ,flex: 2,alignItems: 'center',justifyContent: 'center',flexDirection: 'row'}}>
+        <View style={{top:50 ,alignItems: 'center',justifyContent: 'center',flexDirection: 'row'}}>
           <View style={{flex: 1,alignItems: 'center',justifyContent: 'center',flexDirection: 'row'}}>
               <TextInput style={styles.input} onChangeText={(val)=>setCantidadSemaforos(val)} placeholder="Cantidad de Semaforos"/>
               <TouchableOpacity style={{marginTop:0, width: 190, height: 40, backgroundColor: 'blue',padding:10,alignItems: 'center',borderRadius: 5}} onPress={()=>establecerSemaforos()} >
@@ -229,7 +231,8 @@ function  crearTablaEntrada (){
         </View>
         
         {tableInputThreadsComponent()}
-        <View style={{top:120 ,flex: 2,alignItems: 'center',justifyContent: 'center',flexDirection: 'row'}}>
+        
+        <View style={{marginTop:230 ,alignItems: 'center',justifyContent: 'center',flexDirection: 'row'}}>
           {buttonGenerarSemaforosAleatoriosComponent()}
           {buttonEjecutarAlgoritmo()}
           {textAreaSalidaComponent()}

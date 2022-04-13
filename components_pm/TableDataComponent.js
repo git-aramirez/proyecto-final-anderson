@@ -20,13 +20,13 @@ function ProcessList(props) {
 
         <DataTable id="tabla_salida" style={{flexDirection: 'column'}}>
           <DataTable.Header style={{width:200}}>
-            <DataTable.Title >Pagina</DataTable.Title>
-            <DataTable.Title>Memoria</DataTable.Title>
+            <DataTable.Title style={{justifyContent:'center'}} ><Text style={{fontSize:15}}>Pagina</Text></DataTable.Title>
+            <DataTable.Title style={{justifyContent:'center'}} ><Text style={{fontSize:15}}>Memoria</Text></DataTable.Title>
           </DataTable.Header>
           {Object.values(array).map((row, index) => (
             <DataTable.Row > 
-              <DataTable.Cell style={{width:75, height: 50}}>{row.pagina}</DataTable.Cell>
-              <DataTable.Cell style={{width:100,height: 50 }}>{row.memoria}</DataTable.Cell>
+              <DataTable.Cell style={{width:75, height: 50,justifyContent:'center'}}>{row.pagina}</DataTable.Cell>
+              <DataTable.Cell style={{width:100,height: 50 ,justifyContent:'center'}}>{row.memoria}</DataTable.Cell>
             </DataTable.Row>
           ))}
         </DataTable > 

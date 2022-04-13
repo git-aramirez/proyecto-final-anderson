@@ -20,16 +20,16 @@ function ProcessList(props) {
         
     return(
 
-      <View style={{top: 40,flexDirection: 'row',alignContent: "center",alignItems: "center",justifyContent: "center",padding: 1,width:100 }}>
+      <View style={{top: 0,flexDirection: 'row',alignContent: "center",alignItems: "center",justifyContent: "center",padding: 1, width:250}}>
  
           <DataTable id="tabla_salida" style={{flexDirection: 'column'}}>
-            <DataTable.Header style={{width:300}}>
+            <DataTable.Header style={{width:250}}>
               <DataTable.Title><Text style={styles.item_tabla}>Nombre</Text></DataTable.Title>
               <DataTable.Title><Text style={styles.item_tabla}>Inicio</Text></DataTable.Title>
               <DataTable.Title><Text style={styles.item_tabla}>Tamaño</Text></DataTable.Title>
             </DataTable.Header>
             {array.map((row, index) => (
-            <DataTable.Row style={{width:300, height: array[index]*20, minHeight: '40%'}}> 
+            <DataTable.Row style={{width:250, height: array[index]*20, minHeight: '40%'}}> 
               <DataTable.Cell style={{height: array[index]*20 , flexDirection: 'column', alignContent: "center", alignItems: "center", justifyContent: "center"}}>
               <View style={{flexDirection: 'column', margin: 0}}>
                 <Text style={styles.item,{height: array[index]}}>{array[index]}</Text>

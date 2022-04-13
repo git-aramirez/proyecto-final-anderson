@@ -23,17 +23,17 @@ function ProcessList(props) {
  
           <DataTable id="tabla_salida" style={{flexDirection: 'column'}}>
             <DataTable.Header style={{width:220}}>
-              <DataTable.Title adjustsFontSizeToFit ><Text style={styles.item_tabla}>Segmento</Text></DataTable.Title>
-              <DataTable.Title adjustsFontSizeToFit ><Text style={styles.item_tabla}>Memoria</Text></DataTable.Title>
+              <DataTable.Title adjustsFontSizeToFit style={{justifyContent: 'center'}}><Text style={styles.item_tabla}>Segmento</Text></DataTable.Title>
+              <DataTable.Title adjustsFontSizeToFit style={{justifyContent: 'center'}}><Text style={styles.item_tabla}>Memoria</Text></DataTable.Title>
             </DataTable.Header>
         
             {Object.values(array).map((row, index) => (
             <DataTable.Row > 
-              <DataTable.Cell style={{width:100, height: 50, borderBottomWidth: 0}}>{row.indice}</DataTable.Cell>
-              <DataTable.Cell style={{width:100, height: array[index]*20 , flexDirection: 'column'}}>
+              <DataTable.Cell style={{width:100, height: 50, borderBottomWidth: 0,justifyContent: 'center'}}>{row.indice}</DataTable.Cell>
+              <DataTable.Cell style={{width:100, height: array[index]*20 , flexDirection: 'column',justifyContent: 'center'}}>
               <View style={{flexDirection: 'column', margin: 0}}>
-                <Text style={styles.item}>{'Inicio: '+ parseInt(row.inicio)}</Text>
-                <Text style={styles.item}>{'Tamaño: '+row.tamaño}</Text>
+                <Text style={styles.item_2}>{'Inicio: '+ parseInt(row.inicio)}</Text>
+                <Text style={styles.item_2}>{'Tamaño: '+row.tamaño}</Text>
               </View>
               </DataTable.Cell>
             </DataTable.Row>

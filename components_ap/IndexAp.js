@@ -246,13 +246,15 @@ function resultado(){
     return(
       <View style={{marginBottom:20,marginTop:560,width: '90%', height:400,backgroundColor: '#fff',alignItems: 'center',flexDirection: 'column'}}>
         <Text style={{fontSize: 15, justifyContent:'center',marginBottom:30,marginTop:30,fontWeight:'bold',fontStyle: 'italic'}}>Texto de Salida</Text>
-        <TextInput style={styles.item_resultado} multiline={true} numberOfLines={8} value={textoFinal}/>
-        <TouchableOpacity  style={{marginTop:15, width: '20%', height: 45, backgroundColor: 'blue',padding:10,alignItems: 'center',borderRadius: 5}} onPress={()=> Speaker(textoFinal)}>
-          <Text style={{color:'white', fontSize: 17}}>Reproducir</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={{marginBottom:30,marginTop:15, width: '20%', height: 45, backgroundColor: 'red',padding:10,alignItems: 'center',borderRadius: 5}} onPress= { ()=> Pause()}>
-          <Text style={{color:'white', fontSize: 17}}>Parar</Text>
-        </TouchableOpacity>
+        <TextInput style={styles.item_resultado} multiline={true} numberOfLines={8} value={textoFinal}/> 
+        <View style={{height:100,width:'90%',marginTop: 20,alignItems: 'center',justifyContent: 'center',flexDirection: 'row'}}>
+            <TouchableOpacity  style={{ width: '20%', height: 45, backgroundColor: 'blue',padding:10,alignItems: 'center',borderRadius: 5}} onPress={()=> Speaker(textoFinal)}>
+              <Text style={{color:'white', fontSize: 17}}>Reproducir</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={{marginLeft: 20, width: '20%', height: 45, backgroundColor: 'red',padding:10,alignItems: 'center',borderRadius: 5}} onPress= { ()=> Pause()}>
+              <Text style={{color:'white', fontSize: 17}}>Parar</Text>
+            </TouchableOpacity>
+        </View>
       </View>
       );
   }

@@ -22,18 +22,18 @@ function ProcessList(props) {
       <View style={{top: 40, flexDirection: 'row',alignContent: "center",justifyContent: "center",padding: 1, right: 40 }}>
  
           <DataTable id="tabla_salida" style={{flexDirection: 'column'}}>
-            <DataTable.Header style={{width:220}}>
-              <DataTable.Title adjustsFontSizeToFit ><Text style={styles.item_tabla}>Segmento</Text></DataTable.Title>
-              <DataTable.Title adjustsFontSizeToFit ><Text style={styles.item_tabla}>Memoria</Text></DataTable.Title>
+            <DataTable.Header style={{width:260}}>
+              <DataTable.Title adjustsFontSizeToFit style={{justifyContent: 'center'}}><Text style={styles.item_tabla}>Segmento</Text></DataTable.Title>
+              <DataTable.Title adjustsFontSizeToFit style={{justifyContent: 'center'}}><Text style={styles.item_tabla}>Memoria</Text></DataTable.Title>
             </DataTable.Header>
         
             {array.map((row, index) => (
             <DataTable.Row > 
-              <DataTable.Cell style={{width:75, height: 50, borderBottomWidth: 0}}>{index}</DataTable.Cell>
-              <DataTable.Cell style={{width:100, height: array[index]*20 , flexDirection: 'column'}}>
+              <DataTable.Cell style={{width:75, height: 50, borderBottomWidth: 0,justifyContent: 'center'}}>{index}</DataTable.Cell>
+              <DataTable.Cell style={{width:100, height: array[index]*20 , flexDirection: 'column',justifyContent: 'center'}}>
               <View style={{flexDirection: 'column', margin: 0}}>
                 {array[index].map((row, index1) =>(
-                  <Text style={styles.item}>{array[index][index1]}</Text>
+                  <Text style={styles.item_1}>{array[index][index1]}</Text>
                 ))}
               </View>
               </DataTable.Cell>

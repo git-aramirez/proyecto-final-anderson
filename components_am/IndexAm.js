@@ -124,14 +124,17 @@
         }
 
         return (
-            <View style={{top:500,width: `100%`,backgroundColor: '#fff',alignItems: 'center',flexDirection: 'column'}}>
+            <View style={{top:650,width: `100%`,backgroundColor: '#fff',alignItems: 'center',flexDirection: 'column'}}>
                 <TextInput style={styles.item_resultado} multiline={true} numberOfLines={8} value={log}/>
-                <TouchableOpacity style={{marginTop:15, width: 160, height: 40, backgroundColor: 'blue',padding:10,alignItems: 'center',borderRadius: 5}} onPress= { ()=> Speaker(log)}>
-                    <Text style={{color:'white', fontSize: 17}}>Reproducir</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={{marginTop:15, width: 160, height: 40, backgroundColor: 'red',padding:10,alignItems: 'center',borderRadius: 5}} onPress= { ()=> Pause()}>
-                    <Text style={{color:'white', fontSize: 17}}>Parar</Text>
-                </TouchableOpacity>
+                
+                <View style={{height:100,width:'90%',marginTop: 20,alignItems: 'center',justifyContent: 'center',flexDirection: 'row'}}>
+                    <TouchableOpacity style={{width: 160, height: 40, backgroundColor: 'blue',padding:10,alignItems: 'center',borderRadius: 5}} onPress= { ()=> Speaker(log)}>
+                        <Text style={{color:'white', fontSize: 17}}>Reproducir</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={{marginLeft:20, width: 160, height: 40, backgroundColor: 'red',padding:10,alignItems: 'center',borderRadius: 5}} onPress= { ()=> Pause()}>
+                        <Text style={{color:'white', fontSize: 17}}>Parar</Text>
+                    </TouchableOpacity>
+                </View>
             </View>
         )
     }
@@ -165,8 +168,8 @@
         }
 
         return (
-            <View style={{top: 0,marginLeft:20}}>
-                <Text>Mapa de bits</Text>
+            <View style={{marginBottom:140,marginLeft:10}}>
+                <Text style={{fontSize: 15}}>Mapa de bits</Text>
                 <TextInput style={styles.item_input} multiline={true} numberOfLines={5} value={mapaBits}/>
             </View>
         )
@@ -215,7 +218,7 @@
         }
 
         return (
-            <ScrollView vertical={true} style={{ top: 100 ,width: 100 ,height: 600}}> 
+            <ScrollView vertical={true} style={{ top: 100 ,width: 250 ,height: 600}}> 
                 <ProcessList procesos = {tablaProcesos} indices = {indiceBloque} tamaños = {tamaños}/>
             </ScrollView>
         )
@@ -268,7 +271,7 @@
         //Retorna las SectionList con los datos
         return(
             
-            <View style={{top:150, marginRight:0, marginLeft: 20, width: 400 ,height: 500,flexDirection: 'column',alignContent: "center",alignItems: "center",justifyContent: "center",padding: 1}}>
+            <View style={{top:130, marginRight:0, marginLeft: 20, width: 400 ,height: 500,flexDirection: 'column',alignContent: "center",alignItems: "center",justifyContent: "center",padding: 1}}>
 
                 <DataTable id="tabla_salida" style={{flexDirection: 'column'}}>
                     <DataTable.Header >
@@ -490,7 +493,7 @@
 
             </View>
             
-            <View style={{width: '80%' ,height: 500,top: 50,flex: 1,flexDirection: 'row',alignContent: "center",alignItems: "center",justifyContent: "center"}}>
+            <View style={{width: '80%' ,height: 500,top: 150,flex: 1,flexDirection: 'row',alignContent: "center",alignItems: "center",justifyContent: "center"}}>
                 {processTable()}
                 {mapaBits()}
                 {mapas()}

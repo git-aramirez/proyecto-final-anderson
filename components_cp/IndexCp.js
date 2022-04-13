@@ -105,12 +105,14 @@ function  crearTablaEntrada (){
     return(
       <View style={{marginTop:30,width: '90%', height:350,backgroundColor: '#fff',alignItems: 'center',flexDirection: 'column'}}>
         <TextInput style={styles.item_resultado_cp} multiline={true} numberOfLines={8} value={textoFinal}/>
-        <TouchableOpacity  style={{marginTop:15, width: '20%', height: 45, backgroundColor: 'blue',padding:10,alignItems: 'center',borderRadius: 5}} onPress={()=> Speaker(textoFinal)}>
-          <Text style={{color:'white', fontSize: 17}}>Reproducir</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={{marginTop:15, width: '20%', height: 45, backgroundColor: 'red',padding:10,alignItems: 'center',borderRadius: 5}} onPress= { ()=> Pause()}>
-          <Text style={{color:'white', fontSize: 17}}>Parar</Text>
-        </TouchableOpacity>
+        <View style={{height:100,width:'90%',marginTop: 20,alignItems: 'center',justifyContent: 'center',flexDirection: 'row'}}>
+          <TouchableOpacity  style={{ width: '20%', height: 45, backgroundColor: 'blue',padding:10,alignItems: 'center',borderRadius: 5}} onPress={()=> Speaker(textoFinal)}>
+            <Text style={{color:'white', fontSize: 17}}>Reproducir</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={{marginLeft:20, width: '20%', height: 45, backgroundColor: 'red',padding:10,alignItems: 'center',borderRadius: 5}} onPress= { ()=> Pause()}>
+            <Text style={{color:'white', fontSize: 17}}>Parar</Text>
+          </TouchableOpacity>
+        </View>
       </View>
       );
   }

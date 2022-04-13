@@ -178,14 +178,18 @@ function paginacion() {
             </View>
         </View>
 
-        <View style={{top: 600,flex: 2,alignItems: 'center',justifyContent: 'center',flexDirection: 'row'}}>
-            <TextInput style ={{padding: 10}} multiline={true} numberOfLines={8} value={funciones.paginationLog}/>
-            <TouchableOpacity style={{marginTop:0, width: 190, height: 40, backgroundColor: 'blue',padding:10,alignItems: 'center',borderRadius: 5}} onPress={ ()=> Speaker(funciones.paginationLog)} >
-                <Text style={{color:'white', fontSize: 17}}>Reproducir</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={{marginTop:15, width: 160, height: 40, backgroundColor: 'red',padding:10,alignItems: 'center',borderRadius: 5}} onPress= { ()=> Pause()}>
-                <Text style={{color:'white', fontSize: 17}}>Parar</Text>
-            </TouchableOpacity>
+        <View style={{height:400,width:'90%',marginTop: 200,alignItems: 'center',justifyContent: 'center',flexDirection: 'column'}}>
+            
+            <TextInput style ={{padding: 10,marginTop:0,width:'90%',height:200,borderWidth:1}} multiline={true} numberOfLines={8} value={funciones.paginationLog}/>
+            
+            <View style={{height:100,width:'90%',marginTop: 20,alignItems: 'center',justifyContent: 'center',flexDirection: 'row'}}>
+                <TouchableOpacity style={{width: 190, height: 40, backgroundColor: 'blue',padding:10,alignItems: 'center',borderRadius: 5}} onPress={ ()=> Speaker(funciones.paginationLog)} >
+                    <Text style={{color:'white', fontSize: 17}}>Reproducir</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={{marginLeft:10, width: 160, height: 40, backgroundColor: 'red',padding:10,alignItems: 'center',borderRadius: 5}} onPress= { ()=> Pause()}>
+                    <Text style={{color:'white', fontSize: 17}}>Parar</Text>
+                </TouchableOpacity>
+            </View>
         </View>
 
     </View>
