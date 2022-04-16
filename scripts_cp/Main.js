@@ -3,19 +3,7 @@
  * @author Kevin David Sanchez Solis
  * @author Anderson Ramirez Vasquez
  */
-
- var variables = [];
- var valoresVariables = [];
- var listaSemaforos;
- var valores = [];
- var matrizEntrada;
- var posiciones;
- var salida;
- var sema;
- var hilosDormidos;
- var hilosTerminados;
  const CANTIDAD_COLUMNAS = 5;
- const CANTIDAD_FILAS_DAFAULT = 13;
  
  
  export function editarTextoSalida(textSalida,textHilosBloqueados){

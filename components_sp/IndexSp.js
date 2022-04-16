@@ -186,7 +186,7 @@ function  crearTablaEntrada (){
     if(verTablaEntrada){
       return (
         <TextInput style={styles.textInput_hilos_bloqueados_sp} 
-        onChangeText={(text) => setTextHilosBloqueados(text)} placeholder="Hilos Bloqueados" value={textHilosBloqueados}/>
+        onChangeText={(text) => setTextHilosBloqueados(text)} placeholder="Hilos Dormidos" value={textHilosBloqueados}/>
       );
     }
 

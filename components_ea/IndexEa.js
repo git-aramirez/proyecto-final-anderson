@@ -225,12 +225,12 @@ const onRefresh = React.useCallback(() => {
         for (let index = 0; index < cantidadCeldas; index++) {
 
           if(index==cantidadCeldas-1){
-            listaProcesos+=("S"+(index+1));
+            listaProcesos+=("P"+(index+1));
           }else{
-            listaProcesos+=("S"+(index+1)+"\n");
+            listaProcesos+=("P"+(index+1)+"\n");
           }
           listaRequerimientos.push("Solicitar 1");
-          tablaEntrada.push({proceso: "S"+(index+1), solicita: "", libera: ""});
+          tablaEntrada.push({proceso: "P"+(index+1), solicita: "", libera: ""});
         }
         setListaProcesos(listaProcesos);
         setListaRequerimientos(listaRequerimientos);

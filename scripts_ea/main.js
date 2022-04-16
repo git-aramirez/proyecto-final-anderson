@@ -83,7 +83,7 @@ export function inicializarTablaEntradaNumerosAleatorios(itemAlgoritmo,tablaEntr
 function reescribirSolicitudesFinales(tablaEntrada,DIVISION_TABLA){
     let initialValue = parseInt(tablaEntrada[DIVISION_TABLA].proceso.substring(1))+1;
     for (let index = DIVISION_TABLA*2; index < tablaEntrada.length; index++) {
-       tablaEntrada[index].proceso= "S"+initialValue;
+       tablaEntrada[index].proceso= "P"+initialValue;
        initialValue++;    
     }
 }
