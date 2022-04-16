@@ -31,7 +31,8 @@ export function inicializarListasAleatorias(listaProcesos,listaRequerimientos,ta
     return [listaProcesos,listaRequerimientos];
 }
 
-export function inicializarTablaEntrada(listaProcesos,listaRequerimientos,tablaEntrada){
+export function inicializarTablaEntrada(listaProcesos,listaRequerimientos,tablaEntrada,cantidadCeldasMemoria){
+    let totalsolicitudes = 0;
     let procesos = listaProcesos.split("\n");
     for (let index = 0; index < listaRequerimientos.length; index++) {
         tablaEntrada[index].proceso = procesos[index];
@@ -39,12 +40,20 @@ export function inicializarTablaEntrada(listaProcesos,listaRequerimientos,tablaE
             let resultado = listaRequerimientos[index].split("Solicitar");
             tablaEntrada[index].solicita = parseInt(resultado[1].replace(/ /g, ""));
             tablaEntrada[index].libera= "--";
+            totalsolicitudes += tablaEntrada[index].solicita;
+
+            if(totalsolicitudes>cantidadCeldasMemoria){
+                return true;
+            }
+
         }else{
             tablaEntrada[index].solicita = "--";
             tablaEntrada[index].libera = "X";
         }        
     }
 }
+
+
 
 
 export function inicializarTablaEntradaNumerosAleatorios(itemAlgoritmo,tablaEntrada){

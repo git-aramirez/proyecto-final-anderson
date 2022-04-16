@@ -196,12 +196,12 @@ const onRefresh = React.useCallback(() => {
            return true;
         }
 
-        if(parseInt(cantidadCeldas)>15){
-           alert("Por favor NO ingreses más de 15 solicitudes");
+        if(parseInt(cantidadCeldasMemoria) < parseInt(cantidadCeldas)){
+           alert("Por favor NO ingreses más de "+cantidadCeldasMemoria+" solicitudes");
            return true;
         }
 
-        if(parseInt(cantidadCeldas)<3){
+        if(parseInt(cantidadCeldas)<1){
            alert("Por favor ingrese mínimo 3 solicitudes !");
            return true;
         }
@@ -251,7 +251,11 @@ const onRefresh = React.useCallback(() => {
           return;
         }
         let listaSalida;
-        main.inicializarTablaEntrada(listaProcesos,listaRequerimientos,tablaEntrada);
+        let resultado = main.inicializarTablaEntrada(listaProcesos,listaRequerimientos,tablaEntrada,cantidadCeldasMemoria);
+
+        if(resultado){
+          return alert("Por favor solicite una cantidad inferior a la cantidad de celdas de memoria !");
+        }
 
         if(itemAlgoritmoAjuste === "Ajuste Sobre Solicitudes"){
 
@@ -284,7 +288,7 @@ const onRefresh = React.useCallback(() => {
 
           <View style={{top:10, alignItems: 'center',justifyContent: 'center',flexDirection: 'row'}}>
           <NumberFormat value={cantidadCeldas} displayType={'text'} renderText={(cantidadCeldas) =>(
-            <TextInput style={styles.input} onChangeText={(val)=>setCantidadCeldas(val)} placeholder="Cantidad de Celdas" keyboardType='numeric'/>)}/>
+            <TextInput style={styles.input} onChangeText={(val)=>setCantidadCeldas(val)} placeholder="Cantidad de Solicitudes" keyboardType='numeric'/>)}/>
               
             <NumberFormat value={cantidadCeldasMemoria} displayType={'text'} renderText={ (cantidadCeldasMemoria) => (
                      <TextInput style={styles.input} onChangeText={(val)=>setCantidadCeldasMemoria(val)} value={cantidadCeldasMemoria} placeholder="Celdas de Memoria" keyboardType='numeric'/>)}/>

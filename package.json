@@ -15,16 +15,17 @@
     "expo": "~42.0.1",
     "expo-speech": "^9.2.1",
     "expo-status-bar": "~1.0.4",
+    "expo-updates": "~0.8.2",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-42.0.0.tar.gz",
+    "react-native-bouncy-checkbox": "^2.1.10",
     "react-native-gesture-handler": "^1.10.3",
     "react-native-icons": "^0.7.1",
     "react-native-paper": "^4.9.2",
     "react-native-reanimated": "^2.2.2",
     "react-native-web": "~0.13.12",
-    "react-number-format": "^4.9.1",
-    "expo-updates": "~0.8.2"
+    "react-number-format": "^4.9.1"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0"

@@ -2,6 +2,7 @@ import { StyleSheet} from 'react-native';
 
 export const styles = StyleSheet.create({
   input: {
+    width:'100%',
     height: 40,
     margin: 8,
     borderWidth: 1,
@@ -45,13 +46,12 @@ export const styles = StyleSheet.create({
   },
   item_resultado: {
     fontSize: 15,
-    height: 100,
-    width:900,
-    justifyContent: "justify",
+    height: 200,
+    width:'100%',
     borderColor: 'black',
     borderWidth: .25,
     textAlign: 'justify',
-    padding: 10
+    padding: 5
   },
   container: {
       flex: 1,
