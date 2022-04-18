@@ -264,12 +264,16 @@ const onRefresh = React.useCallback(() => {
             return alert("Solo ingrese solicitudes !");
           }
 
-           main.asignarCantidadCeldasMemoria(cantidadCeldasMemoria);
+          if(main.listaCeldas == null){
+            main.asignarCantidadCeldasMemoria(cantidadCeldasMemoria);
+          }
            listaSalida = main.ejecutarAlgoritmoAjusteSolicitudes(itemAjustes,tablaEntrada,isPasoAPaso,cantidadCeldasMemoria);
            
            setparrafoResultado(listaSalida[1]);
         }else{
-           main.asignarCantidadCeldasMemoria(cantidadCeldasMemoria);
+          if(main.listaCeldas == null){
+            main.asignarCantidadCeldasMemoria(cantidadCeldasMemoria);
+          }
            listaSalida = main.ejecutarAlgoritmoAjusteHuecos(itemAjustes,tablaEntrada,isPasoAPaso,cantidadCeldasMemoria);
            setparrafoResultado(listaSalida[1]);
         }

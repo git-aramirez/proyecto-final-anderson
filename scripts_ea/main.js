@@ -1,4 +1,4 @@
-var listaCeldas;
+export var listaCeldas;
 var index = 0;
 var posicionesBloques;
 
@@ -336,7 +336,7 @@ function encontarEspacioEnMemoriaMejorAjuste(listaCeldas,cantidadDeEspacios){
 
    
 
-export function ejecutarAlgoritmoAjusteSolicitudes(itemAlgoritmoAjuste,tablaEntrada,isPasoAPaso){
+export function ejecutarAlgoritmoAjusteSolicitudes(itemAlgoritmoAjuste,tablaEntrada,isPasoAPaso,cantidadCeldasMemoria){
 
     if(!isPasoAPaso){
         initVariablesGlobalesAlgoritmoSolicitudes();
