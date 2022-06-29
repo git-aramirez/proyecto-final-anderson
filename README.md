@@ -10,5 +10,3 @@ Modules such as:
 6) Memory Paging
 7) Disk Allocation
 8) Disk Partitioning
-
-Translated with www.DeepL.com/Translator (free version)
